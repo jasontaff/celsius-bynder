@@ -1,0 +1,175 @@
+{
+	"defaults": {
+		"upload_user": "Jason Taff",
+        "brand_celsius_id": "94A5CF49-3FAB-4801-A9A50E2C2D072798"
+	},
+    "channel_sub-category": {
+        "channel_sub_category_id": "96E32BBF-EA20-4BFC-A9FCB51AF41D3872",
+
+        "magazine": "BBB9E902-9F82-4010-937BE155886AEC38",
+        "newsletter": "5E07B4FF-9107-4541-B8AC82B8B7AE3BC8",
+        "pr": "1D908BCD-5FFC-4FF8-B5411DD91EB95829",
+        "social_media": "B09893DB-3468-4CA3-B709BAAD6AE2FC44"
+    },
+    "flavors":{
+        "flavors_id": "F0801F2D-F91E-4F62-B59F6581E8FB7B2C",
+        
+        "arctic_vibe":  "4F32BCC4-7E0A-43A8-833E0EF83837BF9F",
+        "cherry_lime": "3FE47ED9-E1AA-4F79-8E5A50E4AF3775C7",
+        "fantasy_vibe": "6F31F13E-8C26-4CB9-B861C0ECE6E592FD",
+        "fuji_apple_pear": "4B7E4546-03B1-4F77-99BA2310AC56DC43",     
+        "grape_rush": "D5F9FB4D-70D6-4574-B8B28C0DA1632306",
+        "green_apple_cherry": "D42F92B9-AD6D-4B27-A278CB8846C3CE77",
+        "inferno_punch": "2A2EEFF7-5FD3-42BE-AFE559C234FE599F",
+        "jackfruit": "711B2336-C6D5-4012-888934F987A92B8AA",
+        "kiwi_guava": "816F15F8-CD36-4F18-9FBEC40D8953F491",
+        "lemon_lime": "94641525-110B-477A-A1BCC0EF0C09B4B1",
+        "manage_passionfruit": "91DE22F0-E696-4EA3-914F9224CDA876DF",
+        "mango_tango": "BE385377-D609-472A-98546782E35E77FC",
+        "orange": "5853F24A-7DBC-433C-AFCD2304F07C8A57",
+        "orangesicle": "246AE2FF-A609-4662-9051A79304E8EAE8",
+        "peach_mango": "7944B885-86C5-4099-A521712F29D19EA8",
+        "peach_vibe": "511EFD4F-3212-440E-AC1EEBE71E187A39",
+        "raspberry_acai": "DEE1B068-CD26-4A4B-885F80DC0DBC8FF9",
+        "sparkling_green_apple_cherry": "C303465B-249C-45CE-BFD7F4640F5A704C",
+        "sparkling_lemon_lime": "EA2ADF31-F99D-449C-B308FED0EED62CDD",
+        "sparkling_strawberry_lemonade": "177DAA2B-C016-45A7-BE43B3312136B039",
+        "strawberry_lemonade": "A24D3B64-B29B-4E93-BB55C7A6326B6DD2",
+        "tropical_vibe": "44CBB591-B1C7-4D07-AA6C7D8758EBC60C",
+        "watermelon": "CA00DEF3-AB18-4432-82A259735A480057",
+        "wild_berry": "18865888-B345-442F-9D867C46EC5ADCF9"
+    
+    },
+    "country":{
+         "country_id": "697F646C-9594-4A3A-92716AD65D29CE90",
+
+         "global":  "F55C2CC3-719A-497A-A89A77210A770C74",
+         "finland": "1899F660-70F8-4D37-96B41EC5CFE09585",
+         "germany": "EFF87653-7432-4929-8E2063C8B30AC834",
+         "hong_kong": "6531BF86-B047-418C-A40C7C36A191F29C",
+         "israel": "D4E28AB8-810B-4315-AE9CA9656C0BEC3",
+         "japan": "4E99A11F-4DE2-49BD-8E6AB05F00E41B2C",
+         "korea": "9E8FE156-6229-4CC1-A343F82470B976E5",
+         "kuwait": "8189B883-0C52-466A-B1760FEB619A3FE8",
+         "malaysia": "45F535B2-495D-4889-871DAA4744B6F8FC",
+         "norway": "AC00A49C-6FEE-42F5-BA0020A878B4AE84",
+         "saudi": "31BCE34D-4ED1-4577-A27BE693063AFB62",
+         "sweden": "E94C78EB-83A4-49CB-93D2550F822C8DBF",
+         "switzerland": "CEA547F3-4C73-4AD1-8058B60500A78699",
+         "uk": "CDD023BB-6358-4190-BD053B89EEF30306",
+         "usa": "10C1B4CA-840C-426A-81E84DC75E3C9BC3"
+    },
+    "channels":{
+        "channels_id": "9F15883E-2172-471C-9C334BE19A2DECF3",
+
+        "digital": "C2AEF40D-5DB7-4624-BD183D314DC25E01",
+        "print": "B48CDB08-C966-4244-934DBF4CDFC1E845"
+    },
+    "org_category": {
+        "org_category_id": "3E4D131B-61D1-4269-9A8C64352F962010",
+
+        "celsius": "DEC4407F-4384-48F7-9645FC3DD18C2260"
+    },
+    "year": {
+        "year_id": "8582BD37-9C90-4447-B2D6DC9F75C42131",
+        
+        "2020": "66076352-7E7A-4E61-8F6F95BAA1F3DDD8",
+        "2021": "B2403E6C-C3E1-4B21-BBFA0C72E0F40176",
+        "2022": "843B1BF4-BCA3-4EF0-8BCA3A4C3A321D51",
+        "2023": "D433D080-D147-4446-8508BC5B1002552F",
+        "2024": "AD3727F2-2FEB-4ACD-A57E9926718C6C0E",
+        "historic": "5DAD242E-1949-4950-B306126BF9C8FB7A"
+    },
+    "asset_type":{
+        "asset_type_id": "8961A884-9F3A-4406-AEA266B0311932FF",
+
+        "audio": "6E19619A-62F2-443A-9689E061A06299BF",
+        "document": "652E4036-E019-4ACC-8C1A1C47A4AC056C",
+        "file": "CEC71DB5-B9FA-4BF5-BC18D21A3A2DFDD3",
+        "graphic": "28AA9764-B5E6-46AD-A90D879B63F1BC49",
+        "photo": "A8814250-FF60-472A-BE9E8B5D91C78137",
+        "video": "75697DC-941E-41D1-B10ED837A72F9075"
+    },
+    "event":{
+        "event_id": "626C6C67-9084-407C-A1055C519A193CAE",
+
+        "social": "28409686-9A24-4190-9CDF4AEE8B0A312C",
+        "tradeshow": "100FD22A-6EE3-4B53-A475EFC73A8E637D"
+    },
+    "product":{
+        "product_id": "5B8FE18F-1552-411E-93F27070ECE3410D",
+
+        "energy_drinks": "5DDAD176-26BA-410A-8EE6834C2A03DB48",
+        "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02"
+    },
+    "department":{
+        "department_id": "7DA6072B-9B6E-47C4-926C877D91C6706B",
+
+        "art": "2A89E9FF-F959-4251-BBFD950DFB19BEB0",
+        "creative" :"DF482C3C-84B5-43B4-926B812C5421D63E",
+        "marketing" : "E742CF95-18BD-452B-B6D3752FFF6EB09E",
+        "multimedia": "904C0419-B2F8-412F-BCAC2952B485F637",
+        "other": "1CC82FC4-1624-4A6C-A0E7655FB7DA12A3",
+        "paid": "3A4459A3-CD04-44DA-A252815E72084855",
+        "sales": "0C224D90-0EE6-419C-B692E91ADED9411F",
+        "social": "480582CE-F548-4828-80C22A43E9BAB401"
+    },
+    "asset_category":{
+        "asset_category_id": "7AD8F6F-E3B1-4C49-93975E6766772052",
+
+        "adventure": "2A21E8BE-4DE7-4AA4-A7BEEC7AD012608E",
+        "advertising": "7FDB8D12-8F75-45C5-92032D0A2DC8D3CB",
+        "athlete": "C3CF5EFA-0442-41E4-A637C8A4F5B6A72E",
+        "brand_identity": "9C5FDD31-5D75-4985-927D66C8896DA066",
+        "branding": "DC00BB25-E189-4170-9CD0554539CD9427",
+        "creative_portfolio": "0FF77F55-655A-43D1-982C8733915D3998",
+        "email": "CB54738E-8A99-4F80-BA89A8C30E84C151",
+        "fitness": "3C11DFC2-504C-47FB-9BF0E7E1F4380371",
+        "images": "3C11DFC2-504C-47FB-9BF0E7E1F4380371",
+        "lifestyle": "BF79BC29-56E3-4046-955DF4921A5F0455",
+        "marketing_media": "6CD5020D-97BB-446A-B3B6978128F1BA43",
+        "music": "E67CCB7E-2E26-49B4-A015B39B320165F8",
+        "organizations": "68966B66-3F5A-47EE-B6925FAE5CFDE7AA",
+        "packaging": "5849CA64-51F5-4E03-959CA05B67AAB77F",
+        "partnership": "E1DB6599-951E-4CE7-BB6027550C5AA01C",
+        "point_of_sell": "051CA1D0-0BCD-474A-97DCEBE15A33ECA2",
+        "print": "F1C6DE66-ACEB-46D9-99C106F8DE35CA2F",
+        "product": "22DD4046-7E60-4F02-82CC5139C01CABFA",
+        "research": "6A1D0F73-C1E4-4959-894CF00ACCC52A5B",
+        "sell_sheets": "659263E2-1F60-449B-93C2B4215BF17219",
+        "signage": "8CD6A99B-57F7-4684-83FBCD4B5FB512DC",
+        "technical_specs": "4703686E-2DE7-4266-A8C70E381AB64D95",
+        "templates": "26825805-EB43-4586-9A448C3E4B43117A",
+        "video": "E99AD4DC-0E4D-4956-8156059ACC7398FB",
+        "website": "964AF0A5-84EB-4037-AA962E4D1F146565",
+        "wraps": "FC856588-5704-4741-9685F2E5FCD867F7"
+    },
+    "product_name":{
+        "product_name_id": "4B32BAF8-F97C-4BC0-875DEACD47914DEC",
+
+        "celsius_bcaa": "9A33340E-79A0-4930-A7EEC658D073D5FE",
+        "celsius_core": "FBBF4673-8E01-483E-BCEABBA0FD313087",
+        "celsius_heat": "FAABB8ED-D573-4F55-B0ACABF1F4859A67",
+        "celsius_heat_otg": "75B21168-A0D9-4074-86E4CF519049BAD4",
+        "celsius_otg": "179A10E4-EB94-4C78-9B4C40E0231FBF2A",
+        "celsius_stevia": "CCE2379C-919C-45DD-AF639D944A915B65",
+        "celsius_vibe": "EE51BE8-A106-4B83-A700864A057BB3F6",
+        "fast": "6A7F979F-F328-4120-BC6C004944C1A39B"
+    },
+
+    "ad_campaign":{
+        "ad_campaign_id": "26BF5AA6-6C31-4A26-A4C5E7BCB3851B90",
+
+        "amazon": "BD3E2E06-E106-4FC1-A44E0605722B9973",
+        "ferrari": "12A78E9-A186-4D70-AD5C7EF7171E8154",
+        "pepsico": "4D302BAA-5FEA-45FE-A0D5BEE448718448"
+    },
+    "usage_rights":{
+        "usage_rights_id": "1ED0B844-9771-49FC-B788D4ACB5441206",
+
+        "approved_for_external_usage": "B7F4402B-999D-43E5-9AC83A96BE1A5191",
+        "internal_use_only" : "854ACF06-76FB-41EB-B34143ECD970F1ED"
+    }
+
+    
+}

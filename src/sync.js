@@ -1,16 +1,30 @@
 require('dotenv').config({path: '../.env'})
-var configObject = require('./config/config.json');
+var configObject = require('./config.json');
 var Bynder = require('@bynder/bynder-js-sdk');
+var axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-//create bynder session
+//create Bynder session
 const bynder = new Bynder({ baseURL: "https://celsius.bynder.com/api/", permanentToken: process.env.BYNDER_TOKEN});
 
 
-try {
-    let fileCount = 0;
-    const fileExtensions = {};
+//blank objects for config
+var defaultObject = new Object();
+
+
+//populate default values for object
+for (var key in configObject.defaults) {
+  var key = key;
+  var value =  configObject.defaults[key];
+  defaultObject[key] = value;
+}
+
+
+
+
+let fileCount = 0;
+const fileExtensions = {};
 
 function readDirectory(directory) {
   // Read all files in the directory
@@ -35,6 +49,11 @@ function readDirectory(directory) {
       if (!fileExtensions[extension]) {
         fileExtensions[extension] = true;
       }
+
+      // Get the local accessed date of the file
+      const fileStats = fs.statSync(filePath);
+      const accessedDate = fileStats.atime;
+      console.log(`Accessed date: ${accessedDate}`);
     }
   });
 }
@@ -47,6 +66,5 @@ readDirectory('../../_CREATIVE/International/');
 console.log(`Found ${fileCount} files.`);
 console.log('File extensions:');
 console.log(Object.keys(fileExtensions));
-} catch (error) {
-    console.log(error);
-}
+
+

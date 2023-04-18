@@ -31,14 +31,32 @@
         "peach_mango": "7944B885-86C5-4099-A521712F29D19EA8",
         "peach_vibe": "511EFD4F-3212-440E-AC1EEBE71E187A39",
         "raspberry_acai": "DEE1B068-CD26-4A4B-885F80DC0DBC8FF9",
-        "sparkling_green_apple_cherry": "C303465B-249C-45CE-BFD7F4640F5A704C",
-        "sparkling_lemon_lime": "EA2ADF31-F99D-449C-B308FED0EED62CDD",
-        "sparkling_strawberry_lemonade": "177DAA2B-C016-45A7-BE43B3312136B039",
         "strawberry_lemonade": "A24D3B64-B29B-4E93-BB55C7A6326B6DD2",
         "tropical_vibe": "44CBB591-B1C7-4D07-AA6C7D8758EBC60C",
         "watermelon": "CA00DEF3-AB18-4432-82A259735A480057",
-        "wild_berry": "18865888-B345-442F-9D867C46EC5ADCF9"
-    
+        "wild_berry": "18865888-B345-442F-9D867C46EC5ADCF9",
+        "cola": "A4CAC559-BC84-44E4-ACD62587884D2BEF",
+        "grapefruit_melon": "5428AA3F-2C10-4EF6-86F5E77BE0A1FA86",
+        "strawberry_guava": "8994F6E5-2160-4826-A006B3B6BBEC484E",
+        "oasis_vibe": "E0177AAF-8CDC-4960-8517E8C2E82897F9",
+        "cosmic_vibe": "ACE046AD-EA33-4368-B7C7E1D6A5539557",
+        "orange_pomegranate": "6641A8C7-A2E7-40AF-BACFE139B053A3FC",
+        "cucumber_lime": "B906342A-C4C8-42F3-8E5904E9EC15D8CA",
+        "grapefruit": "52DA3E59-92D3-44CA-99D73875AAC08031",
+        "watermelon_berry": "D08BCC4-4AAB-40D1-96BEDF0D968B1F14",
+        "watermelon_ice": "31ED1094-B8FE-49D2-9B34751F76E991B4",
+        "blood_orange_lemonade": "0121EC38-9822-4AD5-823579C52110612C",
+        "tropical_twist": "892AF966-9894-4A7F-B7CA94D244BF995D",
+        "blue_razz": "F1D79ECC-07BA-4493-81A8D793A5A536E7",
+        "blueberry_pomegranate": "98D4B9F5-D257-457F-A973A0862392AFCF",
+        "strawberry_dragon_fruit": "C0AC5828-D0BF-44FC-919218313B1CC943",
+        "coconut": "BEE7AAA9-554D-4196-B382F18FE4C2A9F3",
+        "cranberry_lemon": "7AA49132-8FB9-4856-AA0EFDCA23F746B4",
+        "dragonfruit_lime": "6859E625-79D8-4E0C-A414A08753EA38B2",
+        "kiwi_guava_lime": "72AA2638-D556-4CF1-8229293AB8D215AB",
+        "strawberry_mango": "F9BB1059-F78F-402C-8A87839AFC57409D",
+        "lemonade_mist": "4CA5B25E-EF2E-4CA8-82FA0714984036CA",
+        "berry_blast": "49526BDA-5C08-49C8-99F9D816B3FBF0A8"
     },
     "country":{
          "country_id": "697F646C-9594-4A3A-92716AD65D29CE90",
@@ -100,7 +118,8 @@
         "product_id": "5B8FE18F-1552-411E-93F27070ECE3410D",
 
         "energy_drinks": "5DDAD176-26BA-410A-8EE6834C2A03DB48",
-        "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02"
+        "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02",
+        "shipper_display": "C1AC95BE-0CEF-4BA9-8BACF3FAC5F76742"
     },
     "department":{
         "department_id": "7DA6072B-9B6E-47C4-926C877D91C6706B",
@@ -139,7 +158,7 @@
         "sell_sheets": "659263E2-1F60-449B-93C2B4215BF17219",
         "signage": "8CD6A99B-57F7-4684-83FBCD4B5FB512DC",
         "technical_specs": "4703686E-2DE7-4266-A8C70E381AB64D95",
-        "templates": "26825805-EB43-4586-9A448C3E4B43117A",
+        "templates": "26825805-EB43-4 586-9A448C3E4B43117A",
         "video": "E99AD4DC-0E4D-4956-8156059ACC7398FB",
         "website": "964AF0A5-84EB-4037-AA962E4D1F146565",
         "wraps": "FC856588-5704-4741-9685F2E5FCD867F7"
@@ -147,6 +166,10 @@
     "product_name":{
         "product_name_id": "4B32BAF8-F97C-4BC0-875DEACD47914DEC",
 
+        "celsius_green_tea": "9A8EB846-FE3F-43ED-812D3337AC00A572",
+        "celsius_sparkling": "EE08F0BF-97D0-48B1-824B8B6A3251BF95",
+        "celsius_variety_pack": "435D9E27-5C7F-4748-9081E5050AABB057",
+        "celsius_club_box": "EBF900CB-F695-4256-A9C9C3D3FD48FB18",
         "celsius_bcaa": "9A33340E-79A0-4930-A7EEC658D073D5FE",
         "celsius_core": "FBBF4673-8E01-483E-BCEABBA0FD313087",
         "celsius_heat": "FAABB8ED-D573-4F55-B0ACABF1F4859A67",
@@ -180,7 +203,9 @@
         "bundles": "221251F3-7A68-40EA-BCAAD0217E87FEE7",
         "can": "AFE2C955-9A04-47B7-B93468B86254D342",
         "packs": "983EF617-0DB2-4F7F-A40807C7F6BE4760",
-        "trays" : "C896174E-593E-4871-A4A57B0D5670C3CB"
+        "trays" : "C896174E-593E-4871-A4A57B0D5670C3CB",
+        "6ct": "2AA53F6D-1D79-41FB-9ABEF7BCDF5E9E3C",
+        "single": "8B83BAA4-37B8-40DE-8FB330D0C26F815E"
     },
     "asset_sub-category": {
         "asset_sub-category_id": "AA31523D-201B-4B61-9B03EE84EE2C1FA8",

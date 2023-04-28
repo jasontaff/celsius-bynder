@@ -1,5 +1,6 @@
 {
 	"defaults": {
+        "directory": "../../Approved_Assets/Celsius/",
 		"upload_user": "Jason Taff",
         "brand_celsius_id": "94A5CF49-3FAB-4801-A9A50E2C2D072798"
 	},
@@ -24,7 +25,7 @@
         "jackfruit": "711B2336-C6D5-4012-888934F987A92B8AA",
         "kiwi_guava": "816F15F8-CD36-4F18-9FBEC40D8953F491",
         "lemon_lime": "94641525-110B-477A-A1BCC0EF0C09B4B1",
-        "manage_passionfruit": "91DE22F0-E696-4EA3-914F9224CDA876DF",
+        "mango_passionfruit" : "36CEE181-26AB-4BE9-9B12B8C1EEADFA4A",
         "mango_tango": "BE385377-D609-472A-98546782E35E77FC",
         "orange": "5853F24A-7DBC-433C-AFCD2304F07C8A57",
         "orangesicle": "246AE2FF-A609-4662-9051A79304E8EAE8",

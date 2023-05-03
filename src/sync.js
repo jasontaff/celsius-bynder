@@ -9,31 +9,39 @@ const ExcelJS = require('exceljs');
 //create Bynder session
 const bynder = new Bynder({ baseURL: process.env.BYNDER_API_PATH, permanentToken: process.env.BYNDER_TOKEN});
 
-
 function readDirectory(rootDir) {
-  // Read the contents of the current directory
   const files = fs.readdirSync(rootDir);
 
-  // Iterate over each item in the directory
   files.forEach(file => {
-    // Construct the absolute path of the current item
     const filePath = path.join(rootDir, file);
-
-    // Get the file's stats
     const stats = fs.statSync(filePath);
 
-    // Check if the item is a directory
     if (stats.isDirectory()) {
-      // Recursively read the subdirectory
       readDirectory(filePath);
     } else {
-      // It's a file, so you can do whatever you want with it
-      console.log(filePath);
-      // Or perform other operations like reading its contents, etc.
+      const extension = getFileExtension(file);
+      const fileType = getFileType(extension);
+      console.log(filePath, extension, fileType);
     }
   });
 }
 
+function getFileExtension(filename) {
+  return path.extname(filename).slice(1);
+}
+
+function getFileType(extension) {
+  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+  const videoExtensions = ['mp4', 'mov', 'avi', 'mkv'];
+  
+  if (imageExtensions.includes(extension.toLowerCase())) {
+    return 'image';
+  } else if (videoExtensions.includes(extension.toLowerCase())) {
+    return 'video';
+  } else {
+    return 'file';
+  }
+}
 // Usage:
 readDirectory(configObject.defaults.directory);
 

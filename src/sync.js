@@ -15,7 +15,7 @@ function readDirectory(rootDir) {
   files.forEach(file => {
     const filePath = path.join(rootDir, file);
     const stats = fs.statSync(filePath);
-
+    
     if (stats.isDirectory()) {
       readDirectory(filePath);
     } else {

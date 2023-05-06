@@ -4,3 +4,5 @@
 .env
 *.log
 package-lock.json
+*.xls
+*.xlsx

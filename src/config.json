@@ -61,26 +61,27 @@
     },
     "asset_sub-category": {
         "asset_sub-category_id": "AA31523D-201B-4B61-9B03EE84EE2C1FA8",
-        
+
         "apparel": "2B80A25F-2368-4E23-8B5B0F9C6DD6CCA3",
+        "athlete": "1E0982EE-C90E-48D1-954BD3AEF3261DDF",
         "b-roll": "C6408CEA-304A-4B2A-A6C8E494D0D8C717",
         "banner": "46BB1ED5-E80B-4076-AC81BAE4B26B2DAD",
+        "barcodes": "A8F675FB-52B3-4A9D-80DF7DBB48A793FD",
         "brand_guidelines": "F543A1AD-483C-41C9-89C8D60395F2687A",
         "brochure": "6C8D207C-5E9E-44D4-BCD5E70C43E46C5E",
-        "card": "6C8D207C-5E9E-44D4-BCD5E70C43E46C5E",
-        "case_study": "C5EFCEBD-FF06-4C06-981A59785A365E7B",
+        "card": "A9F62007-956A-44B3-8B5DB782F9A27E14",
         "cling": "729B1205-4F2C-48BC-898831F8DF1B31A4",
         "color": "39E914BB-090B-414E-A6404C75C084A3DC",
         "commercial": "0CF6CDF7-0104-4949-AF0EAE902C6228C2",
         "corporate": "43E4146C-E050-4868-81948BCCC9027CD8",
         "displays": "BE6A3C51-0997-4F05-8A903E15256529D6",
-        "events": "58C39371-5D12-4584-BF6E56FB76214206",
+        "events" : "58C39371-5D12-4584-BF6E56FB76214206",
+        "fitness": "CE5807F9-C72C-49F0-88FEBBE7B9057513",
         "font": "CA90DF0B-E1C6-45C4-B68C0FE351837665",
         "form": "34D40AB2-58B4-4C1D-A62B73336EBD71F9",
         "high-res": "3E437317-3E51-4D39-8C3DA07D7A17DF63",
         "horizontal": "528B955A-1335-4EC7-A5A755D5876CE42D",
-        "how-to_doc": "9A17B21F-04C7-471B-9F3AD872182BF416",
-        "icon": "D91BDB0-6206-4F82-B1862B6C87627918",
+        "icon": "ED91BDB0-6206-4F82-B1862B6C87627918",
         "infographic": "B8CADDD3-B82E-43A9-8107CA4344D2DD64",
         "innovation": "23DA533B-C046-41CE-A4F263B5B81CFABE",
         "interview_recording": "7AA258F7-06E0-468D-B3B83CAF25687795",
@@ -88,31 +89,66 @@
         "low-res": "589228B8-FA1A-4A40-97AE0E8403537924",
         "motion_graphic": "F957AAAC-394B-426F-9B2EC39C937CE294",
         "music_track": "846B71F7-1F02-4873-B633AE671C20A397",
-        "pattern": "89825B52-A892-4379-9040FA8C95F2B0E0",
         "podcast": "B02505C7-323B-4F92-AF7F084A60C6B0C7",
-        "product": "8475F07D-5B77-4BB4-9D4A7493BA345D4F",
-        "pushpull": "3CD0D6E9-9206-4E57-8C11050A3DED6635",
         "rendering": "6739909F-6BFC-47CE-8E5799DDE463D9D5",
         "shelf": "96ACC1DC-08E9-4625-970FC77AA07CAE0F",
         "shoots": "3631C87D-BBAF-40DB-B0423A2CA67B48EF",
-        "spec": "299FEFF-6A3F-4747-ABB8E50613C95940",
+        "signage": "14CB9312-AE4F-4D5A-8DDF2A43C3EE937A",
         "standard": "B6DC8303-C233-4C6B-8174B6831DDF8ADC",
         "stock": "43E6FBC1-8FE1-4D75-92D6C5D4A168F5DA",
         "strip": "ADAECE13-B9E1-48D3-ADC0A195E6B948E4",
         "style_guide": "E96E36A1-0797-4BD4-9A805C487DCB12CD",
         "template": "FC2C38E2-17E2-4336-ACE89E7901EFD8F0",
         "vertical": "9A9DF2B9-C2CF-48F9-813DA1DA84B9FC57",
-        "webinar": "95B4E9BD-87FB-4C32-9F0C4530F3A1DF27"
+        "webinar": "95B4E9BD-87FB-4C32-9F0C4530F3A1DF27",
+        "wraps": "24E5130A-5018-4FE5-83E7C9F103695912"
     },
+    "product":{
+        "product_id": "5B8FE18F-1552-411E-93F27070ECE3410D",
 
+        "energy_drinks": "5DDAD176-26BA-410A-8EE6834C2A03DB48",
+        "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02",
+        "shipper_display": "C1AC95BE-0CEF-4BA9-8BACF3FAC5F76742"
+    },
+    "product_name":{
+        "product_name_id": "4B32BAF8-F97C-4BC0-875DEACD47914DEC",
 
-    
+        "celsius_bcaa": "9A33340E-79A0-4930-A7EEC658D073D5FE",
+        "celsius_core": "FBBF4673-8E01-483E-BCEABBA0FD313087",
+        "celsius_heat": "FAABB8ED-D573-4F55-B0ACABF1F4859A67",
+        "celsius_heat_otg": "75B21168-A0D9-4074-86E4CF519049BAD4",
+        "celsius_otg": "179A10E4-EB94-4C78-9B4C40E0231FBF2A",
+        "celsius_stevia": "CCE2379C-919C-45DD-AF639D944A915B65",
+        "celsius_vibe": "BEE51BE8-A106-4B83-A700864A057BB3F6",
+        "celsius_club_box": "EBF900CB-F695-4256-A9C9C3D3FD48FB18",
+        "celsius_green_tea": "9A8EB846-FE3F-43ED-812D3337AC00A572",
+        "celsius_sparkling": "EE08F0BF-97D0-48B1-824B8B6A3251BF95",
+        "celsius_variety_pack": "435D9E27-5C7F-4748-9081E5050AABB057"
+    },
+    "product_sub-type":{
+        "product_sub-type_id": "43A45382-5080-4D89-985CB39557324D9A",
 
+        "12ct": "B403171C-85E8-4A34-9641F2DC606C8883",
+        "12pk": "BB89B326-D4C5-41E6-91B762A041A57C3D",
+        "18pk": "88427111-CBFD-480B-AC7DE50AB659D08D",
+        "2_12pk": "F97EC132-635C-4DC9-B21EC5B7F7CE7352",
+        "24ct": "A2A1E659-5E3A-4E1D-A298282C56EE7556",
+        "4pk": "4935242E-AE8B-46F4-9396DDEBB086A3E2",
+        "6_4pk": "8914FB72-8A07-442F-BCBC039974BB7663",
+        "6ct": "2AA53F6D-1D79-41FB-9ABEF7BCDF5E9E3C",
+        "boxes": "199CA2B0-0AA9-4626-A5852B953CF84F40",
+        "bundles": "221251F3-7A68-40EA-BCAAD0217E87FEE7",
+        "can": "AFE2C955-9A04-47B7-B93468B86254D342",
+        "packs": "983EF617-0DB2-4F7F-A40807C7F6BE4760",
+        "single": "8B83BAA4-37B8-40DE-8FB330D0C26F815E",
+        "trays": "C896174E-593E-4871-A4A57B0D5670C3CB"
 
+    },
     "flavors":{
         "flavors_id": "F0801F2D-F91E-4F62-B59F6581E8FB7B2C",
         
         "arctic_vibe":  "4F32BCC4-7E0A-43A8-833E0EF83837BF9F",
+        "berry_blast": "49526BDA-5C08-49C8-99F9D816B3FBF0A8",
         "cherry_lime": "3FE47ED9-E1AA-4F79-8E5A50E4AF3775C7",
         "fantasy_vibe": "6F31F13E-8C26-4CB9-B861C0ECE6E592FD",
         "fuji_apple_pear": "4B7E4546-03B1-4F77-99BA2310AC56DC43",     
@@ -153,8 +189,22 @@
         "dragonfruit_lime": "6859E625-79D8-4E0C-A414A08753EA38B2",
         "kiwi_guava_lime": "72AA2638-D556-4CF1-8229293AB8D215AB",
         "strawberry_mango": "F9BB1059-F78F-402C-8A87839AFC57409D",
-        "lemonade_mist": "4CA5B25E-EF2E-4CA8-82FA0714984036CA",
-        "berry_blast": "49526BDA-5C08-49C8-99F9D816B3FBF0A8"
+        "lemonade_mist": "4CA5B25E-EF2E-4CA8-82FA0714984036CA"
+    },
+    "event":{
+        "event_id": "626C6C67-9084-407C-A1055C519A193CAE",
+
+        "social_event": "82FDFD9F-B642-455E-A1A486927A58A80",
+        "tradeshow_event": "AFB97664-064F-47EF-832AB79A85751AA7"
+    },
+    "company":{
+        "company_id": "7EB122B6-00AF-48C7-AC5078A64F4469AC",
+
+        "amazon": "3A5B993-CA49-4BA4-9760DDAE32BA5081",
+        "circle_k": "EEA45827-1F73-404D-A1664981B45C6864",
+        "ferrari": "B911EAEA-9AFE-47DD-95F229714F8FD0B6",
+        "kroger": "5AF6563C-571F-4B37-AB47DE5F51DEFE95",
+        "pepsico": "138FFCF0-EE53-4C9E-B98EC4D312317F91",
     },
     "country":{
          "country_id": "697F646C-9594-4A3A-92716AD65D29CE90",
@@ -175,13 +225,6 @@
          "uk": "CDD023BB-6358-4190-BD053B89EEF30306",
          "usa": "10C1B4CA-840C-426A-81E84DC75E3C9BC3"
     },
-    "channels":{
-        "channels_id": "9F15883E-2172-471C-9C334BE19A2DECF3",
-
-        "digital": "C2AEF40D-5DB7-4624-BD183D314DC25E01",
-        "print": "B48CDB08-C966-4244-934DBF4CDFC1E845"
-    },
-   
     "year": {
         "year_id": "8582BD37-9C90-4447-B2D6DC9F75C42131",
         
@@ -192,66 +235,14 @@
         "2024": "AD3727F2-2FEB-4ACD-A57E9926718C6C0E",
         "historic": "5DAD242E-1949-4950-B306126BF9C8FB7A"
     },
-  
-    "event":{
-        "event_id": "626C6C67-9084-407C-A1055C519A193CAE",
-
-        "social": "28409686-9A24-4190-9CDF4AEE8B0A312C",
-        "tradeshow": "100FD22A-6EE3-4B53-A475EFC73A8E637D"
-    },
-    "product":{
-        "product_id": "5B8FE18F-1552-411E-93F27070ECE3410D",
-
-        "energy_drinks": "5DDAD176-26BA-410A-8EE6834C2A03DB48",
-        "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02",
-        "shipper_display": "C1AC95BE-0CEF-4BA9-8BACF3FAC5F76742"
-    },
-
-  
-    "product_name":{
-        "product_name_id": "4B32BAF8-F97C-4BC0-875DEACD47914DEC",
-
-        "celsius_green_tea": "9A8EB846-FE3F-43ED-812D3337AC00A572",
-        "celsius_sparkling": "EE08F0BF-97D0-48B1-824B8B6A3251BF95",
-        "celsius_variety_pack": "435D9E27-5C7F-4748-9081E5050AABB057",
-        "celsius_club_box": "EBF900CB-F695-4256-A9C9C3D3FD48FB18",
-        "celsius_bcaa": "9A33340E-79A0-4930-A7EEC658D073D5FE",
-        "celsius_core": "FBBF4673-8E01-483E-BCEABBA0FD313087",
-        "celsius_heat": "FAABB8ED-D573-4F55-B0ACABF1F4859A67",
-        "celsius_heat_otg": "75B21168-A0D9-4074-86E4CF519049BAD4",
-        "celsius_otg": "179A10E4-EB94-4C78-9B4C40E0231FBF2A",
-        "celsius_stevia": "CCE2379C-919C-45DD-AF639D944A915B65",
-        "celsius_vibe": "EE51BE8-A106-4B83-A700864A057BB3F6",
-        "fast": "6A7F979F-F328-4120-BC6C004944C1A39B"
-    },
-
-    "ad_campaign":{
-        "ad_campaign_id": "26BF5AA6-6C31-4A26-A4C5E7BCB3851B90",
-
-        "amazon": "BD3E2E06-E106-4FC1-A44E0605722B9973",
-        "ferrari": "12A78E9-A186-4D70-AD5C7EF7171E8154",
-        "pepsico": "4D302BAA-5FEA-45FE-A0D5BEE448718448"
-    },
     "usage_rights":{
         "usage_rights_id": "1ED0B844-9771-49FC-B788D4ACB5441206",
 
         "approved_for_external_usage": "B7F4402B-999D-43E5-9AC83A96BE1A5191",
         "internal_use_only" : "854ACF06-76FB-41EB-B34143ECD970F1ED"
     },
-    "product_sub-type":{
-        "product_sub-type_id": "43A45382-5080-4D89-985CB39557324D9A",
-
-        "12ct": "B403171C-85E8-4A34-9641F2DC606C8883",
-        "24ct": "A2A1E659-5E3A-4E1D-A298282C56EE7556",
-        "4pk": "4935242E-AE8B-46F4-9396DDEBB086A3E2",
-        "boxes": "9C99887B-A193-4D2C-952896D26A661D05",
-        "bundles": "221251F3-7A68-40EA-BCAAD0217E87FEE7",
-        "can": "AFE2C955-9A04-47B7-B93468B86254D342",
-        "packs": "983EF617-0DB2-4F7F-A40807C7F6BE4760",
-        "trays" : "C896174E-593E-4871-A4A57B0D5670C3CB",
-        "6ct": "2AA53F6D-1D79-41FB-9ABEF7BCDF5E9E3C",
-        "single": "8B83BAA4-37B8-40DE-8FB330D0C26F815E"
+    "uuid":{
+        "uuid_id": "14D615DC-D1A3-4CCA-A91669359BABAC96"
     }
   
-    
 }

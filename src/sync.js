@@ -9,53 +9,76 @@ const ExcelJS = require('exceljs');
 //create Bynder session
 const bynder = new Bynder({ baseURL: process.env.BYNDER_API_PATH, permanentToken: process.env.BYNDER_TOKEN});
 
-function readDirectory(rootDir) {
-  const files = fs.readdirSync(rootDir);
+//Approved Asset Types
+const imageExtensions = ['.jpg', '.jpeg', '.png'];
+const videoExtensions = ['.mp4', '.avi', '.mov', '.wmv', '.mkv', '.mpeg', '.3gp', '.m4v', '.mpg', '.webm', '.ts', '.asf', '.rm', '.vob', '.m2ts', '.mp2'];
+const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.wma', '.aiff', '.m4a', '.alac', '.mp2', '.amr', '.ac3', '.midi', '.opus'];
+const graphicExtensions = ['.gif', '.bmp', '.eps', '.svg'];
+const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
+
+
+
+function isHidden(file) {
+  return file.charAt(0) === '.';
+}
+
+// Function to get the file extension
+function getExtension(file) {
+  const extension = path.extname(file).slice(1).toLowerCase();
+
+  if (imageExtensions.includes(extension)) {
+    return 'photo';
+  } else if (videoExtensions.includes(extension)) {
+    return 'video';
+  } else if (audioExtensions.includes(extension)) {
+    return 'audio';
+  } else if (graphicExtensions.includes(extension)) {
+    return 'graphic';
+  }else if (fileExtensions.includes(extension)) {
+    return 'file';
+  } else {
+    return 'other';
+  }
+}
+
+// Recursive function to read all file assets in a directory and sub directories
+function readAssets(directory, assets) {
+  const files = fs.readdirSync(directory);
 
   files.forEach(file => {
-    const filePath = path.join(rootDir, file);
-    const stats = fs.statSync(filePath);
+    const filePath = path.join(directory, file);
+
+    if (fs.statSync(filePath).isDirectory()) {
+      readAssets(filePath, assets); // Recursive call for subdirectories
+    } else if (!isHidden(file)) {
+      const extension = getExtension(file);
+      assets[filePath] = { path: filePath, type: extension };
     
-    if (stats.isDirectory()) {
-      readDirectory(filePath);
-    } else {
-      const extension = getFileExtension(file);
-      const fileType = getFileType(extension);
-      console.log(filePath, extension, fileType);
     }
   });
 }
 
-function getFileExtension(filename) {
-  return path.extname(filename).slice(1);
+// Function to create a global object with all file assets and their paths
+function getAllAssets(directory) {
+  const assets = {};
+  readAssets(directory, assets);
+  return assets;
 }
 
-function getFileType(extension) {
-  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-  const videoExtensions = ['mp4', 'mov', 'avi', 'mkv'];
-  
-  if (imageExtensions.includes(extension.toLowerCase())) {
-    return 'image';
-  } else if (videoExtensions.includes(extension.toLowerCase())) {
-    return 'video';
-  } else {
-    return 'file';
-  }
+// start:
+const assets = getAllAssets(configObject.defaults.directory);
+console.log(assets);
+
+
+
+
+
+
+
+function getTimestamp(dataString){
+  const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }
+  return new Date(dataString).toLocaleDateString(undefined, options);
 }
-// Usage:
-readDirectory(configObject.defaults.directory);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

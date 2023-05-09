@@ -16,28 +16,72 @@ const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.wma', '.aiff
 const graphicExtensions = ['.gif', '.bmp', '.eps', '.svg'];
 const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
 
+//Department Types
+const departmentTypes = ['Dep_Collegiate', 'Dep_Creative', 'Dep_General_Marketing', 'Dep_Media_Digital', 'Dep_Packaging', 'Dep_PR', 'Dep_Social', 'Dep_Sports_Marketing', 'Dep_Street_Teams', 'Dep_Trade'];
+
+// Asset Category
+const assetCategories = ['Paid', 'Organic', 'POS', 'Shell_Sheets', 'Key_Acc', 'Cans', 'Boxes', 'Trays', 'Packets', 'Linear', 'Digital', 'Branding', 'Renderings', 'Print', 'Website', 'Portfolio', 'Advertising', 'Partnership', 'Templates', 'Sports_and_Recreation', 'Product', 'Organizations'];
 
 
 function isHidden(file) {
   return file.charAt(0) === '.';
 }
 
-// Function to get the file extension
-function getExtension(file) {
-  const extension = path.extname(file).slice(1).toLowerCase();
+// *Required - Get Department Type through file path
+function getDepartmentType(pathName){
 
+  var department = null;
+  var department_meta_id = "";
+  for (const keyword of departmentTypes) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+        //console.log(`Found keyword "${department}" in path name.`);
+        department = keyword;
+        break;
+    }
+  }
+
+}
+
+// *Required - Get the file extension for asset type
+function getAssetType(file) {
+  const extension = path.extname(file).toLowerCase();
+  
   if (imageExtensions.includes(extension)) {
-    return 'photo';
+    return {
+      asset_type_name: 'photo',
+      asset_type_id: configObject.asset_type.asset_type_id,
+      asset_type_photo_meta_id: configObject.asset_type.photo
+    };
   } else if (videoExtensions.includes(extension)) {
-    return 'video';
+    return {
+      asset_type_name: 'video',
+      asset_type_id: configObject.asset_type.asset_type_id,
+      asset_type_photo_meta_id: configObject.asset_type.video
+    };
   } else if (audioExtensions.includes(extension)) {
-    return 'audio';
+    return {
+      asset_type_name: 'audio',
+      asset_type_id: configObject.asset_type.asset_type_id,
+      asset_type_photo_meta_id: configObject.asset_type.audio
+    };;
   } else if (graphicExtensions.includes(extension)) {
-    return 'graphic';
+    return {
+      asset_type_name: 'graphic',
+      asset_type_id: configObject.asset_type.asset_type_id,
+      asset_type_photo_meta_id: configObject.asset_type.graphic
+    };
   }else if (fileExtensions.includes(extension)) {
-    return 'file';
+    return {
+      asset_type_name: 'file',
+      asset_type_id: configObject.asset_type.asset_type_id,
+      asset_type_photo_meta_id: configObject.asset_type.file
+    };
   } else {
-    return 'other';
+    return {
+      asset_type_name: 'other',
+      asset_type_id: '',
+      asset_type_photo_meta_id: ''
+    };
   }
 }
 
@@ -46,13 +90,32 @@ function readAssets(directory, assets) {
   const files = fs.readdirSync(directory);
 
   files.forEach(file => {
+
     const filePath = path.join(directory, file);
 
     if (fs.statSync(filePath).isDirectory()) {
-      readAssets(filePath, assets); // Recursive call for subdirectories
+       readAssets(filePath, assets); // Recursive call for subdirectories
     } else if (!isHidden(file)) {
-      const extension = getExtension(file);
-      assets[filePath] = { path: filePath, type: extension };
+      var extension = getAssetType(file);
+     
+      if (extension.asset_type_name !== 'other') {
+        var department = getDepartmentType(filePath);   
+      
+           if (department  !== null){
+              assets[filePath] = { 
+                file_path: filePath, 
+                asset_type: extension,
+                department_type: department
+
+              };
+           }else{
+              //SKIP THE FILE IF IT NO DEPARTMENT TYPE IS ASSIGNED
+              console.log("SKIPPING: " + filePath + " --- NO DEPARTMENT TYPE ASSIGNED" );
+           }
+      }else{
+        //SKIP THE FILE IF IT DOESN'T MEET A PROPER ASSET TYPE
+        console.log("SKIPPING: " + filePath + " --- NOT A VALID ASSET" );
+      }
     
     }
   });
@@ -79,6 +142,66 @@ function getTimestamp(dataString){
   const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }
   return new Date(dataString).toLocaleDateString(undefined, options);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -17,10 +17,18 @@ const graphicExtensions = ['.gif', '.bmp', '.eps', '.svg'];
 const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
 
 //Department Types
-const departmentTypes = ['dep_collegiate', 'dep_creative', 'dep_general_marketing', 'dep_media_digital', 'dep_packaging', 'dep_pr', 'dep_social', 'dep_sports_marketing', 'dep_street_teams', 'dep_trade'];
+const departmentTypes = ['dep_collegiate', 'dep_creative', 'dep_general_marketing', 'dep_media_digital', 'dep_packaging', 'dep_pr', 'dep_social', 'dep_sports_marketing',
+ 'dep_street_teams', 'dep_trade'];
 
-// Asset Category
-const assetCategories = ['paid', 'organic', 'pos', 'shell_sheets', 'key_acct', 'cans', 'boxes', 'trays', 'packets', 'linear', 'digital', 'branding', 'renderings', 'print', 'website', 'portfolio', 'advertising', 'partnership', 'templates', 'sports_and_recreation', 'product', 'organizations'];
+// Asset Categories
+const assetCategories = ['paid', 'organic', 'pos', 'shell_sheets', 'key_acct', 'cans', 'boxes', 'trays', 'packets', 'linear', 
+'digital', 'branding', 'renderings', 'print', 'website', 'portfolio', 'advertising', 'partnership', 'templates', 'sports_and_recreation', 'product', 'organizations'];
+
+// Asset Sub-Categories
+const assetSubCategories = ['stock', 'corporate', 'logo', 'font', 'color', 'brand guidelines', 'brochure', 'template', 'commercial',
+ 'motion graphic', 'webinar', 'b_roll', 'music track', 'podcast', 'interview recording', 'infographic', 'icon', 'rendering', 'apparel', 
+ 'shoots', 'events', 'displays', 'innovation', 'standard', 'cling', 'strip', 'card', 'banner', 's helf', 'low_res', 'high_res', 'horizontal', 
+ 'vertical', 'style guide', 'form', 'fitness', 'athlete', 'signage', 'wraps', 'barcodes'];
 
 function isHidden(file) {
   return file.charAt(0) === '.';
@@ -219,6 +227,40 @@ function getAssetCategory(pathName){
 
 } 
 
+//get Asset Sub-Category through file path
+function getAssetSubCategory(pathName){
+  let assetSubCategory = null;
+  for (const keyword of assetSubCategories) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      assetSubCategory = keyword;
+      assetSubCategory.toLowerCase();
+      break;
+    }
+  }
+
+  let assetSubCategoryObj = {
+    asset_sub_category_name: assetSubCategory,
+    asset_sub_category_id: configObject.asset_sub_category.asset_sub_category_id,
+    asset_sub_category_meta_id: ''
+  };
+
+  switch (assetSubCategory) {
+    case 'apparel':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.apparel;
+      break;
+    case 'athlete':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.athlete;
+      break;
+    default:
+      assetSubCategoryObj.asset_sub_category_id = null;
+      assetSubCategoryObj.asset_sub_category_meta_id = null;
+      break;
+  }
+
+  return assetSubCategoryObj;
+
+}
+
 // Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   const files = fs.readdirSync(directory);
@@ -240,13 +282,16 @@ function readAssets(directory, assets) {
 
             if (assetCategory.asset_category_name  !== null){
 
+              var assetSubCategory = getAssetSubCategory(filePath); 
+
                 assets[filePath] = { 
                   file_path: filePath, 
                   asset_type: extension,
                   department_type: department,
-                  asset_category: assetCategory
-                
+                  asset_category: assetCategory,
+                  asset_sub_category: assetSubCategory
                 };
+
               }else{
                 //SKIP THE FILE IF  NO ASSET CATEGORY TYPE IS ASSIGNED
                 console.log("--- NO ASSET CATEGORY ASSIGNED ---:"  + filePath + " --- SKIPPING" );

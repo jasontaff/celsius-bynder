@@ -17,29 +17,13 @@ const graphicExtensions = ['.gif', '.bmp', '.eps', '.svg'];
 const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
 
 //Department Types
-const departmentTypes = ['Dep_Collegiate', 'Dep_Creative', 'Dep_General_Marketing', 'Dep_Media_Digital', 'Dep_Packaging', 'Dep_PR', 'Dep_Social', 'Dep_Sports_Marketing', 'Dep_Street_Teams', 'Dep_Trade'];
+const departmentTypes = ['dep_collegiate', 'dep_creative', 'dep_general_marketing', 'dep_media_digital', 'dep_packaging', 'dep_pr', 'dep_social', 'dep_sports_marketing', 'dep_street_teams', 'dep_trade'];
 
 // Asset Category
-const assetCategories = ['Paid', 'Organic', 'POS', 'Shell_Sheets', 'Key_Acc', 'Cans', 'Boxes', 'Trays', 'Packets', 'Linear', 'Digital', 'Branding', 'Renderings', 'Print', 'Website', 'Portfolio', 'Advertising', 'Partnership', 'Templates', 'Sports_and_Recreation', 'Product', 'Organizations'];
-
+const assetCategories = ['paid', 'organic', 'pos', 'shell_sheets', 'key_acct', 'cans', 'boxes', 'trays', 'packets', 'linear', 'digital', 'branding', 'renderings', 'print', 'website', 'portfolio', 'advertising', 'partnership', 'templates', 'sports_and_recreation', 'product', 'organizations'];
 
 function isHidden(file) {
   return file.charAt(0) === '.';
-}
-
-// *Required - Get Department Type through file path
-function getDepartmentType(pathName){
-
-  var department = null;
-  var department_meta_id = "";
-  for (const keyword of departmentTypes) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
-        //console.log(`Found keyword "${department}" in path name.`);
-        department = keyword;
-        break;
-    }
-  }
-
 }
 
 // *Required - Get the file extension for asset type
@@ -85,6 +69,156 @@ function getAssetType(file) {
   }
 }
 
+// *Required - Get Department Type through file path
+function getDepartmentType(pathName) {
+  let department = null;
+  for (const keyword of departmentTypes) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      department = keyword;
+      department.toLowerCase();
+      break;
+    }
+  }
+
+  let departmentObj = {
+    department_name: department,
+    department_id: configObject.department.department_id,
+    department_meta_id: ''
+  };
+
+  switch (department) {
+    case 'dep_collegiate':
+      departmentObj.department_meta_id = configObject.department.collegiate;
+      break;
+    case 'dep_creative':
+      departmentObj.department_meta_id = configObject.department.creative;
+      break;
+    case 'dep_general_marketing':
+      departmentObj.department_meta_id = configObject.department.general_marketing;
+      break;
+    case 'dep_media_digital':
+      departmentObj.department_meta_id = configObject.department.media_digital;
+      break;
+    case 'dep_packaging':
+      departmentObj.department_meta_id = configObject.department.packaging;
+      break;
+    case 'dep_pr':
+      departmentObj.department_meta_id = configObject.department.pr;
+      break;
+    case 'dep_social':
+      departmentObj.department_meta_id = configObject.department.social;
+      break;
+    case 'dep_sports_marketing':
+      departmentObj.department_meta_id = configObject.department.sports_marketing;
+      break;
+    case 'dep_street_teams':
+      departmentObj.department_meta_id = configObject.department.street_teams;
+      break;
+    case 'dep_trade':
+      break;
+    default:
+      departmentObj.department_id = null;
+      departmentObj.department_meta_id = null;
+      break;
+  }
+
+  return departmentObj;
+}
+
+// *Required - Get Asset Category through file path
+function getAssetCategory(pathName){
+  let assetCategory = null;
+  for (const keyword of assetCategories) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      assetCategory = keyword;
+      assetCategory.toLowerCase();
+      break;
+    }
+  }
+
+  let assetCategoryObj = {
+    asset_category_name: assetCategory,
+    asset_category_id: configObject.asset_category.asset_category_id,
+    asset_category_meta_id: ''
+  };
+
+  switch (assetCategory) {
+    case 'paid':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.paid;
+      break;
+    case 'organic':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.organic;
+      break;
+    case 'pos':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.pos;
+      break;
+    case 'shell_sheets':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.shell_sheets;
+      break;
+    case 'key_acct':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.key_acct;
+      break;
+    case 'cans':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.cans;
+      break;
+    case 'boxes':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.boxes;
+      break;
+    case 'trays':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.trays;
+      break;
+    case 'packets':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.packets;
+      break;
+    case 'linear':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.linear;
+      break;
+    case 'digital':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.digital;
+      break;
+    case 'branding':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.branding;
+      break;
+    case 'renderings':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.renderings;
+      break;
+    case 'print':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.print;
+      break;
+    case 'website':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.website;
+      break;
+    case 'portfolio':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.portfolio;
+      break;
+    case 'advertising':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.advertising;
+      break;
+    case 'partnership':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.partnership;
+      break;
+    case 'templates':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.templates;
+    break;
+    case 'sports_and_recreation':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.sports_and_recreation;
+      break;
+    case 'product':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.product;
+      break;
+    case 'organizations':
+      assetCategoryObj.asset_category_meta_id = configObject.asset_category.organizations;
+      break;
+    default:
+      assetCategoryObj.asset_category_id = null;
+      assetCategoryObj.asset_category_meta_id = null;
+      break;
+  }
+
+  return assetCategoryObj;
+
+} 
+
 // Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   const files = fs.readdirSync(directory);
@@ -100,26 +234,38 @@ function readAssets(directory, assets) {
      
       if (extension.asset_type_name !== 'other') {
         var department = getDepartmentType(filePath);   
-      
-           if (department  !== null){
-              assets[filePath] = { 
-                file_path: filePath, 
-                asset_type: extension,
-                department_type: department
+        
+           if (department.department_name  !== null){
+            var assetCategory = getAssetCategory(filePath); 
 
-              };
+            if (assetCategory.asset_category_name  !== null){
+
+                assets[filePath] = { 
+                  file_path: filePath, 
+                  asset_type: extension,
+                  department_type: department,
+                  asset_category: assetCategory
+                
+                };
+              }else{
+                //SKIP THE FILE IF  NO ASSET CATEGORY TYPE IS ASSIGNED
+                console.log("--- NO ASSET CATEGORY ASSIGNED ---:"  + filePath + " --- SKIPPING" );
+              }
            }else{
-              //SKIP THE FILE IF IT NO DEPARTMENT TYPE IS ASSIGNED
-              console.log("SKIPPING: " + filePath + " --- NO DEPARTMENT TYPE ASSIGNED" );
+              //SKIP THE FILE IF NO DEPARTMENT TYPE IS ASSIGNED
+              console.log("--- NO DEPARTMENT TYPE ASSIGNED ---:"  + filePath + " --- SKIPPING" );
            }
       }else{
-        //SKIP THE FILE IF IT DOESN'T MEET A PROPER ASSET TYPE
-        console.log("SKIPPING: " + filePath + " --- NOT A VALID ASSET" );
+        //SKIP THE FILE IF  DOESN'T MEET A PROPER ASSET TYPE
+        console.log("--- NOT A VALID ASSET ---:"  + filePath + " --- SKIPPING" );
       }
     
     }
   });
 }
+
+
+
 
 // Function to create a global object with all file assets and their paths
 function getAllAssets(directory) {

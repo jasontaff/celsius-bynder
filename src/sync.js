@@ -27,11 +27,16 @@ const assetCategories = ['paid', 'organic', 'pos', 'shell_sheets', 'key_acct', '
 // Asset Sub-Categories
 const assetSubCategories = ['stock', 'corporate', 'logo', 'font', 'color', 'brand guidelines', 'brochure', 'template', 'commercial',
  'motion graphic', 'webinar', 'b_roll', 'music track', 'podcast', 'interview recording', 'infographic', 'icon', 'rendering', 'apparel', 
- 'shoots', 'events', 'displays', 'innovation', 'standard', 'cling', 'strip', 'card', 'banner', 's helf', 'low_res', 'high_res', 'horizontal', 
+ 'shoots', 'events', 'displays', 'innovation', 'standard', 'cling', 'strip', 'card', 'banner', 'shelf', 'low_res', 'high_res', 'horizontal', 
  'vertical', 'style guide', 'form', 'fitness', 'athlete', 'signage', 'wraps', 'barcodes'];
 
 function isHidden(file) {
   return file.charAt(0) === '.';
+}
+
+function  getFileNameOnly(pathName){
+  const file_name_only = path.basename(pathName).toLowerCase();
+  return file_name_only;
 }
 
 // *Required - Get the file extension for asset type
@@ -251,6 +256,120 @@ function getAssetSubCategory(pathName){
     case 'athlete':
       assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.athlete;
       break;
+    case 'b_roll':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.b_roll;
+      break;
+    case 'banner':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.banner;
+      break;
+    case 'barcodes':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.barcodes;
+      break;
+    case 'brand_guidelines':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.brand_guidelines;
+      break;
+    case 'brochure':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.brochure;
+      break;
+    case 'card':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.card;
+      break;
+    case 'cling':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.cling;
+      break;
+    case 'color':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.color;
+      break;
+    case 'commercial':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.commercial;
+      break;
+    case 'corporate':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.corporate;
+      break;
+    case 'displays':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.displays;
+    break;
+    case 'events':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.events;
+    break;
+    case 'fitness':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.fitness;
+    break;
+    case 'font':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.font;
+    break;
+    case 'form':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.form;
+    break;
+    case 'high_res':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.high_res;
+    break;
+    case 'horizontal':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.horizontal;
+    break;
+    case 'icon':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.icon;
+    break;
+    case 'infographic':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.infographic;
+    break;
+    case 'innovation':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.innovation;
+    break;
+    case 'interview_recording':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.interview_recording;
+    break;
+    case 'logo':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.logo;
+    break;
+    case 'low_res':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.low_res;
+    break;
+    case 'motion_graphic':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.motion_graphic;
+    break;
+    case 'music_track':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.music_track;
+    break;
+    case 'podcast':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.podcast;
+    break;
+    case 'rendering':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.rendering;
+    break;
+    case 'shelf':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.shelf;
+    break;
+    case 'shoots':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.shoots;
+    break;
+    case 'signage':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.signage;
+    break;
+    case 'standard':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.standard;
+    break;
+    case 'stock':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.stock;
+    break;
+    case 'strip':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.strip;
+    break;
+    case 'style_guide':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.style_guide;
+    break;
+    case 'template':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.template;
+    break;
+    case 'vertical':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.vertical;
+    break;
+    case 'webinar':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.webinar;
+    break;
+    case 'wraps':
+      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.wraps;
+    break;
     default:
       assetSubCategoryObj.asset_sub_category_id = null;
       assetSubCategoryObj.asset_sub_category_meta_id = null;
@@ -267,7 +386,11 @@ function readAssets(directory, assets) {
 
   files.forEach(file => {
 
-    const filePath = path.join(directory, file);
+    var filePath = path.join(directory, file);
+
+      //remove file name and extension from filepath 
+      var file_path_only = path.dirname(filePath);
+    
 
     if (fs.statSync(filePath).isDirectory()) {
        readAssets(filePath, assets); // Recursive call for subdirectories
@@ -275,22 +398,31 @@ function readAssets(directory, assets) {
       var extension = getAssetType(file);
      
       if (extension.asset_type_name !== 'other') {
-        var department = getDepartmentType(filePath);   
+
+
+        var department = getDepartmentType(file_path_only);   
         
            if (department.department_name  !== null){
-            var assetCategory = getAssetCategory(filePath); 
+            var assetCategory = getAssetCategory(file_path_only); 
 
             if (assetCategory.asset_category_name  !== null){
+                  var file_name_only = getFileNameOnly(filePath);
 
-              var assetSubCategory = getAssetSubCategory(filePath); 
+                  assets[filePath] = { 
+                    file_path_only: file_path_only, 
+                    file_name_only: file_name_only,
+                    asset_type: extension,
+                    department_type: department,
+                    asset_category: assetCategory
+                  };
 
-                assets[filePath] = { 
-                  file_path: filePath, 
-                  asset_type: extension,
-                  department_type: department,
-                  asset_category: assetCategory,
-                  asset_sub_category: assetSubCategory
-                };
+                  var assetSubCategory = getAssetSubCategory(file_path_only); 
+
+                  if (assetSubCategory.asset_sub_category_name !== null) {
+                    assets[filePath].asset_sub_category = assetSubCategory;
+                  }
+
+
 
               }else{
                 //SKIP THE FILE IF  NO ASSET CATEGORY TYPE IS ASSIGNED

@@ -232,7 +232,7 @@ function getAssetCategory(pathName){
 
 } 
 
-//get Asset Sub-Category through file path
+//Get Asset Sub-Category through file path
 function getAssetSubCategory(pathName){
   let assetSubCategory = null;
   for (const keyword of assetSubCategories) {
@@ -380,6 +380,13 @@ function getAssetSubCategory(pathName){
 
 }
 
+//Get Product Type through file path
+function getProductType(pathName){
+
+
+
+}
+
 // Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   const files = fs.readdirSync(directory);
@@ -416,11 +423,15 @@ function readAssets(directory, assets) {
                     asset_category: assetCategory
                   };
 
+
+                  //GET OPTIONAL METAPROPERITES//
                   var assetSubCategory = getAssetSubCategory(file_path_only); 
 
                   if (assetSubCategory.asset_sub_category_name !== null) {
                     assets[filePath].asset_sub_category = assetSubCategory;
                   }
+
+                 // var product = getProductType(file_path_only);
 
 
 

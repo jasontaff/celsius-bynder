@@ -1,6 +1,6 @@
 {
 	"defaults": {
-        "directory": "../../JASON_TESTING_APPROVED_ASSETS/Celsius",
+        "directory": "../../Jason_Test_Approved_Assets/Celsius",
 		"upload_user": "Jason Taff",
         "brand_celsius_id": "94A5CF49-3FAB-4801-A9A50E2C2D072798"
 	},
@@ -19,22 +19,20 @@
         "video": "875697DC-941E-41D1-B10ED837A72F9075"
     },
     "department":{
-        "department_id": "7DA6072B-9B6E-47C4-926C877D91C6706B",
-
-        "collegiate": "A0D6828B-8992-4953-86BE466BD956FE45",
-        "general_marketing": "A3ACCFE-7183-44B8-A6B828D7F435C5FB",
-        "media_digital": "517BA567-C6C0-46DB-9589DEB36E887E5E",
-        "packaging": "183374DD-1DB5-4FFA-B6376193F694B39B",
-        "pr": "0393A649-CCFC-4182-949837F3375E5950",
-        "sports_marketing": "08D38B97-8486-41B8-80DEDF0C2249CDAE",
-        "street_teams": "F7AAB5B0-2470-409E-811468B3D27BCDF5",
-        "trade": "7C5E0691-D1B9-4477-8C83FA1E68006C0C",
-        "creative" :"DF482C3C-84B5-43B4-926B812C5421D63E",
-        "social": "480582CE-F548-4828-80C22A43E9BAB401"
+    
+        "dep_collegiate": "A0D6828B-8992-4953-86BE466BD956FE45",
+        "dep_general_marketing": "A3ACCFE-7183-44B8-A6B828D7F435C5FB",
+        "dep_media_digital": "517BA567-C6C0-46DB-9589DEB36E887E5E",
+        "dep_packaging": "183374DD-1DB5-4FFA-B6376193F694B39B",
+        "dep_pr": "0393A649-CCFC-4182-949837F3375E5950",
+        "dep_sports_marketing": "08D38B97-8486-41B8-80DEDF0C2249CDAE",
+        "dep_street_teams": "F7AAB5B0-2470-409E-811468B3D27BCDF5",
+        "dep_trade": "7C5E0691-D1B9-4477-8C83FA1E68006C0C",
+        "dep_creative" :"DF482C3C-84B5-43B4-926B812C5421D63E",
+        "dep_social": "480582CE-F548-4828-80C22A43E9BAB401"
     },
     "asset_category":{
-        "asset_category_id": "C7AD8F6F-E3B1-4C49-93975E6766772052",
-
+    
         "advertising": "7447A08B-E1D8-45CF-ACD0BA239FF19FE9",
         "boxes": "59E46F2B-18EA-46B8-A3C68E141533DFAF",
         "branding": "37049677-1F33-459C-8E65D884C326F59F",
@@ -60,7 +58,6 @@
         "website": "F46B1315-71FC-4D62-8DC01797992CB66F"
     },
     "asset_sub_category": {
-        "asset_sub_category_id": "AA31523D-201B-4B61-9B03EE84EE2C1FA8",
 
         "apparel": "2B80A25F-2368-4E23-8B5B0F9C6DD6CCA3",
         "athlete": "1E0982EE-C90E-48D1-954BD3AEF3261DDF",
@@ -104,15 +101,13 @@
         "wraps": "24E5130A-5018-4FE5-83E7C9F103695912"
     },
     "product":{
-        "product_id": "5B8FE18F-1552-411E-93F27070ECE3410D",
 
         "energy_drinks": "5DDAD176-26BA-410A-8EE6834C2A03DB48",
         "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02",
         "shipper_display": "C1AC95BE-0CEF-4BA9-8BACF3FAC5F76742"
     },
     "product_name":{
-        "product_name_id": "4B32BAF8-F97C-4BC0-875DEACD47914DEC",
-
+    
         "celsius_bcaa": "9A33340E-79A0-4930-A7EEC658D073D5FE",
         "celsius_core": "FBBF4673-8E01-483E-BCEABBA0FD313087",
         "celsius_heat": "FAABB8ED-D573-4F55-B0ACABF1F4859A67",
@@ -125,23 +120,22 @@
         "celsius_sparkling": "EE08F0BF-97D0-48B1-824B8B6A3251BF95",
         "celsius_variety_pack": "435D9E27-5C7F-4748-9081E5050AABB057"
     },
-    "product_sub-type":{
-        "product_sub-type_id": "43A45382-5080-4D89-985CB39557324D9A",
-
+    "product_sub_type":{
+       
         "12ct": "B403171C-85E8-4A34-9641F2DC606C8883",
         "12pk": "BB89B326-D4C5-41E6-91B762A041A57C3D",
         "18pk": "88427111-CBFD-480B-AC7DE50AB659D08D",
-        "2_12pk": "F97EC132-635C-4DC9-B21EC5B7F7CE7352",
+        "2-12pk": "F97EC132-635C-4DC9-B21EC5B7F7CE7352",
         "24ct": "A2A1E659-5E3A-4E1D-A298282C56EE7556",
         "4pk": "4935242E-AE8B-46F4-9396DDEBB086A3E2",
-        "6_4pk": "8914FB72-8A07-442F-BCBC039974BB7663",
+        "6-4pk": "8914FB72-8A07-442F-BCBC039974BB7663",
         "6ct": "2AA53F6D-1D79-41FB-9ABEF7BCDF5E9E3C",
-        "boxes": "199CA2B0-0AA9-4626-A5852B953CF84F40",
-        "bundles": "221251F3-7A68-40EA-BCAAD0217E87FEE7",
-        "can": "AFE2C955-9A04-47B7-B93468B86254D342",
-        "packs": "983EF617-0DB2-4F7F-A40807C7F6BE4760",
-        "single": "8B83BAA4-37B8-40DE-8FB330D0C26F815E",
-        "trays": "C896174E-593E-4871-A4A57B0D5670C3CB"
+        "bx": "199CA2B0-0AA9-4626-A5852B953CF84F40",
+        "bd": "221251F3-7A68-40EA-BCAAD0217E87FEE7",
+        "cn": "AFE2C955-9A04-47B7-B93468B86254D342",
+        "pk": "983EF617-0DB2-4F7F-A40807C7F6BE4760",
+        "sg": "8B83BAA4-37B8-40DE-8FB330D0C26F815E",
+        "tr": "C896174E-593E-4871-A4A57B0D5670C3CB"
 
     },
     "flavors":{
@@ -192,14 +186,12 @@
         "lemonade_mist": "4CA5B25E-EF2E-4CA8-82FA0714984036CA"
     },
     "event":{
-        "event_id": "626C6C67-9084-407C-A1055C519A193CAE",
-
+     
         "social_event": "82FDFD9F-B642-455E-A1A486927A58A80",
         "tradeshow_event": "AFB97664-064F-47EF-832AB79A85751AA7"
     },
     "company":{
-        "company_id": "7EB122B6-00AF-48C7-AC5078A64F4469AC",
-
+     
         "amazon": "3A5B993-CA49-4BA4-9760DDAE32BA5081",
         "circle_k": "EEA45827-1F73-404D-A1664981B45C6864",
         "ferrari": "B911EAEA-9AFE-47DD-95F229714F8FD0B6",
@@ -236,7 +228,6 @@
         "historic": "5DAD242E-1949-4950-B306126BF9C8FB7A"
     },
     "usage_rights":{
-        "usage_rights_id": "1ED0B844-9771-49FC-B788D4ACB5441206",
 
         "approved_for_external_usage": "B7F4402B-999D-43E5-9AC83A96BE1A5191",
         "internal_use_only" : "854ACF06-76FB-41EB-B34143ECD970F1ED"

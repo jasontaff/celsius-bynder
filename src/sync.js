@@ -4,10 +4,15 @@ var Bynder = require('@bynder/bynder-js-sdk');
 var axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 const ExcelJS = require('exceljs');
 
 //create Bynder session
-const bynder = new Bynder({ baseURL: process.env.BYNDER_API_PATH, permanentToken: process.env.BYNDER_TOKEN});
+const bynder = new Bynder({
+  baseURL: process.env.BYNDER_API_PATH,
+  permanentToken: process.env.BYNDER_TOKEN,
+});
+
 
 //Approved Asset Types
 const imageExtensions = ['.jpg', '.jpeg', '.png'];
@@ -16,19 +21,6 @@ const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.wma', '.aiff
 const graphicExtensions = ['.gif', '.bmp', '.eps', '.svg'];
 const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
 
-//Department Types
-const departmentTypes = ['dep_collegiate', 'dep_creative', 'dep_general_marketing', 'dep_media_digital', 'dep_packaging', 'dep_pr', 'dep_social', 'dep_sports_marketing',
- 'dep_street_teams', 'dep_trade'];
-
-// Asset Categories
-const assetCategories = ['paid', 'organic', 'pos', 'shell_sheets', 'key_acct', 'cans', 'boxes', 'trays', 'packets', 'linear', 
-'digital', 'branding', 'renderings', 'print', 'website', 'portfolio', 'advertising', 'partnership', 'templates', 'sports_and_recreation', 'product', 'organizations'];
-
-// Asset Sub-Categories
-const assetSubCategories = ['stock', 'corporate', 'logo', 'font', 'color', 'brand guidelines', 'brochure', 'template', 'commercial',
- 'motion graphic', 'webinar', 'b_roll', 'music track', 'podcast', 'interview recording', 'infographic', 'icon', 'rendering', 'apparel', 
- 'shoots', 'events', 'displays', 'innovation', 'standard', 'cling', 'strip', 'card', 'banner', 'shelf', 'low_res', 'high_res', 'horizontal', 
- 'vertical', 'style guide', 'form', 'fitness', 'athlete', 'signage', 'wraps', 'barcodes'];
 
 function isHidden(file) {
   return file.charAt(0) === '.';
@@ -85,54 +77,25 @@ function getAssetType(file) {
 // *Required - Get Department Type through file path
 function getDepartmentType(pathName) {
   let department = null;
+  let department_meta_id_value = null;
+  const departmentTypes = Object.keys(configObject.department);
+
   for (const keyword of departmentTypes) {
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
-      department = keyword;
-      department.toLowerCase();
+      department = keyword.toLowerCase();
+      department_meta_id_value = configObject.department[keyword];
       break;
     }
   }
 
   let departmentObj = {
     department_name: department,
-    department_id: configObject.department.department_id,
-    department_meta_id: ''
+    department_id: "7DA6072B-9B6E-47C4-926C877D91C6706B",
+    department_meta_id: null
   };
 
-  switch (department) {
-    case 'dep_collegiate':
-      departmentObj.department_meta_id = configObject.department.collegiate;
-      break;
-    case 'dep_creative':
-      departmentObj.department_meta_id = configObject.department.creative;
-      break;
-    case 'dep_general_marketing':
-      departmentObj.department_meta_id = configObject.department.general_marketing;
-      break;
-    case 'dep_media_digital':
-      departmentObj.department_meta_id = configObject.department.media_digital;
-      break;
-    case 'dep_packaging':
-      departmentObj.department_meta_id = configObject.department.packaging;
-      break;
-    case 'dep_pr':
-      departmentObj.department_meta_id = configObject.department.pr;
-      break;
-    case 'dep_social':
-      departmentObj.department_meta_id = configObject.department.social;
-      break;
-    case 'dep_sports_marketing':
-      departmentObj.department_meta_id = configObject.department.sports_marketing;
-      break;
-    case 'dep_street_teams':
-      departmentObj.department_meta_id = configObject.department.street_teams;
-      break;
-    case 'dep_trade':
-      break;
-    default:
-      departmentObj.department_id = null;
-      departmentObj.department_meta_id = null;
-      break;
+  if (department) {
+    departmentObj.department_meta_id = department_meta_id_value;
   }
 
   return departmentObj;
@@ -141,91 +104,25 @@ function getDepartmentType(pathName) {
 // *Required - Get Asset Category through file path
 function getAssetCategory(pathName){
   let assetCategory = null;
+  let assetCategory_meta_id = null;
+  const assetCategories = Object.keys(configObject.asset_category);
+
   for (const keyword of assetCategories) {
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
-      assetCategory = keyword;
-      assetCategory.toLowerCase();
+      assetCategory = keyword.toLowerCase();
+      assetCategory_meta_id = configObject.asset_category[keyword];
       break;
     }
   }
 
   let assetCategoryObj = {
     asset_category_name: assetCategory,
-    asset_category_id: configObject.asset_category.asset_category_id,
-    asset_category_meta_id: ''
+    asset_category_id: "C7AD8F6F-E3B1-4C49-93975E6766772052",
+    asset_category_meta_id: null
   };
 
-  switch (assetCategory) {
-    case 'paid':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.paid;
-      break;
-    case 'organic':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.organic;
-      break;
-    case 'pos':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.pos;
-      break;
-    case 'shell_sheets':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.shell_sheets;
-      break;
-    case 'key_acct':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.key_acct;
-      break;
-    case 'cans':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.cans;
-      break;
-    case 'boxes':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.boxes;
-      break;
-    case 'trays':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.trays;
-      break;
-    case 'packets':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.packets;
-      break;
-    case 'linear':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.linear;
-      break;
-    case 'digital':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.digital;
-      break;
-    case 'branding':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.branding;
-      break;
-    case 'renderings':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.renderings;
-      break;
-    case 'print':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.print;
-      break;
-    case 'website':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.website;
-      break;
-    case 'portfolio':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.portfolio;
-      break;
-    case 'advertising':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.advertising;
-      break;
-    case 'partnership':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.partnership;
-      break;
-    case 'templates':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.templates;
-    break;
-    case 'sports_and_recreation':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.sports_and_recreation;
-      break;
-    case 'product':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.product;
-      break;
-    case 'organizations':
-      assetCategoryObj.asset_category_meta_id = configObject.asset_category.organizations;
-      break;
-    default:
-      assetCategoryObj.asset_category_id = null;
-      assetCategoryObj.asset_category_meta_id = null;
-      break;
+  if (assetCategory) {
+    assetCategoryObj.asset_category_meta_id = assetCategory_meta_id;
   }
 
   return assetCategoryObj;
@@ -235,145 +132,25 @@ function getAssetCategory(pathName){
 //Get Asset Sub-Category through file path
 function getAssetSubCategory(pathName){
   let assetSubCategory = null;
+  let assetSubCategory_meta_id_value = null;
+  const assetSubCategories = Object.keys(configObject.asset_sub_category);
+
   for (const keyword of assetSubCategories) {
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
-      assetSubCategory = keyword;
-      assetSubCategory.toLowerCase();
+      assetSubCategory = keyword.toLowerCase();
+      assetSubCategory_meta_id_value = configObject.asset_sub_category[keyword];
       break;
     }
   }
 
   let assetSubCategoryObj = {
     asset_sub_category_name: assetSubCategory,
-    asset_sub_category_id: configObject.asset_sub_category.asset_sub_category_id,
-    asset_sub_category_meta_id: ''
+    asset_sub_category_id: "AA31523D-201B-4B61-9B03EE84EE2C1FA8",
+    asset_sub_category_meta_id: null
   };
 
-  switch (assetSubCategory) {
-    case 'apparel':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.apparel;
-      break;
-    case 'athlete':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.athlete;
-      break;
-    case 'b_roll':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.b_roll;
-      break;
-    case 'banner':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.banner;
-      break;
-    case 'barcodes':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.barcodes;
-      break;
-    case 'brand_guidelines':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.brand_guidelines;
-      break;
-    case 'brochure':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.brochure;
-      break;
-    case 'card':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.card;
-      break;
-    case 'cling':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.cling;
-      break;
-    case 'color':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.color;
-      break;
-    case 'commercial':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.commercial;
-      break;
-    case 'corporate':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.corporate;
-      break;
-    case 'displays':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.displays;
-    break;
-    case 'events':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.events;
-    break;
-    case 'fitness':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.fitness;
-    break;
-    case 'font':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.font;
-    break;
-    case 'form':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.form;
-    break;
-    case 'high_res':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.high_res;
-    break;
-    case 'horizontal':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.horizontal;
-    break;
-    case 'icon':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.icon;
-    break;
-    case 'infographic':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.infographic;
-    break;
-    case 'innovation':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.innovation;
-    break;
-    case 'interview_recording':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.interview_recording;
-    break;
-    case 'logo':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.logo;
-    break;
-    case 'low_res':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.low_res;
-    break;
-    case 'motion_graphic':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.motion_graphic;
-    break;
-    case 'music_track':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.music_track;
-    break;
-    case 'podcast':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.podcast;
-    break;
-    case 'rendering':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.rendering;
-    break;
-    case 'shelf':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.shelf;
-    break;
-    case 'shoots':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.shoots;
-    break;
-    case 'signage':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.signage;
-    break;
-    case 'standard':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.standard;
-    break;
-    case 'stock':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.stock;
-    break;
-    case 'strip':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.strip;
-    break;
-    case 'style_guide':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.style_guide;
-    break;
-    case 'template':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.template;
-    break;
-    case 'vertical':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.vertical;
-    break;
-    case 'webinar':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.webinar;
-    break;
-    case 'wraps':
-      assetSubCategoryObj.asset_sub_category_meta_id = configObject.asset_sub_category.wraps;
-    break;
-    default:
-      assetSubCategoryObj.asset_sub_category_id = null;
-      assetSubCategoryObj.asset_sub_category_meta_id = null;
-      break;
+  if (assetSubCategory) {
+    assetSubCategoryObj.asset_sub_category_meta_id = assetSubCategory_meta_id_value;
   }
 
   return assetSubCategoryObj;
@@ -382,12 +159,183 @@ function getAssetSubCategory(pathName){
 
 //Get Product Type through file path
 function getProductType(pathName){
+  let productType = null;
+  let productType_meta_id_value = null;
+  const productTypes = Object.keys(configObject.product);
 
+  for (const keyword of productTypes) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      productType = keyword.toLowerCase();
+      productType_meta_id_value = configObject.product[keyword];
+      break;
+    }
+  }
+  let productTypeObj = {
+    productType_name: productType,
+    productType_id: "5B8FE18F-1552-411E-93F27070ECE3410D",
+    productType_meta_id: null
+  };
 
+  if (productType) {
+    productTypeObj.productType_meta_id = productType_meta_id_value;
+  }
+
+ return productTypeObj;
 
 }
 
-// Recursive function to read all file assets in a directory and sub directories
+//Get Product Name through file path
+function getProductName (pathName){
+  let productName = null;
+  let productName_meta_id_value = null;
+  const productNames = Object.keys(configObject.product_name);
+
+  for (const keyword of productNames) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      productName = keyword.toLowerCase();
+      productName_meta_id_value = configObject.product_name[keyword];
+      break;
+    }
+  }
+  let productNameObj = {
+    productName_name: productName,
+    productName_id: "4B32BAF8-F97C-4BC0-875DEACD47914DEC",
+    productName_meta_id: null
+  };
+
+  if (productName) {
+    productNameObj.productName_meta_id = productName_meta_id_value;
+  }
+
+ return productNameObj;
+
+}
+
+//Get Event Name through file path
+function getEventName(pathName){
+  let eventName = null;
+  let eventName_meta_id_value = null;
+  const eventNames = Object.keys(configObject.event);
+
+  for (const keyword of eventNames) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      eventName = keyword.toLowerCase();
+      eventName_meta_id_value = configObject.event[keyword];
+      break;
+    }
+  }
+
+  let eventNameObj = {
+    event_name: eventName,
+    event_name_id: "626C6C67-9084-407C-A1055C519A193CAE",
+    event_name_meta_id: null
+  };
+
+  if (eventName) {
+    eventNameObj.event_name_meta_id = eventName_meta_id_value;
+  }
+
+  return eventNameObj;
+
+}
+
+//Get Company Name through file path
+function getCompanyName(pathName){
+  let companyName = null;
+  let companyName_meta_id_value = null;
+  const companyNames = Object.keys(configObject.company);
+
+  for (const keyword of companyNames) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      companyName = keyword.toLowerCase();
+      companyName_meta_id_value = configObject.company[keyword];
+      break;
+    }
+  }
+
+  let companyNameObj = {
+    company_name: companyName,
+    company_name_id: "7EB122B6-00AF-48C7-AC5078A64F4469AC",
+    company_name_meta_id: null
+  };
+  if (companyName) {
+    companyNameObj.company_name_meta_id = companyName_meta_id_value;
+  }
+
+  return companyNameObj;
+}
+
+//Get Product Sub Type from file name
+function getProductSubType(fileName){
+  let productSubTypeObj = {};
+  let matchingObj = {};
+
+  for (const [key, value] of Object.entries(configObject.product_sub_type)) {
+    if (fileName.includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+
+  //If there are 1 or more matching keys from in the filename
+  if (Object.keys(matchingObj).length > 0) {
+    productSubTypeObj.productSubType_id = "43A45382-5080-4D89-985CB39557324D9A";
+    productSubTypeObj.productSubType_meta_ids = matchingObj;
+  } 
+  return productSubTypeObj;
+
+}
+
+//Get Usage Rights 
+function getUsageRights(fileName){
+  let usage_rights = "internal";
+  let usage_rights_meta_id_value = configObject.usage_rights.internal_use_only;
+  if (fileName.includes("extl")) {
+    usage_rights = "external";
+    usage_rights_meta_id_value = configObject.usage_rights.approved_for_external_usage
+  }
+
+  let usageRightsObj = {
+    usage_rights_name: usage_rights,
+    usage_rights_id: "1ED0B844-9771-49FC-B788D4ACB5441206",
+    usage_rights_meta_id: usage_rights_meta_id_value
+  };
+
+  return usageRightsObj;
+}
+
+//Get UUID
+function addUUIDToFile(filePath) {
+  try {
+    const fileData = fs.readFileSync(filePath, 'utf8');
+    const uuid = getUUIDFromFileData(fileData);
+
+    if (!uuid) {
+      const updatedFileData = `${fileData}\nUUID: ${uuidv4()}`;
+      fs.writeFileSync(filePath, updatedFileData);
+      console.log('UUID added to the file:', filePath);
+      return getUUIDFromFileData(updatedFileData);
+    } else {
+      console.log('UUID already exists for the file:', filePath);
+      return uuid;
+    }
+  } catch (error) {
+    console.error('Error accessing the file:', error);
+    return null;
+  }
+}
+
+function getUUIDFromFileData(fileData) {
+  const lines = fileData.split('\n');
+  for (const line of lines) {
+    if (line.startsWith('UUID: ')) {
+      return line.slice(6).trim();
+    }
+  }
+  return null;
+}
+
+
+//Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   const files = fs.readdirSync(directory);
 
@@ -407,20 +355,25 @@ function readAssets(directory, assets) {
       if (extension.asset_type_name !== 'other') {
 
 
-        var department = getDepartmentType(file_path_only);   
+        var department =  getDepartmentType(file_path_only);   
         
            if (department.department_name  !== null){
             var assetCategory = getAssetCategory(file_path_only); 
 
             if (assetCategory.asset_category_name  !== null){
                   var file_name_only = getFileNameOnly(filePath);
+                  var usage_rights = getUsageRights(file_name_only);
+                  var uuid =  addUUIDToFile(filePath);
+               
 
                   assets[filePath] = { 
+                    uuid: uuid,
                     file_path_only: file_path_only, 
                     file_name_only: file_name_only,
                     asset_type: extension,
                     department_type: department,
-                    asset_category: assetCategory
+                    asset_category: assetCategory,
+                    usage_right: usage_rights
                   };
 
 
@@ -431,7 +384,30 @@ function readAssets(directory, assets) {
                     assets[filePath].asset_sub_category = assetSubCategory;
                   }
 
-                 // var product = getProductType(file_path_only);
+                  var product = getProductType(file_path_only);
+                  if (product.productType_name !== null) {
+                    assets[filePath].product = product;
+                  }
+
+                  var productName = getProductName(file_path_only);
+                  if (productName.productName_name !== null) {
+                    assets[filePath].product_name = productName;
+                  }
+
+                  var eventName = getEventName(file_path_only);
+                  if (eventName.event_name !== null) {
+                    assets[filePath].event = eventName;
+                  }
+
+                  var company = getCompanyName(file_path_only);
+                  if (company.company_name !== null) {
+                    assets[filePath].company = company;
+                  }
+
+                  var product_sub_type_obj = getProductSubType(file_name_only);
+                  if (Object.keys(product_sub_type_obj).length) {
+                    assets[filePath].product_sub_types = product_sub_type_obj;
+                  }
 
 
 
@@ -456,136 +432,62 @@ function readAssets(directory, assets) {
 
 
 // Function to create a global object with all file assets and their paths
-function getAllAssets(directory) {
+function getAllServerAssets(directory) {
   const assets = {};
   readAssets(directory, assets);
   return assets;
 }
 
 // start:
-const assets = getAllAssets(configObject.defaults.directory);
-console.log(assets);
+const serverAssets = getAllServerAssets(configObject.defaults.directory);
+console.log(serverAssets);
+console.log("-----Finished Getting All Assets on Server-----");
+console.log("-----Start getting all assets from Bynder-----");
+getAllBynderAssets();
 
+async function getAllBynderAssets() {
+  const params = {
+    limit: 1000,
+    page: 1,
+    orderBy: 'dateModified desc'
+  };
 
+  const data = await getAllBynderMediaItems(params);
+  console.log(data);
+  console.log("DONE GETTING BYNDER");
+}
 
+ async function getAllBynderMediaItems(params) {
+  var recursiveGetAssets = (_params, assets) => {
 
+    bynderFileArray = assets;
+    var params = { ..._params }; // gathers the rest of the list of arguments into an array
+    params.page = !params.page ? 1 : params.page;
+    params.limit = !params.limit ? defaultAssetsNumberPerPage : params.limit;
 
+    return bynder.getMediaList(params)
+      .then(data => {
+        bynderFileArray = assets.concat(data);
+        
+        //if date return length is equal to limit, call again. 
+        //if not, it got the rest of assets 
+        if (data && data.length === params.limit) {
+          
+          params.page += 1;
+          return recursiveGetAssets(params, bynderFileArray);
+        }
+        
+        return bynderFileArray;
+      })
+      .catch(error => {
+        return error;
+      });
+  };
+  return recursiveGetAssets(params, []);
+}
 
 
 function getTimestamp(dataString){
   const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }
   return new Date(dataString).toLocaleDateString(undefined, options);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//blank objects for config
-// var defaultObject = new Object();
-
-
-// //populate default values for object
-// for (var key in configObject.defaults) {
-//   var key = key;
-//   var value =  configObject.defaults[key];
-//   defaultObject[key] = value;
-// }
-// let fileCount = 0;
-// const fileExtensions = {};
-
-// // Create a new workbook and worksheet
-// const workbook = new ExcelJS.Workbook();
-
-// // Create a worksheet for the first directory
-// const worksheet1 = workbook.addWorksheet('Directory 1');
-// // Set up the columns for the first worksheet
-// worksheet1.columns = [  { header: 'Last Accessed Date', key: 'accessedDate', width: 25 },  { header: 'File Path', key: 'path', width: 100 }];
-
-// // Freeze the first row and bold the header row for the first worksheet
-// worksheet1.views = [  { state: 'frozen', xSplit: 0, ySplit: 1 }];
-// worksheet1.getRow(1).font = { bold: true };
-
-// // Create a worksheet for the second directory
-// const worksheet2 = workbook.addWorksheet('Directory 2');
-// // Set up the columns for the second worksheet
-// worksheet2.columns = [  { header: 'Last Accessed Date', key: 'accessedDate', width: 25 },  { header: 'File Path', key: 'path', width: 100 }];
-
-// // Freeze the first row and bold the header row for the second worksheet
-// worksheet2.views = [  { state: 'frozen', xSplit: 0, ySplit: 1 }];
-// worksheet2.getRow(1).font = { bold: true };
-
-
-
-// // Call the readDirectory function with the first directory to be processed
-// readDirectory('../../_CREATIVE/International/', worksheet1);
-
-// // Call the readDirectory function with the second directory to be processed
-// readDirectory('../../_CREATIVE/US/', worksheet2);
-
-// // Save the workbook to a file
-// workbook.xlsx.writeFile('file_access_dates.xlsx')
-//   .then(() => {
-//     console.log('Workbook saved successfully!');
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });

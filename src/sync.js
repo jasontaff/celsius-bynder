@@ -22,6 +22,11 @@ const graphicExtensions = ['.gif', '.bmp', '.eps', '.svg'];
 const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
 
 
+function getTimestamp(dataString){
+  const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }
+  return new Date(dataString).toLocaleDateString(undefined, options);
+}
+
 function isHidden(file) {
   return file.charAt(0) === '.';
 }
@@ -316,7 +321,11 @@ function addUUIDToFile(filePath) {
       return getUUIDFromFileData(updatedFileData);
     } else {
       console.log('UUID already exists for the file:', filePath);
-      return uuid;
+      let uuidObj = {
+        uuid_value: uuid,
+        uuid_id: configObject.uuid.uuid_id
+      };
+      return uuidObj;
     }
   } catch (error) {
     console.error('Error accessing the file:', error);
@@ -428,9 +437,6 @@ function readAssets(directory, assets) {
   });
 }
 
-
-
-
 // Function to create a global object with all file assets and their paths
 function getAllServerAssets(directory) {
   const assets = {};
@@ -438,12 +444,7 @@ function getAllServerAssets(directory) {
   return assets;
 }
 
-// start:
-const serverAssets = getAllServerAssets(configObject.defaults.directory);
-console.log(serverAssets);
-console.log("-----Finished Getting All Assets on Server-----");
-console.log("-----Start getting all assets from Bynder-----");
-getAllBynderAssets();
+
 
 async function getAllBynderAssets() {
   const params = {
@@ -454,10 +455,11 @@ async function getAllBynderAssets() {
 
   const data = await getAllBynderMediaItems(params);
   console.log(data);
-  console.log("DONE GETTING BYNDER");
+  console.log("Done getting all Bynder assets");
+  
 }
 
- async function getAllBynderMediaItems(params) {
+async function getAllBynderMediaItems(params) {
   var recursiveGetAssets = (_params, assets) => {
 
     bynderFileArray = assets;
@@ -487,7 +489,9 @@ async function getAllBynderAssets() {
 }
 
 
-function getTimestamp(dataString){
-  const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }
-  return new Date(dataString).toLocaleDateString(undefined, options);
-}
+// START:
+const serverAssets = getAllServerAssets(configObject.defaults.directory);
+console.log(serverAssets);
+console.log("-----Finished getting all assets on Server-----");
+console.log("-----Start getting all assets from Bynder-----");
+getAllBynderAssets();

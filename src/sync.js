@@ -48,37 +48,37 @@ function getAssetType(file) {
     return {
       asset_type_name: 'photo',
       asset_type_id: configObject.asset_type.asset_type_id,
-      asset_type_photo_meta_id: configObject.asset_type.photo
+      asset_type_meta_id: configObject.asset_type.photo
     };
   } else if (videoExtensions.includes(extension)) {
     return {
       asset_type_name: 'video',
       asset_type_id: configObject.asset_type.asset_type_id,
-      asset_type_photo_meta_id: configObject.asset_type.video
+      asset_type_meta_id: configObject.asset_type.video
     };
   } else if (audioExtensions.includes(extension)) {
     return {
       asset_type_name: 'audio',
       asset_type_id: configObject.asset_type.asset_type_id,
-      asset_type_photo_meta_id: configObject.asset_type.audio
+      asset_type_meta_id: configObject.asset_type.audio
     };;
   } else if (graphicExtensions.includes(extension)) {
     return {
       asset_type_name: 'graphic',
       asset_type_id: configObject.asset_type.asset_type_id,
-      asset_type_photo_meta_id: configObject.asset_type.graphic
+      asset_type_meta_id: configObject.asset_type.graphic
     };
   }else if (fileExtensions.includes(extension)) {
     return {
       asset_type_name: 'file',
       asset_type_id: configObject.asset_type.asset_type_id,
-      asset_type_photo_meta_id: configObject.asset_type.file
+      asset_type_meta_id: configObject.asset_type.file
     };
   } else {
     return {
       asset_type_name: 'other',
       asset_type_id: '',
-      asset_type_photo_meta_id: ''
+      asset_type_meta_id: ''
     };
   }
 }
@@ -376,13 +376,22 @@ function readAssets(directory, assets) {
             if (assetCategory.asset_category_name  !== null){
                   var file_name_only = getFileNameOnly(filePath);
                   var usage_rights = getUsageRights(file_name_only);
+                  
                   var uuid =  addUUIDToFile(filePath);
+
+                  let orgCategoryobj = {
+                    org_category_name: "celsius",
+                    org_category_id: configObject.org_category.org_category_id,
+                    org_category_meta_id: configObject.org_category.celsius
+                  };
                
 
                   assets[filePath] = { 
+                    full_path: filePath,
                     uuid: uuid,
                     file_path_only: file_path_only, 
                     file_name_only: file_name_only,
+                    org_category: orgCategoryobj,
                     asset_type: extension,
                     department_type: department,
                     asset_category: assetCategory,
@@ -521,48 +530,91 @@ function getAllServerAssets(directory) {
 //   }
 // }
 
+
+async function uploadFileToBynder(asset) {
+
+  var full_path = asset.full_path;
+  var file_name_only = asset.file_name_only;
+
+  var uuid_value = asset.uuid.uuid_value;
+
+  var stats = fs.statSync(asset.full_path);
+       bynder.uploadFile({
+           filename: asset.file_name_only,
+           body: fs.createReadStream(asset.full_path),  
+           length: stats.size,
+           data: { 
+               brandId: "94A5CF49-3FAB-4801-A9A50E2C2D072798",
+               name: file_name_only,    
+               property_Org_Category: '',  'metaproperty.3E4D131B-61D1-4269-9A8C64352F962010': asset.org_category.org_category_meta_id,
+               property_Asset_Type: '',  'metaproperty.8961A884-9F3A-4406-AEA266B0311932FF': asset.asset_type.asset_type_meta_id,
+               property_Department: '',  'metaproperty.7DA6072B-9B6E-47C4-926C877D91C6706B': asset.department_type.department_meta_id,
+               property_Asset_Category: '',  'metaproperty.C7AD8F6F-E3B1-4C49-93975E6766772052': asset.asset_category.asset_category_meta_id,
+               property_Usage_Rights: '',  'metaproperty.1ED0B844-9771-49FC-B788D4ACB5441206': asset.usage_right.usage_rights_meta_id,
+               property_UUID:       '',       'metaproperty.14D615DC-D1A3-4CCA-A91669359BABAC96': asset.uuid.uuid_value
+                                                              
+           },
+
+           }).then((data) => {
+             if(data.success == true){
+                 console.log("Successly uploaded asset: " + full_path + " to Bynder!" );
+             }
+      
+           }).catch((error) => {
+               console.log("FAILED TO UPLOAD: " + full_path + " to Bynder!");
+               console.log(error);
+           });
+}
+
 async function getBynderAssetByUUID(serverAssets) {
   var apiKey = process.env.BYNDER_TOKEN;
   var bynderURL = process.env.BYNDER_API_PATH;
-  
-  var apiUrl = `${bynderURL}v4/media/?property_UUID=12345`;
 
   try {
-    var response = await axios.get(apiUrl, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      }
+    var results = [];
+    for (var [key, asset]  of Object.entries(serverAssets)) {
      
-    });
+        var propertyUUID = asset.uuid.uuid_value;
+    
+        var apiUrl = `${bynderURL}v4/media/?property_UUID=${propertyUUID}`;
 
-    var data = response.data;
+        var response = await axios.get(apiUrl, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          }
+        });
+   
 
-    if (data && data.length > 0) {
-      return data // Return data
-    } else {
-      return null; // Return null if no matching asset is found
+        if (response.data && response.data.length > 0) {
+          console.log("BYNDER UUID: " + propertyUUID + " FOUND, START COMPARE");
+        }else{
+          console.log("Upload to bynder");
+          await uploadFileToBynder(asset); // Call the function to upload file to Bynder
+        
+        }
+      
     }
+
   } catch (error) {
     console.error('Error retrieving asset:', error.response ? error.response.data : error.message);
     return null; // Return null in case of any error
   }
-
 }
 
 // START:
 serverAssets = getAllServerAssets(configObject.defaults.directory);
-console.log(serverAssets);
+//console.log(serverAssets);
 console.log("-----Finished getting all assets on Server-----");
 console.log("-----Find Bynder Asset by Server Asset UUID-----");
 getBynderAssetByUUID(serverAssets)
 .then(asset => {
   if (asset) {
-    console.log('Asset found:', asset);
+   // console.log('Asset found:', asset);
   } else {
-    console.log('No asset found for the specified property UUID in Bynder.');
-    console.log('Upload New Asset to Bynder...');
+    // console.log('No asset found for the specified property UUID in Bynder.');
+    // console.log('Upload New Asset to Bynder...');
   }
 })
 .catch(error => {

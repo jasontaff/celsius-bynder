@@ -384,6 +384,7 @@ function readAssets(directory, assets) {
                     assets[filePath].company = company;
                   }
 
+                  //GET MULTIPLE OPTIONAL METAPROPERITES
                   var product_sub_type_obj = getProductSubType(file_name_only);
                   if (Object.keys(product_sub_type_obj).length) {
                     assets[filePath].product_sub_types = product_sub_type_obj;
@@ -417,37 +418,85 @@ function getAllServerAssets(directory) {
 
 async function uploadFileToBynder(asset) {
   return new Promise((resolve, reject) => {
-  var full_path = asset.full_path;
-  var file_name_only = asset.file_name_only;
+    var full_path = asset.full_path;
+    var file_name_only = asset.file_name_only;
 
-  var stats = fs.statSync(asset.full_path);
-       bynder.uploadFile({
-           filename: asset.file_name_only,
-           body: fs.createReadStream(asset.full_path),  
-           length: stats.size,
-           data: { 
-               brandId: "94A5CF49-3FAB-4801-A9A50E2C2D072798",
-               name: file_name_only,    
-               property_Org_Category: '',  'metaproperty.3E4D131B-61D1-4269-9A8C64352F962010': "DEC4407F-4384-48F7-9645FC3DD18C2260",
-               property_Asset_Type: '',  'metaproperty.8961A884-9F3A-4406-AEA266B0311932FF': asset.asset_type.asset_type_meta_id,
-               property_Department: '',  'metaproperty.7DA6072B-9B6E-47C4-926C877D91C6706B': asset.department_type.department_meta_id,
-               property_Asset_Category: '',  'metaproperty.C7AD8F6F-E3B1-4C49-93975E6766772052': asset.asset_category.asset_category_meta_id,
-               property_Usage_Rights: '',  'metaproperty.1ED0B844-9771-49FC-B788D4ACB5441206': asset.usage_right.usage_rights_meta_id                                     
-           },
+    var stats = fs.statSync(asset.full_path);
 
-           }).then((data) => {
-              if (data.success == true) {
-                console.log("Successfully uploaded asset: " + full_path + " to Bynder!");
-                resolve(); // Resolve the promise when upload is successful
-              } else {
-                reject("Failed to upload asset: " + full_path + " to Bynder!");
-              }
+    const requestData = {
+      filename: asset.file_name_only,
+      body: fs.createReadStream(asset.full_path),
+      length: stats.size,
+      data: {
+        brandId: "94A5CF49-3FAB-4801-A9A50E2C2D072798",
+        name: file_name_only,
+        property_Org_Category: '',
+        'metaproperty.3E4D131B-61D1-4269-9A8C64352F962010': "DEC4407F-4384-48F7-9645FC3DD18C2260",
+        property_Asset_Type: '',
+        'metaproperty.8961A884-9F3A-4406-AEA266B0311932FF': asset.asset_type.asset_type_meta_id,
+        property_Department: '',
+        'metaproperty.7DA6072B-9B6E-47C4-926C877D91C6706B': asset.department_type.department_meta_id,
+        property_Asset_Category: '',
+        'metaproperty.C7AD8F6F-E3B1-4C49-93975E6766772052': asset.asset_category.asset_category_meta_id,
+        property_Usage_Rights: '',
+        'metaproperty.1ED0B844-9771-49FC-B788D4ACB5441206': asset.usage_right.usage_rights_meta_id,
       
-           })
-           .catch((error) => {
-            console.log(error);
-            reject(error);
-        });
+      },
+    };
+
+      // Check if asset_sub_category is present
+      if ('asset_sub_category' in asset) {
+        requestData.data.property_Asset_Sub_Category = '';
+        requestData.data['metaproperty.AA31523D-201B-4B61-9B03EE84EE2C1FA8'] = asset.asset_sub_category.asset_sub_category_meta_id;
+      }
+
+      // Check if product is present
+      if ('product' in asset) {
+        requestData.data.property_Product = '';
+        requestData.data['metaproperty.5B8FE18F-1552-411E-93F27070ECE3410D'] = asset.product.productType_meta_id;
+      }
+
+      //check if product Name is present
+      if ('product_name' in asset) {
+        requestData.data.property_Product_Name = '';
+        requestData.data['metaproperty.4B32BAF8-F97C-4BC0-875DEACD47914DEC'] = asset.product_name.productName_meta_id;
+      }
+
+       //check if Event Name is present
+       if ('event' in asset) {
+        requestData.data.property_Event = '';
+        requestData.data['metaproperty.626C6C67-9084-407C-A1055C519A193CAE'] = asset.event.event_name_meta_id;
+      }
+
+      //check if Company is present
+      if ('company' in asset) {
+      requestData.data.property_Compnay = '';
+      requestData.data['metaproperty.7EB122B6-00AF-48C7-AC5078A64F4469AC'] = asset.company.company_name_meta_id;
+      }
+
+      // Check if Product Sub Types are present
+      if ('product_sub_types' in asset) {
+        var productSubTypeValues = Object.values(asset.product_sub_types.productSubType_meta_ids);
+        requestData.data.property_Product_Sub_Type = '';
+        requestData.data['metaproperty.43A45382-5080-4D89-985CB39557324D9A'] = productSubTypeValues;
+      }
+
+
+    console.log(requestData.data);
+  
+    bynder.uploadFile(requestData)
+      .then((data) => {
+        if (data.success == true) {
+          console.log("Successfully uploaded asset: " + full_path + " to Bynder!");
+          resolve(); // Resolve the promise when upload is successful
+        } else {
+          reject("Failed to upload asset: " + full_path + " to Bynder!");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(error);
+      });
   });
 }
 

@@ -452,16 +452,25 @@ async function uploadFileToBynder(asset) {
 }
 
 async function getAllBynderAssets() {
-  const params = {
-    limit: 1000,
-    page: 1,
-    orderBy: 'dateModified desc'
-  };
+  return new Promise(async (resolve, reject) => {
+    try {
+      const params = {
+        limit: 1000,
+        page: 1,
+        orderBy: 'dateModified desc'
+      };
 
-  bynderAssets = await getAllBynderMediaItems(params);
-  console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
-  await loopThroughAllAssets(serverAssets, bynderAssets);
-  console.log("done");
+      bynderAssets = await getAllBynderMediaItems(params);
+      console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
+      
+      await loopThroughAllAssets(serverAssets, bynderAssets);
+      console.log("---Check for unwanted assets in Bynder that are not on the server---");
+      await checkBynderUnwantedFiles(serverAssets, bynderAssets);
+      resolve(); // Resolve the Promise after the loop is complete
+    } catch (error) {
+      reject(error);
+    }
+  });
 }
 
 async function getAllBynderMediaItems(params) {
@@ -551,7 +560,6 @@ var isModified = isFileModifiedAfterBynderCreation(serverAsset.modified_date, by
 }
 
 async function deleteBynderAsset(bynderAsset) {
-  console.log( bynderAsset.id);
   return new Promise((resolve, reject) => {
     bynder.deleteMedia({
       id: bynderAsset.id,
@@ -568,13 +576,50 @@ async function deleteBynderAsset(bynderAsset) {
   });
 }
 
+async function checkBynderUnwantedFiles(serverAssets, bynderAssets){
+ 
+  for (var bynderFilePath in bynderAssets) {
+        var bynderAsset = bynderAssets[bynderFilePath];
+        var bynderAssetName = bynderAsset.name;
+        var foundInServer = false;
+
+        for (var filePath in serverAssets) {
+              var serverAsset = serverAssets[filePath];
+              var serverAssetFileName = serverAsset.file_name_only;
+              
+              if (bynderAssetName === serverAssetFileName) {
+                foundInServer = true;
+                break; // Break the loop when a match is found
+              }
+            }
+
+        if(!foundInServer){
+          try {
+            console.log("Bynder asset: " + bynderAssetName + " not found on the server...deleteing from bynder" )
+            await deleteBynderAsset(bynderAsset);
+            
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+ 
+  }
+
 
 // START:
 console.log("-----Get All Sever Assets-----");
 serverAssets = getAllServerAssets(configObject.defaults.directory);
+console.log(serverAssets);
 console.log("-----Finished getting all assets on Server----- Server total assets = " + Object.keys(serverAssets).length);
 console.log("-----Get All Bynder Assets-----");
-getAllBynderAssets();
+getAllBynderAssets()
+  .then(() => {
+    console.log("---SYNC.JS DONE---");
+  })
+  .catch((error) => {
+    console.error("An error occurred:", error);
+  });
 
 
 

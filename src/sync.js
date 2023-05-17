@@ -32,8 +32,6 @@ function isFileModifiedAfterBynderCreation(severModifiedDate, bynderCreationDate
   return serverModifiedTimestamp > bynderCreationTimestamp;
 }
 
-
-
 function isHidden(file) {
   return file.charAt(0) === '.';
 }
@@ -463,7 +461,7 @@ async function getAllBynderAssets() {
   bynderAssets = await getAllBynderMediaItems(params);
   console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
   await loopThroughAllAssets(serverAssets, bynderAssets);
-
+  console.log("done");
 }
 
 async function getAllBynderMediaItems(params) {
@@ -496,7 +494,7 @@ async function getAllBynderMediaItems(params) {
 }
 
 async function loopThroughAllAssets(serverAssets, bynderAssets) {
-  console.log("Looping through all assets of Server & Bynder");
+  console.log("Looping through all assets on the Server & Bynder");
   
   for (var filePath in serverAssets) {
     var serverAsset = serverAssets[filePath];
@@ -517,6 +515,7 @@ async function loopThroughAllAssets(serverAssets, bynderAssets) {
       try {
         console.log('Match found, comparing the assets ' +  serverAssetFileName);
         await compareAsset(serverAsset, bynderAsset);
+       
       } catch (error) {
      
         console.log(error);
@@ -538,9 +537,10 @@ async function compareAsset(serverAsset, bynderAsset){
 
 var isModified = isFileModifiedAfterBynderCreation(serverAsset.modified_date, bynderAsset.dateCreated);
   try {
-    if(isModified){
+    if(isModified){//true
       console.log('File modified after Bynder creation:', isModified, '.  Delete Bynder asset ');
-     // await deleteBynderAsset(bynderAsset);
+      await deleteBynderAsset(bynderAsset);
+      await uploadFileToBynder(serverAsset);
     }else{
       console.log('File modified after Bynder creation:', isModified, '.  Ignoring...' );
     }
@@ -548,6 +548,24 @@ var isModified = isFileModifiedAfterBynderCreation(serverAsset.modified_date, by
     console.log(error);
   }
 
+}
+
+async function deleteBynderAsset(bynderAsset) {
+  console.log( bynderAsset.id);
+  return new Promise((resolve, reject) => {
+    bynder.deleteMedia({
+      id: bynderAsset.id,
+    })
+      .then((data) => {
+        console.log("Successfully deleted Bynder asset: " + bynderAsset.name);
+        resolve();
+      })
+      .catch((error) => {
+        console.error("FAILED TO DELETE BYNDER ASSET: " + bynderAsset.name);
+        console.log(error.response.data);
+        reject(error);
+      });
+  });
 }
 
 
@@ -560,57 +578,9 @@ getAllBynderAssets();
 
 
 
-// getBynderAssetByName(serverAssets)
-// .then(asset => {
-//   if (asset) {
-//    // console.log('Asset found:', asset);
-//   } else {
-//     // console.log('Upload New Asset to Bynder...');
-//   }
-// })
-// .catch(error => {
-//   console.error('Error:', error);
-// });
 
 
-// async function getBynderAssetByName(serverAssets) {
-//   var apiKey = process.env.BYNDER_TOKEN;
-//   var bynderURL = process.env.BYNDER_API_PATH;
 
-//   try {
-//     var results = [];
-//     for (var [key, asset]  of Object.entries(serverAssets)) {
-//       var encodedFileName = encodeURIComponent(asset.file_name_only);
-//       console.log(encodedFileName);
-//         var apiUrl = `${bynderURL}v4/media/?filename=${encodedFileName}`;
-
-//         var response = await axios.get(apiUrl, {
-//           headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json',
-//             'Authorization': `Bearer ${apiKey}`
-//           }
-//         });
-//         console.log(response.data);
-//         if (response.data && response.data.length > 0) {
-//           console.log("BYNDER NAME: " + asset.file_name_only + " FOUND, START COMPARE");
-//         } else {
-//           try {
-//             console.log("File not found in Bynder, uploading: " + asset.full_path + " to Bynder");
-//             await uploadFileToBynder(asset); // Call the function to upload file to Bynder
-//           } catch (error) {
-         
-//             console.log(error);
-//           }
-//         }
-//       }
-  
-//       return results; // Return the results after the loop finishes
-//   } catch (error) {
-//     console.error('Error retrieving asset:', error.response ? error.response.data : error.message);
-//     return null; // Return null in case of any error
-//   }
-// }
 
 
 

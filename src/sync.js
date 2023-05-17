@@ -5,7 +5,6 @@ var axios = require('axios');
 var request = require('request');
 const fs = require('fs');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
 const ExcelJS = require('exceljs');
 
 //create Bynder session
@@ -26,10 +25,14 @@ const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
 var serverAssets = "";
 var bynderAssets = "";
 
-function getTimestamp(dataString){
-  const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }
-  return new Date(dataString).toLocaleDateString(undefined, options);
+function isFileModifiedAfterBynderCreation(severModifiedDate, bynderCreationDate) {
+  const serverModifiedTimestamp = new Date(severModifiedDate).getTime();
+  const bynderCreationTimestamp = new Date(bynderCreationDate).getTime();
+
+  return serverModifiedTimestamp > bynderCreationTimestamp;
 }
+
+
 
 function isHidden(file) {
   return file.charAt(0) === '.';
@@ -312,42 +315,6 @@ function getUsageRights(fileName){
   return usageRightsObj;
 }
 
-//Get UUID
-function addUUIDToFile(filePath) {
-  try {
-    const fileData = fs.readFileSync(filePath, 'utf8');
-    const uuid = getUUIDFromFileData(fileData);
-
-    if (!uuid) {
-      const updatedFileData = `${fileData}\nUUID: ${uuidv4()}`;
-      fs.writeFileSync(filePath, updatedFileData);
-      console.log('UUID added to the file:', filePath);
-      return getUUIDFromFileData(updatedFileData);
-    } else {
-      console.log('UUID already exists for the file:', filePath);
-      let uuidObj = {
-        uuid_value: uuid,
-        uuid_id: configObject.uuid.uuid_id
-      };
-      return uuidObj;
-    }
-  } catch (error) {
-    console.error('Error accessing the file:', error);
-    return null;
-  }
-}
-
-function getUUIDFromFileData(fileData) {
-  const lines = fileData.split('\n');
-  for (const line of lines) {
-    if (line.startsWith('UUID: ')) {
-      return line.slice(6).trim();
-    }
-  }
-  return null;
-}
-
-
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   const files = fs.readdirSync(directory);
@@ -363,10 +330,12 @@ function readAssets(directory, assets) {
     if (fs.statSync(filePath).isDirectory()) {
        readAssets(filePath, assets); // Recursive call for subdirectories
     } else if (!isHidden(file)) {
+
+     
+   
       var extension = getAssetType(file);
      
       if (extension.asset_type_name !== 'other') {
-
 
         var department =  getDepartmentType(file_path_only);   
         
@@ -376,22 +345,13 @@ function readAssets(directory, assets) {
             if (assetCategory.asset_category_name  !== null){
                   var file_name_only = getFileNameOnly(filePath);
                   var usage_rights = getUsageRights(file_name_only);
-                  
-                  var uuid =  addUUIDToFile(filePath);
-
-                  let orgCategoryobj = {
-                    org_category_name: "celsius",
-                    org_category_id: configObject.org_category.org_category_id,
-                    org_category_meta_id: configObject.org_category.celsius
-                  };
-               
+                  var file_stats = fs.statSync(filePath);
 
                   assets[filePath] = { 
                     full_path: filePath,
-                    uuid: uuid,
                     file_path_only: file_path_only, 
                     file_name_only: file_name_only,
-                    org_category: orgCategoryobj,
+                    modified_date: file_stats.mtime,
                     asset_type: extension,
                     department_type: department,
                     asset_category: assetCategory,
@@ -457,86 +417,10 @@ function getAllServerAssets(directory) {
   return assets;
 }
 
-
-
-// async function getAllBynderAssets() {
-//   const params = {
-//     property_UUID: '92935dd9-ae76-42c6-a450-44851b834f20',
-//     limit: 1000,
-//     page: 1,
-//     orderBy: 'dateModified desc'
-//   };
-
-//   bynderAssets = await getAllBynderMediaItems(params);
-
-//   console.log(bynderAssets);
-//   console.log("Done getting all Bynder assets");
-
-//  // compareAssets(serverAssets, bynderAssets);
-//   console.log("Done comparing");
-  
-  
-// }
-
-// async function getAllBynderMediaItems(params) {
-//   var recursiveGetAssets = (_params, assets) => {
-
-//     bynderFileArray = assets;
-//     var params = { ..._params }; // gathers the rest of the list of arguments into an array
-//     params.page = !params.page ? 1 : params.page;
-//     params.limit = !params.limit ? defaultAssetsNumberPerPage : params.limit;
-
-//     return bynder.getMediaList(params)
-//       .then(data => {
-//         bynderFileArray = assets.concat(data);
-        
-//         //if date return length is equal to limit, call again. 
-//         //if not, it got the rest of assets 
-//         if (data && data.length === params.limit) {
-          
-//           params.page += 1;
-//           return recursiveGetAssets(params, bynderFileArray);
-//         }
-        
-//         return bynderFileArray;
-//       })
-//       .catch(error => {
-//         return error;
-//       });
-//   };
-//   return recursiveGetAssets(params, []);
-// }
-
-// function compareAssets(serverAssets, bynderAssets) {
-//   for (const filePath in serverAssets) {
-//     const serverAsset = serverAssets[filePath];
-//     const serverUUID = serverAsset.uuid.uuid_value;
-   
-//     for (const bynderFilePath in bynderAssets) {
-//       const bynderAsset = bynderAssets[bynderFilePath];
-      
-//       if (bynderAsset.hasOwnProperty('property_uuid')) {
-//         const bynderUUID = bynderAsset.property_uuid;
-
-//         if (serverUUID === bynderUUID) {
-//           console.log(`UUID match found: ${serverUUID}`);
-//           break; // Break out of the loop if a match is found
-//         }else{
-//           console.log(`UUID NOT FOUND: ${serverUUID}`);
-
-//         }
-//       }
-//     }
-//   }
-// }
-
-
 async function uploadFileToBynder(asset) {
-
+  return new Promise((resolve, reject) => {
   var full_path = asset.full_path;
   var file_name_only = asset.file_name_only;
-
-  var uuid_value = asset.uuid.uuid_value;
 
   var stats = fs.statSync(asset.full_path);
        bynder.uploadFile({
@@ -546,80 +430,187 @@ async function uploadFileToBynder(asset) {
            data: { 
                brandId: "94A5CF49-3FAB-4801-A9A50E2C2D072798",
                name: file_name_only,    
-               property_Org_Category: '',  'metaproperty.3E4D131B-61D1-4269-9A8C64352F962010': asset.org_category.org_category_meta_id,
+               property_Org_Category: '',  'metaproperty.3E4D131B-61D1-4269-9A8C64352F962010': "DEC4407F-4384-48F7-9645FC3DD18C2260",
                property_Asset_Type: '',  'metaproperty.8961A884-9F3A-4406-AEA266B0311932FF': asset.asset_type.asset_type_meta_id,
                property_Department: '',  'metaproperty.7DA6072B-9B6E-47C4-926C877D91C6706B': asset.department_type.department_meta_id,
                property_Asset_Category: '',  'metaproperty.C7AD8F6F-E3B1-4C49-93975E6766772052': asset.asset_category.asset_category_meta_id,
-               property_Usage_Rights: '',  'metaproperty.1ED0B844-9771-49FC-B788D4ACB5441206': asset.usage_right.usage_rights_meta_id,
-               property_UUID:       '',       'metaproperty.14D615DC-D1A3-4CCA-A91669359BABAC96': asset.uuid.uuid_value
-                                                              
+               property_Usage_Rights: '',  'metaproperty.1ED0B844-9771-49FC-B788D4ACB5441206': asset.usage_right.usage_rights_meta_id                                     
            },
 
            }).then((data) => {
-             if(data.success == true){
-                 console.log("Successly uploaded asset: " + full_path + " to Bynder!" );
-             }
+              if (data.success == true) {
+                console.log("Successfully uploaded asset: " + full_path + " to Bynder!");
+                resolve(); // Resolve the promise when upload is successful
+              } else {
+                reject("Failed to upload asset: " + full_path + " to Bynder!");
+              }
       
-           }).catch((error) => {
-               console.log("FAILED TO UPLOAD: " + full_path + " to Bynder!");
-               console.log(error);
-           });
+           })
+           .catch((error) => {
+            console.log(error);
+            reject(error);
+        });
+  });
 }
 
-async function getBynderAssetByUUID(serverAssets) {
-  var apiKey = process.env.BYNDER_TOKEN;
-  var bynderURL = process.env.BYNDER_API_PATH;
+async function getAllBynderAssets() {
+  const params = {
+    limit: 1000,
+    page: 1,
+    orderBy: 'dateModified desc'
+  };
 
-  try {
-    var results = [];
-    for (var [key, asset]  of Object.entries(serverAssets)) {
-     
-        var propertyUUID = asset.uuid.uuid_value;
-    
-        var apiUrl = `${bynderURL}v4/media/?property_UUID=${propertyUUID}`;
+  bynderAssets = await getAllBynderMediaItems(params);
+  console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
+  await loopThroughAllAssets(serverAssets, bynderAssets);
 
-        var response = await axios.get(apiUrl, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          }
-        });
-   
+}
 
-        if (response.data && response.data.length > 0) {
-          console.log("BYNDER UUID: " + propertyUUID + " FOUND, START COMPARE");
-        }else{
-          console.log("Upload to bynder");
-          await uploadFileToBynder(asset); // Call the function to upload file to Bynder
+async function getAllBynderMediaItems(params) {
+  var recursiveGetAssets = (_params, assets) => {
+
+    bynderFileArray = assets;
+    var params = { ..._params }; // gathers the rest of the list of arguments into an array
+    params.page = !params.page ? 1 : params.page;
+    params.limit = !params.limit ? defaultAssetsNumberPerPage : params.limit;
+
+    return bynder.getMediaList(params)
+      .then(data => {
+        bynderFileArray = assets.concat(data);
         
+        //if date return length is equal to limit, call again. 
+        //if not, it got the rest of assets 
+        if (data && data.length === params.limit) {
+          
+          params.page += 1;
+          return recursiveGetAssets(params, bynderFileArray);
         }
+        
+        return bynderFileArray;
+      })
+      .catch(error => {
+        return error;
+      });
+  };
+  return recursiveGetAssets(params, []);
+}
+
+async function loopThroughAllAssets(serverAssets, bynderAssets) {
+  console.log("Looping through all assets of Server & Bynder");
+  
+  for (var filePath in serverAssets) {
+    var serverAsset = serverAssets[filePath];
+    var serverAssetFileName = serverAsset.file_name_only;
+    var foundInBynder = false;
+
+    for (var bynderFilePath in bynderAssets) {
+      var bynderAsset = bynderAssets[bynderFilePath];
+      var bynderAssetName = bynderAsset.name;
       
+      if (bynderAssetName === serverAssetFileName) {
+        foundInBynder = true;
+        break; // Break the loop when a match is found
+      }
     }
 
-  } catch (error) {
-    console.error('Error retrieving asset:', error.response ? error.response.data : error.message);
-    return null; // Return null in case of any error
+    if(foundInBynder){
+      try {
+        console.log('Match found, comparing the assets ' +  serverAssetFileName);
+        await compareAsset(serverAsset, bynderAsset);
+      } catch (error) {
+     
+        console.log(error);
+      }
+    }else{
+      try {
+        console.log("File not found in Bynder, uploading: " + serverAsset.full_path + " to Bynder");
+        await uploadFileToBynder(serverAsset); // Call the function to upload file to Bynder
+      } catch (error) {
+     
+        console.log(error);
+      }
+
+    }
   }
 }
 
-// START:
-serverAssets = getAllServerAssets(configObject.defaults.directory);
-//console.log(serverAssets);
-console.log("-----Finished getting all assets on Server-----");
-console.log("-----Find Bynder Asset by Server Asset UUID-----");
-getBynderAssetByUUID(serverAssets)
-.then(asset => {
-  if (asset) {
-   // console.log('Asset found:', asset);
-  } else {
-    // console.log('No asset found for the specified property UUID in Bynder.');
-    // console.log('Upload New Asset to Bynder...');
+async function compareAsset(serverAsset, bynderAsset){
+
+var isModified = isFileModifiedAfterBynderCreation(serverAsset.modified_date, bynderAsset.dateCreated);
+  try {
+    if(isModified){
+      console.log('File modified after Bynder creation:', isModified, '.  Delete Bynder asset ');
+     // await deleteBynderAsset(bynderAsset);
+    }else{
+      console.log('File modified after Bynder creation:', isModified, '.  Ignoring...' );
+    }
+  } catch (error) {
+    console.log(error);
   }
-})
-.catch(error => {
-  console.error('Error:', error);
-});
-//console.log("-----Start getting all assets from Bynder-----");
-//getAllBynderAssets();
+
+}
+
+
+// START:
+console.log("-----Get All Sever Assets-----");
+serverAssets = getAllServerAssets(configObject.defaults.directory);
+console.log("-----Finished getting all assets on Server----- Server total assets = " + Object.keys(serverAssets).length);
+console.log("-----Get All Bynder Assets-----");
+getAllBynderAssets();
+
+
+
+// getBynderAssetByName(serverAssets)
+// .then(asset => {
+//   if (asset) {
+//    // console.log('Asset found:', asset);
+//   } else {
+//     // console.log('Upload New Asset to Bynder...');
+//   }
+// })
+// .catch(error => {
+//   console.error('Error:', error);
+// });
+
+
+// async function getBynderAssetByName(serverAssets) {
+//   var apiKey = process.env.BYNDER_TOKEN;
+//   var bynderURL = process.env.BYNDER_API_PATH;
+
+//   try {
+//     var results = [];
+//     for (var [key, asset]  of Object.entries(serverAssets)) {
+//       var encodedFileName = encodeURIComponent(asset.file_name_only);
+//       console.log(encodedFileName);
+//         var apiUrl = `${bynderURL}v4/media/?filename=${encodedFileName}`;
+
+//         var response = await axios.get(apiUrl, {
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//             'Authorization': `Bearer ${apiKey}`
+//           }
+//         });
+//         console.log(response.data);
+//         if (response.data && response.data.length > 0) {
+//           console.log("BYNDER NAME: " + asset.file_name_only + " FOUND, START COMPARE");
+//         } else {
+//           try {
+//             console.log("File not found in Bynder, uploading: " + asset.full_path + " to Bynder");
+//             await uploadFileToBynder(asset); // Call the function to upload file to Bynder
+//           } catch (error) {
+         
+//             console.log(error);
+//           }
+//         }
+//       }
+  
+//       return results; // Return the results after the loop finishes
+//   } catch (error) {
+//     console.error('Error retrieving asset:', error.response ? error.response.data : error.message);
+//     return null; // Return null in case of any error
+//   }
+// }
+
+
 

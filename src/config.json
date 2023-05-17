@@ -6,7 +6,6 @@
 	},
     "org_category": {
         "org_category_id": "3E4D131B-61D1-4269-9A8C64352F962010",
-
         "celsius": "DEC4407F-4384-48F7-9645FC3DD18C2260"
     },
     "asset_type":{
@@ -231,9 +230,6 @@
 
         "approved_for_external_usage": "B7F4402B-999D-43E5-9AC83A96BE1A5191",
         "internal_use_only" : "854ACF06-76FB-41EB-B34143ECD970F1ED"
-    },
-    "uuid":{
-        "uuid_id": "14D615DC-D1A3-4CCA-A91669359BABAC96"
     }
-  
+
 }

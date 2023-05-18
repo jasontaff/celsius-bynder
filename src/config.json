@@ -197,7 +197,6 @@
         "pepsico": "138FFCF0-EE53-4C9E-B98EC4D312317F91"
     },
     "country":{
-         "country_id": "697F646C-9594-4A3A-92716AD65D29CE90",
 
          "cty-glb":  "F55C2CC3-719A-497A-A89A77210A770C74",
          "cty-fin": "1899F660-70F8-4D37-96B41EC5CFE09585",
@@ -216,8 +215,7 @@
          "cty-usa": "10C1B4CA-840C-426A-81E84DC75E3C9BC3"
     },
     "year": {
-        "year_id": "8582BD37-9C90-4447-B2D6DC9F75C42131",
-        
+    
         "2020": "66076352-7E7A-4E61-8F6F95BAA1F3DDD8",
         "2021": "B2403E6C-C3E1-4B21-BBFA0C72E0F40176",
         "2022": "843B1BF4-BCA3-4EF0-8BCA3A4C3A321D51",

@@ -330,9 +330,44 @@ function getFlavors(fileName){
       flavorsObj.flavors_meta_ids = matchingObj;
     } 
     return flavorsObj;
-
 }
 
+//Get Countries
+function getCountries(fileName){
+  let countryObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.country)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      countryObj.country_id = "697F646C-9594-4A3A-92716AD65D29CE90";
+      countryObj.country_meta_ids = matchingObj;
+    } 
+    return countryObj;
+}
+
+//Get Year
+function getYear(fileName){
+  let yearObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.year)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      yearObj.year_id = "8582BD37-9C90-4447-B2D6DC9F75C42131";
+      yearObj.year_meta_ids = matchingObj;
+    } 
+    return yearObj;
+}
 
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
@@ -415,8 +450,16 @@ function readAssets(directory, assets) {
                   if (Object.keys(flavorObj).length) {
                     assets[filePath].flavors = flavorObj;
                   }
-                  
 
+                  var countryObj = getCountries(file_name_only);
+                  if (Object.keys(countryObj).length) {
+                    assets[filePath].country = countryObj;
+                  }
+
+                  var yearObjc = getYear(file_name_only);
+                  if (Object.keys(yearObjc).length) {
+                    assets[filePath].year = yearObjc;
+                  }
 
               }else{
                 //SKIP THE FILE IF  NO ASSET CATEGORY TYPE IS ASSIGNED
@@ -507,7 +550,6 @@ async function uploadFileToBynder(asset) {
         requestData.data['metaproperty.43A45382-5080-4D89-985CB39557324D9A'] = productSubTypeValues;
       }
 
-
       // Check if flavors are present
       if ('flavors' in asset) {
         var flavorsValues = Object.values(asset.flavors.flavors_meta_ids);
@@ -515,7 +557,21 @@ async function uploadFileToBynder(asset) {
         requestData.data['metaproperty.F0801F2D-F91E-4F62-B59F6581E8FB7B2C'] = flavorsValues;
       }
 
-    console.log(requestData.data);
+      // Check if country is present
+      if ('country' in asset) {
+        var countryValues = Object.values(asset.country.country_meta_ids);
+        requestData.data.property_Country = '';
+        requestData.data['metaproperty.697F646C-9594-4A3A-92716AD65D29CE90'] = countryValues;
+      }
+
+      // Check if year is present
+      if ('year' in asset) {
+        var yearValues = Object.values(asset.year.year_meta_ids);
+        requestData.data.property_Year = '';
+        requestData.data['metaproperty.8582BD37-9C90-4447-B2D6DC9F75C42131'] = yearValues;
+      }
+
+   // console.log(requestData.data);
   
     bynder.uploadFile(requestData)
       .then((data) => {
@@ -692,7 +748,7 @@ async function checkBynderUnwantedFiles(serverAssets, bynderAssets){
 // START:
 console.log("-----Get All Sever Assets-----");
 serverAssets = getAllServerAssets(configObject.defaults.directory);
-console.log(serverAssets);
+//console.log(serverAssets);
 console.log("-----Finished getting all assets on Server----- Server total assets = " + Object.keys(serverAssets).length);
 console.log("-----Get All Bynder Assets-----");
 getAllBynderAssets()

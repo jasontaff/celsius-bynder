@@ -275,26 +275,6 @@ function getCompanyName(pathName){
   return companyNameObj;
 }
 
-//Get Product Sub Type from file name
-function getProductSubType(fileName){
-  let productSubTypeObj = {};
-  let matchingObj = {};
-
-  for (const [key, value] of Object.entries(configObject.product_sub_type)) {
-    if (fileName.includes(key)) {
-      matchingObj[key] = value;
-    }
-  }
-
-  //If there are 1 or more matching keys from in the filename
-  if (Object.keys(matchingObj).length > 0) {
-    productSubTypeObj.productSubType_id = "43A45382-5080-4D89-985CB39557324D9A";
-    productSubTypeObj.productSubType_meta_ids = matchingObj;
-  } 
-  return productSubTypeObj;
-
-}
-
 //Get Usage Rights 
 function getUsageRights(fileName){
   let usage_rights = "internal";
@@ -312,6 +292,47 @@ function getUsageRights(fileName){
 
   return usageRightsObj;
 }
+
+//Get Product Sub Type from file name
+function getProductSubType(fileName){
+  let productSubTypeObj = {};
+  let matchingObj = {};
+
+  for (const [key, value] of Object.entries(configObject.product_sub_type)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+
+  //If there are 1 or more matching keys from in the filename
+  if (Object.keys(matchingObj).length > 0) {
+    productSubTypeObj.productSubType_id = "43A45382-5080-4D89-985CB39557324D9A";
+    productSubTypeObj.productSubType_meta_ids = matchingObj;
+  } 
+  return productSubTypeObj;
+
+}
+
+//Get Flavors
+function getFlavors(fileName){
+  let flavorsObj = {};
+  let matchingObj = {};
+
+  for (const [key, value] of Object.entries(configObject.flavors)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      flavorsObj.flavors_id = "F0801F2D-F91E-4F62-B59F6581E8FB7B2C";
+      flavorsObj.flavors_meta_ids = matchingObj;
+    } 
+    return flavorsObj;
+
+}
+
 
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
@@ -390,6 +411,11 @@ function readAssets(directory, assets) {
                     assets[filePath].product_sub_types = product_sub_type_obj;
                   }
 
+                  var flavorObj = getFlavors(file_name_only);
+                  if (Object.keys(flavorObj).length) {
+                    assets[filePath].flavors = flavorObj;
+                  }
+                  
 
 
               }else{
@@ -481,6 +507,13 @@ async function uploadFileToBynder(asset) {
         requestData.data['metaproperty.43A45382-5080-4D89-985CB39557324D9A'] = productSubTypeValues;
       }
 
+
+      // Check if flavors are present
+      if ('flavors' in asset) {
+        var flavorsValues = Object.values(asset.flavors.flavors_meta_ids);
+        requestData.data.property_Flavors = '';
+        requestData.data['metaproperty.F0801F2D-F91E-4F62-B59F6581E8FB7B2C'] = flavorsValues;
+      }
 
     console.log(requestData.data);
   

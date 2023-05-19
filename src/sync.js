@@ -7,6 +7,32 @@ const fs = require('fs');
 const path = require('path');
 const ExcelJS = require('exceljs');
 
+var logFileName = `file_${getCurrentTimestamp()}.log`;
+var logFilePath = path.join('../logs/', logFileName);
+var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
+
+// Create a reference to the original console.log and console.error functions
+var originalConsoleLog = console.log;
+var originalConsoleError = console.error;
+
+// Override console.log and console.error to log to both console and file
+console.log = (...args) => {
+  var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
+  originalConsoleLog(...args); // Log to console
+  logStream.write(`${logMessage}\n`); // Log to file
+};
+
+console.error = (...args) => {
+  var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
+  originalConsoleError(...args); // Log to console
+  logStream.write(`${logMessage}\n`); // Log to file
+};
+
+function getCurrentTimestamp() {
+  const now = new Date();
+  return now.toISOString().replace(/:/g, '-').slice(0, -5);
+}
+
 //create Bynder session
 const bynder = new Bynder({
   baseURL: process.env.BYNDER_API_PATH,
@@ -24,6 +50,7 @@ const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
 
 var serverAssets = "";
 var bynderAssets = "";
+
 
 function isFileModifiedAfterBynderCreation(severModifiedDate, bynderCreationDate) {
   const serverModifiedTimestamp = new Date(severModifiedDate).getTime();

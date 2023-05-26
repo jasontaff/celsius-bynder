@@ -1,6 +1,6 @@
 {
 	"defaults": {
-        "directory": "../../Jason_Test/Celsius",
+        "directory": "../../Approved_Assets/Celsius",
 		"upload_user": "Jason Taff",
         "brand_celsius_id": "94A5CF49-3FAB-4801-A9A50E2C2D072798"
 	},
@@ -33,9 +33,7 @@
     "asset_category":{
     
         "advertising": "7447A08B-E1D8-45CF-ACD0BA239FF19FE9",
-        "boxes": "59E46F2B-18EA-46B8-A3C68E141533DFAF",
         "branding": "37049677-1F33-459C-8E65D884C326F59F",
-        "cans": "5F7277A2-EC2D-49EC-BB08745C64F2DEF4",
         "digital": "7CFC2C56-47AF-4EB2-82B1298796F64AB4",
         "email": "A5391108-EB08-48E6-9278B4C04246D78B",
         "key_acct": "E3BB7111-A5A6-4933-A339074FFC08E0D5",
@@ -53,7 +51,6 @@
         "sell_sheets": "C0001925-6FB6-4066-9263EAC016CEF1C2",
         "sports_and_recreation": "701E84E0-E3D0-499E-8D90B3B9A11684F0",
         "templates": "4BCBA31D-DBDB-416E-9CB665A954FB7570",
-        "trays": "D6F7E6DC-9B60-4169-B425CC3E22320755",
         "website": "F46B1315-71FC-4D62-8DC01797992CB66F"
     },
     "asset_sub_category": {
@@ -97,7 +94,12 @@
         "template": "FC2C38E2-17E2-4336-ACE89E7901EFD8F0",
         "vertical": "9A9DF2B9-C2CF-48F9-813DA1DA84B9FC57",
         "webinar": "95B4E9BD-87FB-4C32-9F0C4530F3A1DF27",
-        "wraps": "24E5130A-5018-4FE5-83E7C9F103695912"
+        "wraps": "24E5130A-5018-4FE5-83E7C9F103695912",
+        "case_of_6": "217D5ACC-EB85-40D9-9F309DD16B9D05D1",
+        "single": "676A8A0B-2872-4A62-822F00B413BBB729",
+        "can": "67EFF8C7-B338-4B08-9D000C6CEA1A6385",
+        "box": "E45FDD31-2EA2-4762-982ABA46495562F4",
+        "tray": "16CD70AA-1A6A-45A8-8E18FA6AC46E386A"
     },
     "product":{
 
@@ -114,7 +116,6 @@
         "celsius_otg": "179A10E4-EB94-4C78-9B4C40E0231FBF2A",
         "celsius_stevia": "CCE2379C-919C-45DD-AF639D944A915B65",
         "celsius_vibe": "BEE51BE8-A106-4B83-A700864A057BB3F6",
-        "celsius_club_box": "EBF900CB-F695-4256-A9C9C3D3FD48FB18",
         "celsius_green_tea": "9A8EB846-FE3F-43ED-812D3337AC00A572",
         "celsius_sparkling": "EE08F0BF-97D0-48B1-824B8B6A3251BF95",
         "celsius_variety_pack": "435D9E27-5C7F-4748-9081E5050AABB057"
@@ -128,7 +129,6 @@
         "24ct": "A2A1E659-5E3A-4E1D-A298282C56EE7556",
         "4pk": "4935242E-AE8B-46F4-9396DDEBB086A3E2",
         "6-4pk": "8914FB72-8A07-442F-BCBC039974BB7663",
-        "6ct": "2AA53F6D-1D79-41FB-9ABEF7BCDF5E9E3C",
         "bx": "199CA2B0-0AA9-4626-A5852B953CF84F40",
         "bd": "221251F3-7A68-40EA-BCAAD0217E87FEE7",
         "cn": "AFE2C955-9A04-47B7-B93468B86254D342",
@@ -181,7 +181,10 @@
         "flv-drgolm": "6859E625-79D8-4E0C-A414A08753EA38B2",
         "flv-kwglim": "72AA2638-D556-4CF1-8229293AB8D215AB",
         "flv-strmgo": "F9BB1059-F78F-402C-8A87839AFC57409D",
-        "flv-lmnmsk": "4CA5B25E-EF2E-4CA8-82FA0714984036CA"
+        "flv-lmnmsk": "4CA5B25E-EF2E-4CA8-82FA0714984036CA",
+        "flv-berry" : "6DA86A3C-D06A-427B-8168FB1B87B89FA6",
+        "flv-bblmnd": "6D93E8D3-34FD-4783-8A8A31A9793077A7",
+        "flv-stcoct": "CBD5C8E4-EB0C-406C-844654DE3E1176A1"
     },
     "event":{
      

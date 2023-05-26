@@ -513,13 +513,13 @@ function getAllServerAssets(directory) {
 }
 
 async function uploadFileToBynder(asset) {
-  return new Promise((resolve, reject) => {
+
     var full_path = asset.full_path;
     var file_name_only = asset.file_name_only;
-
+    var retryCount = 0;
     var stats = fs.statSync(asset.full_path);
 
-    const requestData = {
+    var requestData = {
       filename: asset.file_name_only,
       body: fs.createReadStream(asset.full_path),
       length: stats.size,
@@ -600,17 +600,39 @@ async function uploadFileToBynder(asset) {
 
    // console.log(requestData.data);
   
+
+   while (retryCount <= 2) {
+    try {
+      await attemptUpload(requestData);
+      console.log("Successfully uploaded asset: " + asset.full_path + " to Bynder!");
+      return; // Exit the function when upload is successful
+    } catch (error) {
+      console.log("Failed to upload asset: " + asset.full_path + " to Bynder!");
+
+      // Retry logic
+      retryCount++;
+      console.log("Retrying upload... (Attempt " + retryCount + ")");
+    }
+  }
+
+  console.log("Retry limit reached. Upload failed.");
+
+
+
+
+}
+
+ function attemptUpload(requestData){
+  return new Promise((resolve, reject) => {
     bynder.uploadFile(requestData)
       .then((data) => {
         if (data.success == true) {
-          console.log("Successfully uploaded asset: " + full_path + " to Bynder!");
-          resolve(); // Resolve the promise when upload is successful
+          resolve();
         } else {
-          reject("Failed to upload asset: " + full_path + " to Bynder!");
+          reject("Upload failed: " + data.message);
         }
       })
       .catch((error) => {
-        console.log(error);
         reject(error);
       });
   });
@@ -715,9 +737,10 @@ var isModified = isFileModifiedAfterBynderCreation(serverAsset.modified_date, by
       console.log('File modified after Bynder creation:', isModified, '.  Delete Bynder asset ');
       await deleteBynderAsset(bynderAsset);
       await uploadFileToBynder(serverAsset);
-    }else{
-      console.log('File modified after Bynder creation:', isModified, '.  Ignoring...' );
     }
+    // else{
+    //   console.log('File modified after Bynder creation:', isModified, '.  Ignoring...' );
+    // }
   } catch (error) {
     console.log(error);
   }

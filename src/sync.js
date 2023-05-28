@@ -7,26 +7,35 @@ const fs = require('fs');
 const path = require('path');
 const ExcelJS = require('exceljs');
 
-var logFileName = `file_${getCurrentTimestamp()}.log`;
-var logFilePath = path.join('../logs/', logFileName);
-var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
+// var logFileName = `file_${getCurrentTimestamp()}.log`;
+// var logFilePath = path.join('../logs/', logFileName);
+// var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
-// Create a reference to the original console.log and console.error functions
-var originalConsoleLog = console.log;
-var originalConsoleError = console.error;
+// // Create a reference to the original console.log and console.error functions
+// var originalConsoleLog = console.log;
+// var originalConsoleError = console.error;
 
-// Override console.log and console.error to log to both console and file
-console.log = (...args) => {
-  var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
-  originalConsoleLog(...args); // Log to console
-  logStream.write(`${logMessage}\n`); // Log to file
-};
+// // Override console.log and console.error to log to both console and file
+// console.log = (...args) => {
+//   var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
+//   originalConsoleLog(...args); // Log to console
+//   try{
+//     logStream.write(`${logMessage}\n`); // Log to file  
+//   }catch (error) {
+//     console.error('An error occurred during the write operation:', error);
+//   }
 
-console.error = (...args) => {
-  var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
-  originalConsoleError(...args); // Log to console
-  logStream.write(`${logMessage}\n`); // Log to file
-};
+// };
+
+// console.error = (...args) => {
+//   var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
+//   originalConsoleError(...args); // Log to console
+//   try{
+//     logStream.write(`${logMessage}\n`); // Log to file
+//   }catch (error) {
+//     console.error('An error occurred during the write operation:', error);
+//   }
+// };
 
 function getCurrentTimestamp() {
   const now = new Date();
@@ -648,6 +657,7 @@ async function getAllBynderAssets() {
       };
 
       bynderAssets = await getAllBynderMediaItems(params);
+ 
       console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
       
       await loopThroughAllAssets(serverAssets, bynderAssets);
@@ -798,7 +808,6 @@ async function checkBynderUnwantedFiles(serverAssets, bynderAssets){
 // START:
 console.log("-----Get All Sever Assets-----");
 serverAssets = getAllServerAssets(configObject.defaults.directory);
-//console.log(serverAssets);
 console.log("-----Finished getting all assets on Server----- Server total assets = " + Object.keys(serverAssets).length);
 console.log("-----Get All Bynder Assets-----");
 getAllBynderAssets()

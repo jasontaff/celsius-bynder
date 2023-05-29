@@ -8,9 +8,6 @@ const path = require('path');
 const ExcelJS = require('exceljs');
 const nodemailer = require('nodemailer');
 
-
-
-
 var logFileName = `file_${getCurrentTimestamp()}.log`;
 var logFilePath = path.join('../logs/', logFileName);
 var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
@@ -41,26 +38,6 @@ console.error = (...args) => {
 };
 
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  }
-});
-
-const mailOptions = {
-  from:  process.env.EMAIL_USER,
-  to: 'jason.dion.taff@gmail.com',
-  subject: 'Bynder Sync - Daily Email',
-  text: 'Please see attached file',
-  attachments: [
-    {
-      filename: 'console-log.log', // Specify the filename of the attachment
-      path: logFilePath // Specify the path to the file
-    }
-  ]
-};
 
 function getCurrentTimestamp() {
   const now = new Date();
@@ -437,7 +414,8 @@ function getYear(fileName){
 
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
-  const files = fs.readdirSync(directory);
+  try {
+    const files = fs.readdirSync(directory);
 
   files.forEach(file => {
 
@@ -542,6 +520,10 @@ function readAssets(directory, assets) {
     
     }
   });
+  } catch (error) {
+    console.log(error);
+  }
+
 }
 
 // Function to create a global object with all file assets and their paths
@@ -813,6 +795,39 @@ async function checkBynderUnwantedFiles(serverAssets, bynderAssets){
  
   }
 
+function sendEmail(){
+  
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    }
+  });
+
+  const mailOptions = {
+    from:  process.env.EMAIL_USER,
+    // to: 'jason.dion.taff@gmail.com, Rdiaz@celsius.com, skuznicke@celsius.com,gtang@celsius.com',
+    to: 'jason.dion.taff@gmail.com',
+    subject: '(TEST) Bynder Sync - Daily Email',
+    text: 'Please see attached file',
+    attachments: [
+      {
+        filename: 'daily.log', // Specify the filename of the attachment
+        path: logFilePath // Specify the path to the file
+      }
+    ]
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Error occurred while sending email:', error);
+    } else {
+      console.log('Email sent successfully:', info.response);
+    }
+  });
+
+}
 
 // START:
 console.log("-----Get All Sever Assets-----");
@@ -824,21 +839,7 @@ getAllBynderAssets()
     console.log("---SYNC.JS DONE---");
     // At the end of the script, close the log stream and write any remaining data
     logStream.end();
-
-  transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log('Error occurred while sending email:', error);
-        } else {
-          console.log('Email sent successfully:', info.response);
-        }
-      });
-
-    // Listen for the 'finish' event to ensure all data is written before closing the stream
-    // logStream.on('finish', () => {
-    //   console.log('Log stream has been written to the log file.');
-    
-
-    // });
+    sendEmail();
   })
   .catch((error) => {
     console.error("An error occurred:", error);

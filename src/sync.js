@@ -6,40 +6,70 @@ var request = require('request');
 const fs = require('fs');
 const path = require('path');
 const ExcelJS = require('exceljs');
+const nodemailer = require('nodemailer');
 
-// var logFileName = `file_${getCurrentTimestamp()}.log`;
-// var logFilePath = path.join('../logs/', logFileName);
-// var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
-// // Create a reference to the original console.log and console.error functions
-// var originalConsoleLog = console.log;
-// var originalConsoleError = console.error;
 
-// // Override console.log and console.error to log to both console and file
-// console.log = (...args) => {
-//   var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
-//   originalConsoleLog(...args); // Log to console
-//   try{
-//     logStream.write(`${logMessage}\n`); // Log to file  
-//   }catch (error) {
-//     console.error('An error occurred during the write operation:', error);
-//   }
 
-// };
+var logFileName = `file_${getCurrentTimestamp()}.log`;
+var logFilePath = path.join('../logs/', logFileName);
+var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
-// console.error = (...args) => {
-//   var logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
-//   originalConsoleError(...args); // Log to console
-//   try{
-//     logStream.write(`${logMessage}\n`); // Log to file
-//   }catch (error) {
-//     console.error('An error occurred during the write operation:', error);
-//   }
-// };
+// Create a reference to the original console.log and console.error functions
+var originalConsoleLog = console.log;
+var originalConsoleError = console.error;
+
+// Override console.log and console.error to log to both console and file
+console.log = (...args) => {
+  const logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
+  originalConsoleLog(...args); // Log to console
+  try {
+    logStream.write(`${logMessage}\n`); // Log to file
+  } catch (error) {
+    console.error('An error occurred during the write operation:', error);
+  }
+};
+
+console.error = (...args) => {
+  const logMessage = `${getCurrentTimestamp()} ${args.join(' ')}`;
+  originalConsoleError(...args); // Log to console
+  try {
+    logStream.write(`${logMessage}\n`); // Log to file
+  } catch (error) {
+    console.error('An error occurred during the write operation:', error);
+  }
+};
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  }
+});
+
+const mailOptions = {
+  from:  process.env.EMAIL_USER,
+  to: 'jason.dion.taff@gmail.com',
+  subject: 'Bynder Sync - Daily Email',
+  text: 'Please see attached file',
+  attachments: [
+    {
+      filename: 'console-log.log', // Specify the filename of the attachment
+      path: logFilePath // Specify the path to the file
+    }
+  ]
+};
 
 function getCurrentTimestamp() {
   const now = new Date();
-  return now.toISOString().replace(/:/g, '-').slice(0, -5);
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day}_${hours}-${minutes}`;
 }
 
 //create Bynder session
@@ -522,13 +552,13 @@ function getAllServerAssets(directory) {
 }
 
 async function uploadFileToBynder(asset) {
-
+  return new Promise((resolve, reject) => {
     var full_path = asset.full_path;
     var file_name_only = asset.file_name_only;
-    var retryCount = 0;
+
     var stats = fs.statSync(asset.full_path);
 
-    var requestData = {
+    const requestData = {
       filename: asset.file_name_only,
       body: fs.createReadStream(asset.full_path),
       length: stats.size,
@@ -609,43 +639,22 @@ async function uploadFileToBynder(asset) {
 
    // console.log(requestData.data);
   
-
-   while (retryCount <= 2) {
-    try {
-      await attemptUpload(requestData);
-      console.log("Successfully uploaded asset: " + asset.full_path + " to Bynder!");
-      return; // Exit the function when upload is successful
-    } catch (error) {
-      console.log("Failed to upload asset: " + asset.full_path + " to Bynder!");
-
-      // Retry logic
-      retryCount++;
-      console.log("Retrying upload... (Attempt " + retryCount + ")");
-    }
-  }
-
-  console.log("Retry limit reached. Upload failed.");
-
-
-
-
-}
-
- function attemptUpload(requestData){
-  return new Promise((resolve, reject) => {
     bynder.uploadFile(requestData)
       .then((data) => {
         if (data.success == true) {
-          resolve();
+          console.log("Successfully uploaded asset: " + full_path + " to Bynder!");
+          resolve(); // Resolve the promise when upload is successful
         } else {
-          reject("Upload failed: " + data.message);
+          reject("Failed to upload asset: " + full_path + " to Bynder!");
         }
       })
       .catch((error) => {
+        console.log("Failed to upload asset: " + full_path + " to Bynder!" + error);
         reject(error);
       });
   });
 }
+
 
 async function getAllBynderAssets() {
   return new Promise(async (resolve, reject) => {
@@ -719,7 +728,7 @@ async function loopThroughAllAssets(serverAssets, bynderAssets) {
 
     if(foundInBynder){
       try {
-        console.log('Match found, comparing the assets ' +  serverAssetFileName);
+       // console.log('Match found, comparing the assets ' +  serverAssetFileName);
         await compareAsset(serverAsset, bynderAsset);
        
       } catch (error) {
@@ -813,12 +822,27 @@ console.log("-----Get All Bynder Assets-----");
 getAllBynderAssets()
   .then(() => {
     console.log("---SYNC.JS DONE---");
+    // At the end of the script, close the log stream and write any remaining data
+    logStream.end();
+
+  transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log('Error occurred while sending email:', error);
+        } else {
+          console.log('Email sent successfully:', info.response);
+        }
+      });
+
+    // Listen for the 'finish' event to ensure all data is written before closing the stream
+    // logStream.on('finish', () => {
+    //   console.log('Log stream has been written to the log file.');
+    
+
+    // });
   })
   .catch((error) => {
     console.error("An error occurred:", error);
   });
-
-
 
 
 

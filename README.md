@@ -10,4 +10,3 @@ TODO:
 -add email error handling
 -1 am sync daily?
 -test all metaproperies choices from server to bynder for labeling
--alapbet the taxonomy sheet

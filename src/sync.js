@@ -412,6 +412,99 @@ function getYear(fileName){
     return yearObj;
 }
 
+
+//Get Dimension
+function getDimension(fileName){
+  let dimensionObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.dimension)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      dimensionObj.dimension_id = "AEB1FED2-413E-4BF8-AFEF0145B3E50370";
+      dimensionObj.dimension_meta_ids = matchingObj;
+    } 
+    return dimensionObj;
+
+}
+
+//Get Ratio
+function getRatio(fileName){
+  let ratioObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.ratio)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      ratioObj.ratio_id = "EC8FDFC9-243D-444E-A2C27E72247A10BC";
+      ratioObj.ratio_meta_ids = matchingObj;
+    } 
+    return ratioObj;
+}
+
+//Get Length
+function getLength(fileName){
+  let lengthObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.length)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      lengthObj.length_id = "321F85C6-D000-493C-AD0D1E0CA0000224";
+      lengthObj.length_meta_ids = matchingObj;
+    } 
+    return lengthObj;
+}
+
+//Get Sound
+function getSound(fileName){
+  let soundObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.sound)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      soundObj.sound_id = "CFA84AB2-359A-4866-9535DED6A8BBA262";
+      soundObj.sound_meta_ids = matchingObj;
+    } 
+    return soundObj;
+}
+
+//Get Language
+function getLanguage(fileName){
+  let languageObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.language)) {
+    if (fileName.toLowerCase().includes(key)) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      languageObj.language_id = "E2B4C35A-A000-4B94-82CA0D24F71F009A";
+      languageObj.language_meta_ids = matchingObj;
+    } 
+    return languageObj;
+}
+
+
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   try {
@@ -503,6 +596,31 @@ function readAssets(directory, assets) {
                   var yearObjc = getYear(file_name_only);
                   if (Object.keys(yearObjc).length) {
                     assets[filePath].year = yearObjc;
+                  }
+
+                 var dimensionObj = getDimension(file_name_only);
+                 if (Object.keys(dimensionObj).length) {
+                  assets[filePath].dimension = dimensionObj;
+                  }
+
+                  var ratioObj = getRatio(file_name_only);
+                  if (Object.keys(ratioObj).length) {
+                    assets[filePath].ratio = ratioObj;
+                  }
+
+                  var lengthObj = getLength(file_name_only);
+                  if (Object.keys(lengthObj).length) {
+                    assets[filePath].length = lengthObj;
+                  }
+
+                  var soundObj = getSound(file_name_only);
+                  if (Object.keys(soundObj).length) {
+                    assets[filePath].sound = soundObj;
+                  }
+
+                  var languageObj = getLanguage(file_name_only);
+                  if (Object.keys(languageObj).length) {
+                    assets[filePath].language = languageObj;
                   }
 
               }else{
@@ -618,6 +736,42 @@ async function uploadFileToBynder(asset) {
         requestData.data.property_Year = '';
         requestData.data['metaproperty.8582BD37-9C90-4447-B2D6DC9F75C42131'] = yearValues;
       }
+
+      // Check if dimension is present
+      if ('dimension' in asset) {
+        var dimensionValues = Object.values(asset.dimension.dimension_meta_ids);
+        requestData.data.property_Dimension = '';
+        requestData.data['metaproperty.AEB1FED2-413E-4BF8-AFEF0145B3E50370'] = dimensionValues;
+      }
+
+      // Check if ratio is present
+      if ('ratio' in asset) {
+        var ratioValues = Object.values(asset.ratio.ratio_meta_ids);
+        requestData.data.property_Ratio = '';
+        requestData.data['metaproperty.EC8FDFC9-243D-444E-A2C27E72247A10BC'] = ratioValues;
+      }
+
+      // Check if length  is present
+      if ('length' in asset) {
+        var lengthValues = Object.values(asset.length.length_meta_ids);
+        requestData.data.property_Length = '';
+        requestData.data['metaproperty.321F85C6-D000-493C-AD0D1E0CA0000224'] = lengthValues;
+      }
+
+      // Check if sound  is present
+      if ('sound' in asset) {
+        var soundValues = Object.values(asset.sound.sound_meta_ids);
+        requestData.data.property_Sound = '';
+        requestData.data['metaproperty.CFA84AB2-359A-4866-9535DED6A8BBA262'] = soundValues;
+      }
+
+      // Check if language  is present
+        if ('language' in asset) {
+          var languageValues = Object.values(asset.language.language_meta_ids);
+          requestData.data.property_Language = '';
+          requestData.data['metaproperty.E2B4C35A-A000-4B94-82CA0D24F71F009A'] = languageValues;
+        }
+
 
    // console.log(requestData.data);
   
@@ -809,7 +963,7 @@ function sendEmail(){
     from:  process.env.EMAIL_USER,
     // to: 'jason.dion.taff@gmail.com, Rdiaz@celsius.com, skuznicke@celsius.com,gtang@celsius.com',
     to: 'jason.dion.taff@gmail.com',
-    subject: '(TEST) Bynder Sync - Daily Email',
+    subject: 'Bynder Sync - Daily Email',
     text: 'Please see attached file',
     attachments: [
       {
@@ -823,7 +977,7 @@ function sendEmail(){
     if (error) {
       console.log('Error occurred while sending email:', error);
     } else {
-      console.log('Email sent successfully:', info.response);
+      console.log('Email sent successfully');
     }
   });
 
@@ -840,6 +994,7 @@ getAllBynderAssets()
     // At the end of the script, close the log stream and write any remaining data
     logStream.end();
     sendEmail();
+ 
   })
   .catch((error) => {
     console.error("An error occurred:", error);

@@ -12,6 +12,12 @@ var logFileName = `file_${getCurrentTimestamp()}.log`;
 var logFilePath = path.join('../logs/', logFileName);
 var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
+
+// Attach an error event listener to the logStream
+logStream.on('error', (error) => {
+  console.error('An error occurred during the write operation:', error);
+});
+
 // Create a reference to the original console.log and console.error functions
 var originalConsoleLog = console.log;
 var originalConsoleError = console.error;

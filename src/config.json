@@ -52,7 +52,8 @@
         "sports_and_recreation": "701E84E0-E3D0-499E-8D90B3B9A11684F0",
         "templates": "4BCBA31D-DBDB-416E-9CB665A954FB7570",
         "website": "F46B1315-71FC-4D62-8DC01797992CB66F",
-        "barcodes": "BCDC0474-9AA4-417D-99902F2F528FA348"
+        "barcodes": "BCDC0474-9AA4-417D-99902F2F528FA348",
+        "layflat": "56EFC06E-C465-43C0-B9A8D5E73501F526"
     },
     "asset_sub_category": {
 
@@ -101,7 +102,9 @@
         "box": "E45FDD31-2EA2-4762-982ABA46495562F4",
         "tray": "16CD70AA-1A6A-45A8-8E18FA6AC46E386A",
         "video": "83BEDC98-CA5B-46A7-8C10BB1C1B58C448",
-        "photography": "B9FA9FBB-5D41-40B3-8A3F8B861FF4A7E1"
+        "photography": "B9FA9FBB-5D41-40B3-8A3F8B861FF4A7E1",
+        "studio": "905C770D-82F1-44A1-BE9CE78E6D53A842",
+        "lifestyle": "DE219DBB-B14A-4840-A70F90DC999D9017"
     },
     "product":{
 

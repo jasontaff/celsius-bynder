@@ -216,6 +216,88 @@ function getAssetSubCategory(pathName){
 
 }
 
+//Get Asset Sub Type Category
+function getAssetSubTypeCategory(pathName){
+  let assetSubTypeCategory = null;
+  let assetSubTypeCategory_meta_id_value = null;
+  const assetSubTypeCategories = Object.keys(configObject.asset_sub_type_category);
+
+  for (const keyword of assetSubTypeCategories) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      assetSubTypeCategory = keyword.toLowerCase();
+      assetSubTypeCategory_meta_id_value = configObject.asset_sub_type_category[keyword];
+      break;
+    }
+  }
+
+  let assetSubTypeCategoryObj = {
+    asset_sub_type_category_name: assetSubTypeCategory,
+    asset_sub_type_category_id: "308BC25B-12D2-4EF0-960E467CAC1D359E",
+    asset_sub_type_category_meta_id: null
+  };
+
+  if (assetSubTypeCategory) {
+    assetSubTypeCategoryObj.asset_sub_type_category_meta_id = assetSubTypeCategory_meta_id_value;
+  }
+
+  return assetSubTypeCategoryObj;
+
+}
+
+//Get Advertising Type
+function getAdvertisingType(pathName){
+  let advertisingType = null;
+  let advertisingType_meta_id_value = null;
+  const advertisingTypes = Object.keys(configObject.advertising_type);
+
+  for (const keyword of advertisingTypes) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      advertisingType = keyword.toLowerCase();
+      advertisingType_meta_id_value = configObject.advertising_type[keyword];
+      break;
+    }
+  }
+  let advertisingTypeObj = {
+    advertisingType_name: advertisingType,
+    advertisingType_id: "14B6E5F5-A323-470B-93BBA05A8D30D1F4",
+    advertisingType_meta_id: null
+  };
+
+  if (advertisingType) {
+    advertisingTypeObj.advertisingType_meta_id = advertisingType_meta_id_value;
+  }
+
+ return advertisingTypeObj;
+}
+
+//Get Sports Entities
+function getSportsEntities(pathName){
+  let sportsEntity = null;
+  let sportsEntites_meta_id_value = null;
+  const sportsEntites = Object.keys(configObject.sports_entities);
+
+  for (const keyword of sportsEntites) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      sportsEntity = keyword.toLowerCase();
+      sportsEntites_meta_id_value = configObject.sports_entities[keyword];
+      break;
+    }
+  }
+  let sportsEntitesObj = {
+    sportsEntites_name: sportsEntity,
+    sportsEntitse_id: "11E20DE7-8BF4-4943-BF65204753FF63CD",
+    sportsEntites_meta_id: null
+  };
+
+  if (sportsEntity) {
+    sportsEntitesObj.sportsEntites_meta_id = sportsEntites_meta_id_value;
+  }
+
+ return sportsEntitesObj;
+
+
+}
+
 //Get Product Type through file path
 function getProductType(pathName){
   let productType = null;
@@ -418,7 +500,6 @@ function getYear(fileName){
     return yearObj;
 }
 
-
 //Get Dimension
 function getDimension(fileName){
   let dimensionObj= {};
@@ -510,7 +591,6 @@ function getLanguage(fileName){
     return languageObj;
 }
 
-
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   try {
@@ -558,11 +638,24 @@ function readAssets(directory, assets) {
 
                   //GET OPTIONAL METAPROPERITES//
                   var assetSubCategory = getAssetSubCategory(file_path_only); 
-
                   if (assetSubCategory.asset_sub_category_name !== null) {
                     assets[filePath].asset_sub_category = assetSubCategory;
                   }
 
+                  var assetSubTypeCategoryObj = getAssetSubTypeCategory(file_path_only);
+                  if (Object.keys(assetSubTypeCategoryObj).length) {
+                    assets[filePath].asset_sub_type_category = assetSubTypeCategoryObj;
+                  }
+                  
+                  var advertisingTypeObj = getAdvertisingType(file_path_only);
+                  if (Object.keys(advertisingTypeObj).length) {
+                    assets[filePath].advertising_type = advertisingTypeObj;
+                  }
+
+                  var sportEntitiesObj = getSportsEntities(file_path_only);
+                  if (Object.keys(sportEntitiesObj).length) {
+                    assets[filePath].sports_entities = sportEntitiesObj;
+                  }
                   var product = getProductType(file_path_only);
                   if (product.productType_name !== null) {
                     assets[filePath].product = product;
@@ -604,8 +697,8 @@ function readAssets(directory, assets) {
                     assets[filePath].year = yearObjc;
                   }
 
-                 var dimensionObj = getDimension(file_name_only);
-                 if (Object.keys(dimensionObj).length) {
+                  var dimensionObj = getDimension(file_name_only);
+                  if (Object.keys(dimensionObj).length) {
                   assets[filePath].dimension = dimensionObj;
                   }
 
@@ -628,6 +721,9 @@ function readAssets(directory, assets) {
                   if (Object.keys(languageObj).length) {
                     assets[filePath].language = languageObj;
                   }
+
+                  
+               
 
               }else{
                 //SKIP THE FILE IF  NO ASSET CATEGORY TYPE IS ASSIGNED
@@ -691,6 +787,24 @@ async function uploadFileToBynder(asset) {
         requestData.data['metaproperty.AA31523D-201B-4B61-9B03EE84EE2C1FA8'] = asset.asset_sub_category.asset_sub_category_meta_id;
       }
 
+      // Check if asset_sub_type_category is present
+      if ('asset_sub_type_category' in asset) {
+        requestData.data.property_Asset_Sub_Type_Category = '';
+        requestData.data['metaproperty.308BC25B-12D2-4EF0-960E467CAC1D359E'] = asset.asset_sub_type_category.asset_sub_type_category_meta_id;
+      }
+
+      //Check if Advertising Type is present
+      if ('advertising_type' in asset) {
+        requestData.data.property_Advertising_Type = '';
+        requestData.data['metaproperty.14B6E5F5-A323-470B-93BBA05A8D30D1F4'] = asset.advertising_type.advertisingType_meta_id;
+      }
+
+      //Check if Sports Entities Type is present
+      if ('sports_entities' in asset) {
+        requestData.data.property_Sports_Entities = '';
+        requestData.data['metaproperty.11E20DE7-8BF4-4943-BF65204753FF63CD'] = asset.sports_entities.sportsEntites_meta_id;
+      }
+   
       // Check if product is present
       if ('product' in asset) {
         requestData.data.property_Product = '';

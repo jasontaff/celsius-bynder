@@ -67,7 +67,7 @@ const imageExtensions = ['.jpg', '.jpeg', '.png'];
 const videoExtensions = ['.mp4', '.avi', '.mov', '.wmv', '.mkv', '.mpeg', '.3gp', '.m4v', '.mpg', '.webm', '.ts', '.asf', '.rm', '.vob', '.m2ts', '.mp2'];
 const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.wma', '.aiff', '.m4a', '.alac', '.mp2', '.amr', '.ac3', '.midi', '.opus'];
 const graphicExtensions = ['.gif', '.bmp', '.eps', '.svg'];
-const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf'];
+const fileExtensions = ['.tiff', '.psd', '.psb', '.ai', '.pdf', '.zip'];
 
 
 var serverAssets = "";

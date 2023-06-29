@@ -430,7 +430,7 @@ function getProductSubType(fileName){
   let matchingObj = {};
 
   for (const [key, value] of Object.entries(configObject.product_sub_type)) {
-    if (fileName.toLowerCase().includes(key)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
       matchingObj[key] = value;
     }
   }
@@ -450,7 +450,7 @@ function getFlavors(fileName){
   let matchingObj = {};
 
   for (const [key, value] of Object.entries(configObject.flavors)) {
-    if (fileName.toLowerCase().includes(key)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
       matchingObj[key] = value;
     }
   }
@@ -463,13 +463,14 @@ function getFlavors(fileName){
     return flavorsObj;
 }
 
+
 //Get Countries
 function getCountries(fileName){
   let countryObj= {};
   let matchingObj= {};
 
   for (const [key, value] of Object.entries(configObject.country)) {
-    if (fileName.toLowerCase().includes(key)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
       matchingObj[key] = value;
     }
   }
@@ -506,7 +507,7 @@ function getDimension(fileName){
   let matchingObj= {};
 
   for (const [key, value] of Object.entries(configObject.dimension)) {
-    if (fileName.toLowerCase().includes(key)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
       matchingObj[key] = value;
     }
   }
@@ -543,7 +544,7 @@ function getLength(fileName){
   let matchingObj= {};
 
   for (const [key, value] of Object.entries(configObject.length)) {
-    if (fileName.toLowerCase().includes(key)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
       matchingObj[key] = value;
     }
   }
@@ -561,7 +562,7 @@ function getSound(fileName){
   let matchingObj= {};
 
   for (const [key, value] of Object.entries(configObject.sound)) {
-    if (fileName.toLowerCase().includes(key)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
       matchingObj[key] = value;
     }
   }
@@ -579,7 +580,7 @@ function getLanguage(fileName){
   let matchingObj= {};
 
   for (const [key, value] of Object.entries(configObject.language)) {
-    if (fileName.toLowerCase().includes(key)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
       matchingObj[key] = value;
     }
   }

@@ -198,7 +198,7 @@ function getAssetSubCategory(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       assetSubCategory = keyword.toLowerCase();
       assetSubCategory_meta_id_value = configObject.asset_sub_category[keyword];
-      break;
+     // break;
     }
   }
 
@@ -226,7 +226,7 @@ function getAssetSubTypeCategory(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       assetSubTypeCategory = keyword.toLowerCase();
       assetSubTypeCategory_meta_id_value = configObject.asset_sub_type_category[keyword];
-      break;
+     // break;
     }
   }
 
@@ -642,19 +642,19 @@ function readAssets(directory, assets) {
                     assets[filePath].asset_sub_category = assetSubCategory;
                   }
 
-                  var assetSubTypeCategoryObj = getAssetSubTypeCategory(file_path_only);
-                  if (Object.keys(assetSubTypeCategoryObj).length) {
-                    assets[filePath].asset_sub_type_category = assetSubTypeCategoryObj;
+                  var assetSubTypeCategory = getAssetSubTypeCategory(file_path_only);
+                  if (assetSubTypeCategory.asset_sub_type_category_name !== null) {
+                    assets[filePath].asset_sub_type_category = assetSubTypeCategory;
                   }
                   
-                  var advertisingTypeObj = getAdvertisingType(file_path_only);
-                  if (Object.keys(advertisingTypeObj).length) {
-                    assets[filePath].advertising_type = advertisingTypeObj;
+                  var advertisingType = getAdvertisingType(file_path_only);
+                  if (advertisingType.advertisingType_name !==null) {
+                    assets[filePath].advertising_type = advertisingType;
                   }
 
-                  var sportEntitiesObj = getSportsEntities(file_path_only);
-                  if (Object.keys(sportEntitiesObj).length) {
-                    assets[filePath].sports_entities = sportEntitiesObj;
+                  var sportEntities = getSportsEntities(file_path_only);
+                  if (sportEntities.sportsEntites_name !==null) {
+                    assets[filePath].sports_entities = sportEntities;
                   }
                   var product = getProductType(file_path_only);
                   if (product.productType_name !== null) {
@@ -892,8 +892,8 @@ async function uploadFileToBynder(asset) {
           requestData.data['metaproperty.E2B4C35A-A000-4B94-82CA0D24F71F009A'] = languageValues;
         }
 
-
-   // console.log(requestData.data);
+        //CONSOLE TO SHOW OBJECT DATA DURING UPLOAD PROCESS
+        //console.log(requestData.data);
   
     bynder.uploadFile(requestData)
       .then((data) => {
@@ -994,6 +994,7 @@ async function loopThroughAllAssets(serverAssets, bynderAssets) {
     }else{
       try {
         console.log("File not found in Bynder, uploading: " + serverAsset.full_path + " to Bynder");
+       
         await uploadFileToBynder(serverAsset); // Call the function to upload file to Bynder
       } catch (error) {
      

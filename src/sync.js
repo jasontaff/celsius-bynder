@@ -170,7 +170,7 @@ function getAssetCategory(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       assetCategory = keyword.toLowerCase();
       assetCategory_meta_id = configObject.asset_category[keyword];
-      break;
+      //break;
     }
   }
 
@@ -254,7 +254,7 @@ function getAdvertisingType(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       advertisingType = keyword.toLowerCase();
       advertisingType_meta_id_value = configObject.advertising_type[keyword];
-      break;
+      //break;
     }
   }
   let advertisingTypeObj = {
@@ -280,7 +280,7 @@ function getSportsEntities(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       sportsEntity = keyword.toLowerCase();
       sportsEntites_meta_id_value = configObject.sports_entities[keyword];
-      break;
+     // break;
     }
   }
   let sportsEntitesObj = {
@@ -308,7 +308,7 @@ function getProductType(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       productType = keyword.toLowerCase();
       productType_meta_id_value = configObject.product[keyword];
-      break;
+     // break;
     }
   }
   let productTypeObj = {
@@ -335,7 +335,7 @@ function getProductName (pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       productName = keyword.toLowerCase();
       productName_meta_id_value = configObject.product_name[keyword];
-      break;
+    //  break;
     }
   }
   let productNameObj = {
@@ -362,7 +362,7 @@ function getEventName(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       eventName = keyword.toLowerCase();
       eventName_meta_id_value = configObject.event[keyword];
-      break;
+     // break;
     }
   }
 
@@ -390,7 +390,7 @@ function getCompanyName(pathName){
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
       companyName = keyword.toLowerCase();
       companyName_meta_id_value = configObject.company[keyword];
-      break;
+     // break;
     }
   }
 
@@ -404,6 +404,34 @@ function getCompanyName(pathName){
   }
 
   return companyNameObj;
+}
+
+//Get Location through file path
+function getLocation(pathName){
+  let locationName = null;
+  let locationName_meta_id_value = null;
+  const locationNames = Object.keys(configObject.location);
+
+  for (const keyword of locationNames) {
+    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+      locationName = keyword.toLowerCase();
+      locationName_meta_id_value = configObject.location[keyword];
+     // break;
+    }
+  }
+
+  let locationNameObj = {
+    location_name: locationName,
+    location_name_id: "2AAF33AB-E3A2-4052-97809F5AFB22364A",
+    location_name_meta_id: null
+  };
+  if (locationName) {
+    locationNameObj.location_name_meta_id = locationName_meta_id_value;
+  }
+
+  return locationNameObj;
+
+
 }
 
 //Get Usage Rights 
@@ -592,6 +620,23 @@ function getLanguage(fileName){
     return languageObj;
 }
 
+function getEmphasis(fileName){
+  let emphasisObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.emphasis)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      emphasisObj.emphasis_id = "A944CA7E-D1E8-4FDB-A0A0922D17D5ED49";
+      emphasisObj.emphasis_meta_ids = matchingObj;
+    } 
+    return emphasisObj;
+}
+
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   try {
@@ -677,6 +722,12 @@ function readAssets(directory, assets) {
                     assets[filePath].company = company;
                   }
 
+                  var location = getLocation(file_path_only);
+                  if (location.location_name !== null) {
+                    assets[filePath].location = location;
+                  }
+
+
                   //GET MULTIPLE OPTIONAL METAPROPERITES
                   var product_sub_type_obj = getProductSubType(file_name_only);
                   if (Object.keys(product_sub_type_obj).length) {
@@ -723,6 +774,10 @@ function readAssets(directory, assets) {
                     assets[filePath].language = languageObj;
                   }
 
+                  var emphasisObj = getEmphasis(file_name_only);
+                  if (Object.keys(emphasisObj).length) {
+                    assets[filePath].emphasis = emphasisObj;
+                  }
                   
                
 
@@ -830,6 +885,12 @@ async function uploadFileToBynder(asset) {
       requestData.data['metaproperty.7EB122B6-00AF-48C7-AC5078A64F4469AC'] = asset.company.company_name_meta_id;
       }
 
+      //check if Location is present
+      if ('location' in asset) {
+        requestData.data.property_Location = '';
+        requestData.data['metaproperty.2AAF33AB-E3A2-4052-97809F5AFB22364A'] = asset.location.location_name_meta_id;
+      }
+
       // Check if Product Sub Types are present
       if ('product_sub_types' in asset) {
         var productSubTypeValues = Object.values(asset.product_sub_types.productSubType_meta_ids);
@@ -887,11 +948,19 @@ async function uploadFileToBynder(asset) {
       }
 
       // Check if language  is present
-        if ('language' in asset) {
-          var languageValues = Object.values(asset.language.language_meta_ids);
-          requestData.data.property_Language = '';
-          requestData.data['metaproperty.E2B4C35A-A000-4B94-82CA0D24F71F009A'] = languageValues;
-        }
+      if ('language' in asset) {
+        var languageValues = Object.values(asset.language.language_meta_ids);
+        requestData.data.property_Language = '';
+        requestData.data['metaproperty.E2B4C35A-A000-4B94-82CA0D24F71F009A'] = languageValues;
+      }
+
+      // Check if emphasis  is present
+      if ('emphasis' in asset) {
+        var emphasisValues = Object.values(asset.emphasis.emphasis_meta_ids);
+        requestData.data.property_Emphasis = '';
+        requestData.data['metaproperty.A944CA7E-D1E8-4FDB-A0A0922D17D5ED49'] = emphasisValues;
+      }
+
 
         //CONSOLE TO SHOW OBJECT DATA DURING UPLOAD PROCESS
         //console.log(requestData.data);

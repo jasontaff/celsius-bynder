@@ -38,10 +38,8 @@
         "email": "A5391108-EB08-48E6-9278B4C04246D78B",
         "key acct": "E3BB7111-A5A6-4933-A339074FFC08E0D5",
         "linear": "1D8FF0B3-3C4C-46DA-A326CBA09C6A06B8",
-        "organic": "F9FF4D68-112A-4893-932AB502BC9F4B61",
         "organizations": "64C95408-E998-4A19-8804BDE4DFCC4124",
         "packets": "6F4EAABA-CD77-4FD0-921AC50F53ADB6A9",
-        "paid": "F4A581CF-A6D6-4726-BB857CBB7DE35AD7",
         "portfolio": "13CBB18F-A12F-4F31-8DCDADF1190A1899",
         "pos": "7EBBB465-9D8C-4EE0-A8A3C2102F788197",
         "print": "E7EBA045-63D3-4E24-8D8DF617A231B8F0",
@@ -124,8 +122,8 @@
         "dual logo and pricing": "A48F7707-EAAB-49E0-BA991A6100A0A9CD",
         "evergreen": "0A626A30-80A1-498B-9306DD5CE5CB8482",
         "pricing": "21BBE220-E9C2-4842-84986D3896A16B18",
-        "still": "874EE3CA-30CA-443B-B2BD35BA74298A76",
-        "ugc": "AEE0B1BD-ECC3-4CAC-87D2CAE4020B0E04"
+        "still": "874EE3CA-30CA-443B-B2BD35BA74298A76"
+      
     },
     "asset_sub_type_category": {
 
@@ -271,6 +269,13 @@
         "social event": "82FDFD9F-B642-455E-A1A486927A58A806",
         "tradeshow event": "AFB97664-064F-47EF-832AB79A85751AA7"
     },
+
+    "campaign_type":{
+      
+        "organic": "C6F90BD3-48B2-498E-A2543FD9163D2D3F",
+        "paid": "11C75AE8-0A0F-4E79-9FD202800AAA7612"
+    },
+    
     "company":{
      
         "amazon": "D3A5B993-CA49-4BA4-9760DDAE32BA5081",
@@ -320,6 +325,8 @@
         "winn dixie": "0D11FAA6-4406-49FD-AAD7A9B5FF400D86"
 
     },
+
+
     "country":{
 
          "global":  "F55C2CC3-719A-497A-A89A77210A770C74",
@@ -353,7 +360,10 @@
         "snow": "007C1325-B5E0-426E-BC6F9F6D1A0BF50E",
         "water": "B5A04AD4-E098-4764-B3460B96E959E98A",
         "sport": "054309F7-742D-4777-8E8796EA604222A4",
-        "animation": "8170C23E-8A59-41C6-8912CFF4F0948D36"
+        "animation": "8170C23E-8A59-41C6-8912CFF4F0948D36",
+        "ugc": "3C2BFEB5-ED01-4B48-8333A12913765295",
+        "event": "4BB1C0F3-464E-441F-9EECAD5661669DC4"
+
 
     },
 

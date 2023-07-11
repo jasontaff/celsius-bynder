@@ -406,33 +406,36 @@ function getCompanyName(pathName){
   return companyNameObj;
 }
 
-//Get Location through file path
-function getLocation(pathName){
-  let locationName = null;
-  let locationName_meta_id_value = null;
-  const locationNames = Object.keys(configObject.location);
+//Get Campaign Type through file path
+function getCampaignType(pathName){
+  let campaign_type_name = null;
+  let campaign_type_meta_id_value = null;
+  const campaign_types = Object.keys(configObject.campaign_type);
 
-  for (const keyword of locationNames) {
+  for (const keyword of campaign_types) {
     if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
-      locationName = keyword.toLowerCase();
-      locationName_meta_id_value = configObject.location[keyword];
+      campaign_type_name = keyword.toLowerCase();
+      campaign_type_meta_id_value = configObject.campaign_type[keyword];
      // break;
     }
   }
 
-  let locationNameObj = {
-    location_name: locationName,
-    location_name_id: "2AAF33AB-E3A2-4052-97809F5AFB22364A",
-    location_name_meta_id: null
+  let campaignTypesObj = {
+    campaign_type_name: campaign_type_name,
+    campaign_type_id: "0AF95F3D-0EA5-4944-B22C8DE7C9B348C",
+    campaign_type_meta_id: null
   };
-  if (locationName) {
-    locationNameObj.location_name_meta_id = locationName_meta_id_value;
+  if (campaign_type_name) {
+    campaignTypesObj.campaign_type_id = campaign_type_meta_id_value;
   }
 
-  return locationNameObj;
+  return campaignTypesObj;
+
+
 
 
 }
+
 
 //Get Usage Rights 
 function getUsageRights(fileName){
@@ -637,6 +640,26 @@ function getEmphasis(fileName){
     return emphasisObj;
 }
 
+
+//Get Location through file name
+function getLocation(fileName){
+  let locationObj= {};
+  let matchingObj= {};
+
+  for (const [key, value] of Object.entries(configObject.location)) {
+    if (fileName.toLowerCase().includes(key.toLowerCase())) {
+      matchingObj[key] = value;
+    }
+  }
+    //If there are 1 or more matching keys from in the filename
+    if (Object.keys(matchingObj).length > 0) {
+      locationObj.location_id = "2AAF33AB-E3A2-4052-97809F5AFB22364A";
+      locationObj.location_meta_ids = matchingObj;
+    } 
+    return locationObj;
+
+}
+
 //Recursive function to read all file assets in a directory and sub directories
 function readAssets(directory, assets) {
   try {
@@ -722,11 +745,10 @@ function readAssets(directory, assets) {
                     assets[filePath].company = company;
                   }
 
-                  var location = getLocation(file_path_only);
-                  if (location.location_name !== null) {
-                    assets[filePath].location = location;
+                  var campaignType = getCampaignType(file_path_only);
+                  if (campaignType.campaign_type_name !== null) {
+                    assets[filePath].campaign_type = campaignType;
                   }
-
 
                   //GET MULTIPLE OPTIONAL METAPROPERITES
                   var product_sub_type_obj = getProductSubType(file_name_only);
@@ -779,6 +801,10 @@ function readAssets(directory, assets) {
                     assets[filePath].emphasis = emphasisObj;
                   }
                   
+                  var locationObj = getLocation(file_name_only);
+                  if (Object.keys(locationObj).length) {
+                    assets[filePath].location = locationObj;
+                  }
                
 
               }else{
@@ -885,11 +911,13 @@ async function uploadFileToBynder(asset) {
       requestData.data['metaproperty.7EB122B6-00AF-48C7-AC5078A64F4469AC'] = asset.company.company_name_meta_id;
       }
 
-      //check if Location is present
-      if ('location' in asset) {
-        requestData.data.property_Location = '';
-        requestData.data['metaproperty.2AAF33AB-E3A2-4052-97809F5AFB22364A'] = asset.location.location_name_meta_id;
-      }
+      
+      //check if Campaign Type is present
+      if ('campaign_type' in asset) {
+        requestData.data.property_Campaign_Type = '';
+        requestData.data['metaproperty.0AF95F3D-0EA5-4944-B22C8DE7C9B348C1'] = asset.campaign_type.campaign_type_meta_id;
+        }
+
 
       // Check if Product Sub Types are present
       if ('product_sub_types' in asset) {
@@ -960,6 +988,14 @@ async function uploadFileToBynder(asset) {
         requestData.data.property_Emphasis = '';
         requestData.data['metaproperty.A944CA7E-D1E8-4FDB-A0A0922D17D5ED49'] = emphasisValues;
       }
+
+        //check if Location is present
+        if ('location' in asset) {
+          var locationValues = Object.values(asset.location.location_meta_ids);
+          requestData.data.property_Location = '';
+          requestData.data['metaproperty.2AAF33AB-E3A2-4052-97809F5AFB22364A9'] = locationValues;
+
+        }
 
 
         //CONSOLE TO SHOW OBJECT DATA DURING UPLOAD PROCESS

@@ -135,16 +135,26 @@ function getAssetType(file) {
 
 // *Required - Get Department Type through file path
 function getDepartmentType(pathName) {
+
+  const segments = pathName.split('\\');
+
   let department = null;
   let department_meta_id_value = null;
   const departmentTypes = Object.keys(configObject.department);
 
-  for (const keyword of departmentTypes) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of departmentTypes) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       department = keyword.toLowerCase();
       department_meta_id_value = configObject.department[keyword];
       break;
     }
+    // if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+    //   department = keyword.toLowerCase();
+    //   department_meta_id_value = configObject.department[keyword];
+    //   break;
+    // }
   }
 
   let departmentObj = {
@@ -162,16 +172,21 @@ function getDepartmentType(pathName) {
 
 // *Required - Get Asset Category through file path
 function getAssetCategory(pathName){
+
+  const segments = pathName.split('\\');
+
   let assetCategory = null;
   let assetCategory_meta_id = null;
   const assetCategories = Object.keys(configObject.asset_category);
 
-  for (const keyword of assetCategories) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
-      assetCategory = keyword.toLowerCase();
-      assetCategory_meta_id = configObject.asset_category[keyword];
-      //break;
-    }
+  for (const key of assetCategories) {
+      var keyword = key.toLowerCase();
+      var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+      if (isMatch) {
+        assetCategory = keyword.toLowerCase();
+        assetCategory_meta_id = configObject.asset_category[keyword];
+        break;
+      }
   }
 
   let assetCategoryObj = {
@@ -190,16 +205,22 @@ function getAssetCategory(pathName){
 
 //Get Asset Sub-Category through file path
 function getAssetSubCategory(pathName){
+
+  const segments = pathName.split('\\');
+
   let assetSubCategory = null;
   let assetSubCategory_meta_id_value = null;
   const assetSubCategories = Object.keys(configObject.asset_sub_category);
 
-  for (const keyword of assetSubCategories) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of assetSubCategories) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       assetSubCategory = keyword.toLowerCase();
       assetSubCategory_meta_id_value = configObject.asset_sub_category[keyword];
-     // break;
+      break;
     }
+
   }
 
   let assetSubCategoryObj = {
@@ -218,15 +239,21 @@ function getAssetSubCategory(pathName){
 
 //Get Asset Sub Type Category
 function getAssetSubTypeCategory(pathName){
+
+  const segments = pathName.split('\\');
+
   let assetSubTypeCategory = null;
   let assetSubTypeCategory_meta_id_value = null;
   const assetSubTypeCategories = Object.keys(configObject.asset_sub_type_category);
 
-  for (const keyword of assetSubTypeCategories) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of assetSubTypeCategories) {
+
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       assetSubTypeCategory = keyword.toLowerCase();
       assetSubTypeCategory_meta_id_value = configObject.asset_sub_type_category[keyword];
-     // break;
+      break;
     }
   }
 
@@ -246,17 +273,24 @@ function getAssetSubTypeCategory(pathName){
 
 //Get Advertising Type
 function getAdvertisingType(pathName){
+
+  const segments = pathName.split('\\');
+
   let advertisingType = null;
   let advertisingType_meta_id_value = null;
   const advertisingTypes = Object.keys(configObject.advertising_type);
 
-  for (const keyword of advertisingTypes) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of advertisingTypes) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       advertisingType = keyword.toLowerCase();
       advertisingType_meta_id_value = configObject.advertising_type[keyword];
-      //break;
+     break;
     }
+ 
   }
+
   let advertisingTypeObj = {
     advertisingType_name: advertisingType,
     advertisingType_id: "14B6E5F5-A323-470B-93BBA05A8D30D1F4",
@@ -272,44 +306,57 @@ function getAdvertisingType(pathName){
 
 //Get Sports Entities
 function getSportsEntities(pathName){
-  let sportsEntity = null;
-  let sportsEntites_meta_id_value = null;
-  const sportsEntites = Object.keys(configObject.sports_entities);
 
-  for (const keyword of sportsEntites) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  const segments = pathName.split('\\');
+
+  let sportsEntity = null;
+  let sportsEntities_meta_id_value = null;
+  const sportsEntities = Object.keys(configObject.sports_entities);
+
+  for (const key of sportsEntities) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       sportsEntity = keyword.toLowerCase();
-      sportsEntites_meta_id_value = configObject.sports_entities[keyword];
-     // break;
+      sportsEntities_meta_id_value = configObject.sports_entities[keyword];
+      break;
     }
   }
-  let sportsEntitesObj = {
-    sportsEntites_name: sportsEntity,
-    sportsEntitse_id: "11E20DE7-8BF4-4943-BF65204753FF63CD",
-    sportsEntites_meta_id: null
+  let sportsEntitiesObj = {
+    sportsEntities_name: sportsEntity,
+    sportsEntities_id: "11E20DE7-8BF4-4943-BF65204753FF63CD",
+    sportsEntities_meta_id: null
   };
 
   if (sportsEntity) {
-    sportsEntitesObj.sportsEntites_meta_id = sportsEntites_meta_id_value;
+    sportsEntitiesObj.sportsEntities_meta_id = sportsEntities_meta_id_value;
+   // console.log(sportsEntitiesObj);
   }
-
- return sportsEntitesObj;
+  
+ return sportsEntitiesObj;
 
 
 }
 
 //Get Product Type through file path
 function getProductType(pathName){
+
+  const segments = pathName.split('\\');
+
   let productType = null;
   let productType_meta_id_value = null;
   const productTypes = Object.keys(configObject.product);
 
-  for (const keyword of productTypes) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of productTypes) {
+
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       productType = keyword.toLowerCase();
       productType_meta_id_value = configObject.product[keyword];
-     // break;
+      break;
     }
+   
   }
   let productTypeObj = {
     productType_name: productType,
@@ -327,15 +374,20 @@ function getProductType(pathName){
 
 //Get Product Name through file path
 function getProductName (pathName){
+
+  const segments = pathName.split('\\');
+
   let productName = null;
   let productName_meta_id_value = null;
   const productNames = Object.keys(configObject.product_name);
 
-  for (const keyword of productNames) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of productNames) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       productName = keyword.toLowerCase();
       productName_meta_id_value = configObject.product_name[keyword];
-    //  break;
+     break;
     }
   }
   let productNameObj = {
@@ -354,15 +406,20 @@ function getProductName (pathName){
 
 //Get Event Name through file path
 function getEventName(pathName){
+
+  const segments = pathName.split('\\');
+
   let eventName = null;
   let eventName_meta_id_value = null;
   const eventNames = Object.keys(configObject.event);
 
-  for (const keyword of eventNames) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of eventNames) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       eventName = keyword.toLowerCase();
       eventName_meta_id_value = configObject.event[keyword];
-     // break;
+      break;
     }
   }
 
@@ -382,16 +439,22 @@ function getEventName(pathName){
 
 //Get Company Name through file path
 function getCompanyName(pathName){
+
+  const segments = pathName.split('\\');
+
   let companyName = null;
   let companyName_meta_id_value = null;
   const companyNames = Object.keys(configObject.company);
 
-  for (const keyword of companyNames) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of companyNames) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       companyName = keyword.toLowerCase();
       companyName_meta_id_value = configObject.company[keyword];
-     // break;
+     break;
     }
+ 
   }
 
   let companyNameObj = {
@@ -408,16 +471,22 @@ function getCompanyName(pathName){
 
 //Get Campaign Type through file path
 function getCampaignType(pathName){
+
+  const segments = pathName.split('\\');
+
   let campaign_type_name = null;
   let campaign_type_meta_id_value = null;
   const campaign_types = Object.keys(configObject.campaign_type);
 
-  for (const keyword of campaign_types) {
-    if (pathName.toLowerCase().includes(keyword.toLowerCase())) {
+  for (const key of campaign_types) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
       campaign_type_name = keyword.toLowerCase();
       campaign_type_meta_id_value = configObject.campaign_type[keyword];
-     // break;
+      break;
     }
+  
   }
 
   let campaignTypesObj = {
@@ -722,7 +791,7 @@ function readAssets(directory, assets) {
                   }
 
                   var sportEntities = getSportsEntities(file_path_only);
-                  if (sportEntities.sportsEntites_name !==null) {
+                  if (sportEntities.sportsEntities_name !==null) {
                     assets[filePath].sports_entities = sportEntities;
                   }
                   var product = getProductType(file_path_only);
@@ -884,7 +953,7 @@ async function uploadFileToBynder(asset) {
       //Check if Sports Entities Type is present
       if ('sports_entities' in asset) {
         requestData.data.property_Sports_Entities = '';
-        requestData.data['metaproperty.11E20DE7-8BF4-4943-BF65204753FF63CD'] = asset.sports_entities.sportsEntites_meta_id;
+        requestData.data['metaproperty.11E20DE7-8BF4-4943-BF65204753FF63CD'] = asset.sports_entities.sportsEntities_meta_id;
       }
    
       // Check if product is present

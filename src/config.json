@@ -166,11 +166,11 @@
 
     "sports_entities":{
     
-        "100 Days of Summer": "30F766F5-2D02-4725-8016469584781B28",
-        "Dallas Mavericks": "8F0A5CF7-951E-4ED3-A420481F98516408",
-        "Dallas Stars": "2876B6C9-45E7-4457-842B64100D015991",
-        "Ferrari General Market": "C43F2FBD-8A0E-42A5-A6BA9B339DBDC56C",
-        "Nascar": "99A53A26-AE4E-41DB-9D9BF2812ABE2CE4"
+        "100 days of summer": "30F766F5-2D02-4725-8016469584781B28",
+        "dallas mavericks": "8F0A5CF7-951E-4ED3-A420481F98516408",
+        "dallas stars": "2876B6C9-45E7-4457-842B64100D015991",
+        "ferrari general market": "C43F2FBD-8A0E-42A5-A6BA9B339DBDC56C",
+        "nascar": "99A53A26-AE4E-41DB-9D9BF2812ABE2CE4"
     },
     
     "product":{

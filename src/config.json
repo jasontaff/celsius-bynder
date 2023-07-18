@@ -20,7 +20,7 @@
     "department":{
     
         "dep_collegiate": "A0D6828B-8992-4953-86BE466BD956FE45",
-        "dep_general_marketing": "A3ACCFE-7183-44B8-A6B828D7F435C5FB",
+        "dep_general_marketing": "AA3ACCFE-7183-44B8-A6B828D7F435C5FB",
         "dep_media_digital": "517BA567-C6C0-46DB-9589DEB36E887E5E",
         "dep_packaging": "183374DD-1DB5-4FFA-B6376193F694B39B",
         "dep_pr": "0393A649-CCFC-4182-949837F3375E5950",
@@ -34,7 +34,6 @@
     
         "advertising": "7447A08B-E1D8-45CF-ACD0BA239FF19FE9",
         "branding": "37049677-1F33-459C-8E65D884C326F59F",
-        "digital": "7CFC2C56-47AF-4EB2-82B1298796F64AB4",
         "email": "A5391108-EB08-48E6-9278B4C04246D78B",
         "key acct": "E3BB7111-A5A6-4933-A339074FFC08E0D5",
         "linear": "1D8FF0B3-3C4C-46DA-A326CBA09C6A06B8",
@@ -60,10 +59,9 @@
 
         "apparel": "2B80A25F-2368-4E23-8B5B0F9C6DD6CCA3",
         "athlete": "1E0982EE-C90E-48D1-954BD3AEF3261DDF",
-        "b roll": "C6408CEA-304A-4B2A-A6C8E494D0D8C717",
+        "b-roll": "C6408CEA-304A-4B2A-A6C8E494D0D8C717",
         "brand guidelines": "F543A1AD-483C-41C9-89C8D60395F2687A",
         "brochure": "6C8D207C-5E9E-44D4-BCD5E70C43E46C5E",
-        "card": "A9F62007-956A-44B3-8B5DB782F9A27E14",
         "color": "39E914BB-090B-414E-A6404C75C084A3DC",
         "commercial": "0CF6CDF7-0104-4949-AF0EAE902C6228C2",
         "corporate": "43E4146C-E050-4868-81948BCCC9027CD8",
@@ -130,7 +128,7 @@
         "aisle interruptor": "4E60D7B7-A5BE-4183-AE1DE292D1476D5C",
         "banner": "4F5A4640-21FF-4620-8991D12CC8512985",
         "base wrap": "7AF93E4E-7B73-45E0-A20F5B8F5BD0414A",
-        "barrel coller": "1CEDF92-AAA9-4FD0-84EAEDBD365A9529",
+        "barrel coller": "A1CEDF92-AAA9-4FD0-84EAEDBD365A9529",
         "case card": "5EF72993-55ED-461A-9A61B38B4C367A9D",
         "channel strip": "83C1BA71-2928-4E7E-98107594F373E87F",
         "channel strip popup": "6333BB50-9307-452B-BE27013BF3C19C07",

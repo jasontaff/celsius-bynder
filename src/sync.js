@@ -426,11 +426,11 @@ function getCampaignType(pathName){
     campaign_type_meta_id: null
   };
   if (campaign_type_name) {
-    campaignTypesObj.campaign_type_id = campaign_type_meta_id_value;
+    campaignTypesObj.campaign_type_meta_id = campaign_type_meta_id_value;
   }
 
   return campaignTypesObj;
-
+ 
 
 
 

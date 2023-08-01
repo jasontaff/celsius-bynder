@@ -28,7 +28,8 @@
         "dep_street_teams": "F7AAB5B0-2470-409E-811468B3D27BCDF5",
         "dep_trade": "7C5E0691-D1B9-4477-8C83FA1E68006C0C",
         "dep_creative" :"DF482C3C-84B5-43B4-926B812C5421D63E",
-        "dep_social": "480582CE-F548-4828-80C22A43E9BAB401"
+        "dep_social": "480582CE-F548-4828-80C22A43E9BAB401",
+        "dep_multimedia": "C52A6140-E38A-471D-8E7B5FFACF6A0633"
     },
     "asset_category":{
     
@@ -176,8 +177,8 @@
     "product":{
 
         "energy drinks": "5DDAD176-26BA-410A-8EE6834C2A03DB48",
-        "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02",
-        "shipper display": "C1AC95BE-0CEF-4BA9-8BACF3FAC5F76742"
+        "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02"
+  
     },
     "product_name":{
     
@@ -188,9 +189,9 @@
         "celsius otg": "179A10E4-EB94-4C78-9B4C40E0231FBF2A",
         "celsius stevia": "CCE2379C-919C-45DD-AF639D944A915B65",
         "celsius vibe": "BEE51BE8-A106-4B83-A700864A057BB3F6",
-        "celsius green_tea": "9A8EB846-FE3F-43ED-812D3337AC00A572",
+        "celsius green tea": "9A8EB846-FE3F-43ED-812D3337AC00A572",
         "celsius sparkling": "EE08F0BF-97D0-48B1-824B8B6A3251BF95",
-        "celsius variety_pack": "435D9E27-5C7F-4748-9081E5050AABB057"
+        "celsius variety pack": "435D9E27-5C7F-4748-9081E5050AABB057"
     },
     "product_sub_type":{
        
@@ -260,7 +261,12 @@
         "lemonade mist": "4CA5B25E-EF2E-4CA8-82FA0714984036CA",
         "berry" : "6DA86A3C-D06A-427B-8168FB1B87B89FA6",
         "blueberry lemonade": "6D93E8D3-34FD-4783-8A8A31A9793077A7",
-        "strawberry coconut": "CBD5C8E4-EB0C-406C-844654DE3E1176A1"
+        "strawberry coconut": "CBD5C8E4-EB0C-406C-844654DE3E1176A1",
+        "blue crush": "8BEEB2BB-07AC-40A5-90AB9C8C83CFB50F",
+        "cherry limeade": "33B8C040-F9B6-4AF3-890D9A13C6150B70",
+        "dragonberry": "270EA6BF-5F75-459F-B6CD9C2DAFFBB311",
+        "fruit burst": "33ECCD12-9568-4366-9AA7F7A2C8A0A39B"
+
     },
     "event":{
      

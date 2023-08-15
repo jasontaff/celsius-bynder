@@ -1062,7 +1062,7 @@ async function uploadFileToBynder(asset) {
         if ('location' in asset) {
           var locationValues = Object.values(asset.location.location_meta_ids);
           requestData.data.property_Location = '';
-          requestData.data['metaproperty.2AAF33AB-E3A2-4052-97809F5AFB22364A9'] = locationValues;
+          requestData.data['metaproperty.2AAF33AB-E3A2-4052-97809F5AFB22364A'] = locationValues;
 
         }
 
@@ -1080,7 +1080,7 @@ async function uploadFileToBynder(asset) {
         }
       })
       .catch((error) => {
-        console.log("Failed to upload asset: " + full_path + " to Bynder!" + error);
+        console.log("Failed to upload asset: " + full_path + " to Bynder!" + error.data);
         reject(error);
       });
   });

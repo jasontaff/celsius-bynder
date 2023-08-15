@@ -71,7 +71,7 @@
         "fitness": "CE5807F9-C72C-49F0-88FEBBE7B9057513",
         "font": "CA90DF0B-E1C6-45C4-B68C0FE351837665",
         "form": "34D40AB2-58B4-4C1D-A62B73336EBD71F9",
-        "high res": "3E437317-3E51-4D39-8C3DA07D7A17DF63",
+        "high-res": "3E437317-3E51-4D39-8C3DA07D7A17DF63",
         "horizontal": "528B955A-1335-4EC7-A5A755D5876CE42D",
         "icon": "ED91BDB0-6206-4F82-B1862B6C87627918",
         "infographic": "B8CADDD3-B82E-43A9-8107CA4344D2DD64",
@@ -118,7 +118,7 @@
         "vibe": "98508F28-D5C2-4E6F-ADE94149591E386A",
         "conv": "CF1BDEBF-9EEE-48A1-AF05233C117FD7B9",
         "muloc": "11AD2786-37C5-47BE-BCD716E47CE158FC",
-        "dual logo and pricing": "A48F7707-EAAB-49E0-BA991A6100A0A9CD",
+        "dual-logo and pricing": "A48F7707-EAAB-49E0-BA991A6100A0A9CD",
         "evergreen": "0A626A30-80A1-498B-9306DD5CE5CB8482",
         "pricing": "21BBE220-E9C2-4842-84986D3896A16B18",
         "still": "874EE3CA-30CA-443B-B2BD35BA74298A76"
@@ -154,7 +154,7 @@
         "rectangular cling": "E728F933-4479-47E6-817F9DA9DFD2EF54",
         "rectangular die cut cling": "E25C18BA-6B60-4F49-B9B5EB67EB33D896",
         "shelf talker": "DD9F1321-4E85-4E5F-84958C5F2F79E532",
-        "texas icer": "FC5316A-2CA1-49F9-86D803B044D536D3",
+        "texas icer": "CFC5316A-2CA1-49F9-86D803B044D536D3",
         "wobbler": "A417C685-BF02-40CC-AD049ACA8EB7F0B4"
 
     },
@@ -172,10 +172,10 @@
         "dallas stars": "2876B6C9-45E7-4457-842B64100D015991",
         "ferrari general market": "C43F2FBD-8A0E-42A5-A6BA9B339DBDC56C",
         "nascar": "99A53A26-AE4E-41DB-9D9BF2812ABE2CE4"
-    },
+    }, 
     
     "product":{
-
+ 
         "energy drinks": "5DDAD176-26BA-410A-8EE6834C2A03DB48",
         "powders": "DD8BD094-A715-4A4C-9C46B38F06500D02"
   
@@ -191,7 +191,8 @@
         "celsius vibe": "BEE51BE8-A106-4B83-A700864A057BB3F6",
         "celsius green tea": "9A8EB846-FE3F-43ED-812D3337AC00A572",
         "celsius sparkling": "EE08F0BF-97D0-48B1-824B8B6A3251BF95",
-        "celsius variety pack": "435D9E27-5C7F-4748-9081E5050AABB057"
+        "celsius variety pack": "435D9E27-5C7F-4748-9081E5050AABB057",
+        "celsius essentials": "4C74887A-564F-4973-8D0F769B73EFD8BF"
     },
     "product_sub_type":{
        
@@ -265,7 +266,12 @@
         "blue crush": "8BEEB2BB-07AC-40A5-90AB9C8C83CFB50F",
         "cherry limeade": "33B8C040-F9B6-4AF3-890D9A13C6150B70",
         "dragonberry": "270EA6BF-5F75-459F-B6CD9C2DAFFBB311",
-        "fruit burst": "33ECCD12-9568-4366-9AA7F7A2C8A0A39B"
+        "fruit burst": "33ECCD12-9568-4366-9AA7F7A2C8A0A39B",
+        "sunset vibe": "DBDA2F28-557E-44A7-90D9F50FA398093E",
+        "galaxy vibe": "A5820090-F213-4A60-9B1D838E8442D672",
+        "astro vibe": "CEFF08CF-4D41-4C33-8C07C20F286E3951",
+        "blue razz lemonade": "54A2D448-1B65-4F41-9930C4032BB58FFD",
+        "raspberry peach": "35AF7E3B-994A-4D41-828422EE6A300568"
 
     },
     "event":{
@@ -337,7 +343,7 @@
          "finland": "1899F660-70F8-4D37-96B41EC5CFE09585",
          "germany": "EFF87653-7432-4929-8E2063C8B30AC834",
          "hong kong": "6531BF86-B047-418C-A40C7C36A191F29C",
-         "israel": "D4E28AB8-810B-4315-AE9CA9656C0BEC3",
+         "israel": "D4E28AB8-810B-4315-AE9CA9656C0BEC33",
          "japan": "4E99A11F-4DE2-49BD-8E6AB05F00E41B2C",
          "korea": "9E8FE156-6229-4CC1-A343F82470B976E5",
          "kuwait": "8189B883-0C52-466A-B1760FEB619A3FE8",
@@ -347,7 +353,8 @@
          "sweden": "E94C78EB-83A4-49CB-93D2550F822C8DBF",
          "switzerland": "CEA547F3-4C73-4AD1-8058B60500A78699",
          "uk": "CDD023BB-6358-4190-BD053B89EEF30306",
-         "usa": "10C1B4CA-840C-426A-81E84DC75E3C9BC3"
+         "usa": "10C1B4CA-840C-426A-81E84DC75E3C9BC3",
+         "canada": "9137B23E-3527-4CAB-9F6A9AE2A0B00285"
     },
 
     "location": {

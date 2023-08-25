@@ -512,7 +512,7 @@ function getUsageRights(fileName){
   let usage_rights_meta_id_value = configObject.usage_rights.internal_use_only;
   if (fileName.includes("extl")) {
     usage_rights = "external";
-    usage_rights_meta_id_value = configObject.usage_rights.approved_for_external_usage
+    usage_rights_meta_id_value = configObject.usage_rights.extl
   }
 
   let usageRightsObj = {

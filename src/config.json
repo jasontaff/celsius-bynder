@@ -156,7 +156,8 @@
         "rectangular die cut cling": "E25C18BA-6B60-4F49-B9B5EB67EB33D896",
         "shelf talker": "DD9F1321-4E85-4E5F-84958C5F2F79E532",
         "texas icer": "CFC5316A-2CA1-49F9-86D803B044D536D3",
-        "wobbler": "A417C685-BF02-40CC-AD049ACA8EB7F0B4"
+        "wobbler": "A417C685-BF02-40CC-AD049ACA8EB7F0B4",
+        "combos": "5C3A4880-86FD-4D85-B15D9190843D1AD2"
 
     },
 
@@ -213,7 +214,8 @@
         "pack": "37166658-67BC-4704-8AEF53286B9FE402",
         "single": "AB7713AF-1002-4792-8E59F5294AD80CF0",
         "tray": "3BFEBBBE-56B6-4ACC-8FCC988CAD2834CD",
-        "specialty": "695CE679-E2E1-4E92-AB106578F0599F88"
+        "specialty": "695CE679-E2E1-4E92-AB106578F0599F88",
+        "combo": "1B8B672D-BE79-4D38-9808F13FA0E03574"
 
     },
     "flavors":{

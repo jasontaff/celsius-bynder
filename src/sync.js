@@ -170,6 +170,38 @@ function getDepartmentType(pathName) {
   return departmentObj;
 }
 
+// *Required - Get Main Country through file path
+function getMainCountry(pathName) {
+
+  const segments = pathName.split('\\');
+
+  let main_country = null;
+  let main_country_meta_id_value = null;
+  const main_countries = Object.keys(configObject.main_country);
+
+  for (const key of main_countries) {
+    var keyword = key.toLowerCase();
+    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
+    if (isMatch) {
+      main_country = keyword.toLowerCase();
+      main_country_meta_id_value = configObject.main_country[keyword];
+      break;
+    }
+  }
+
+  let mainCountryObj = {
+    main_country_name: main_country,
+    main_country_id: "DE8BBD4F-DFDA-4559-849714F7954AE3A2",
+    main_country_meta_id: null
+  };
+
+  if (mainCountryObj) {
+    mainCountryObj.main_country_meta_id = main_country_meta_id_value;
+  }
+
+  return mainCountryObj;
+}
+
 // *Required - Get Asset Category through file path
 function getAssetCategory(pathName){
 
@@ -755,7 +787,13 @@ function readAssets(directory, assets) {
         var department =  getDepartmentType(file_path_only);   
         
            if (department.department_name  !== null){
-            var assetCategory = getAssetCategory(file_path_only); 
+
+              var main_country = getMainCountry(file_path_only);
+
+               if (main_country.main_country_name  !== null){
+              
+
+              var assetCategory = getAssetCategory(file_path_only); 
 
             if (assetCategory.asset_category_name  !== null){
                   var file_name_only = getFileNameOnly(filePath);
@@ -769,6 +807,7 @@ function readAssets(directory, assets) {
                     modified_date: file_stats.mtime,
                     asset_type: extension,
                     department_type: department,
+                    main_country: main_country,
                     asset_category: assetCategory,
                     usage_right: usage_rights
                   };
@@ -880,10 +919,15 @@ function readAssets(directory, assets) {
                 //SKIP THE FILE IF  NO ASSET CATEGORY TYPE IS ASSIGNED
                 console.log("--- NO ASSET CATEGORY ASSIGNED ---:"  + filePath + " --- SKIPPING" );
               }
-           }else{
+
+            }else{
+            //SKIP THE FILE IF NO MAIN COUNTRY IS ASSIGNED
+            console.log("--- NO MAIN COUNTRY  ASSIGNED ---:"  + filePath + " --- SKIPPING" );
+            } 
+          }else{
               //SKIP THE FILE IF NO DEPARTMENT TYPE IS ASSIGNED
               console.log("--- NO DEPARTMENT TYPE ASSIGNED ---:"  + filePath + " --- SKIPPING" );
-           }
+          }
       }else{
         //SKIP THE FILE IF  DOESN'T MEET A PROPER ASSET TYPE
         console.log("--- NOT A VALID ASSET ---:"  + filePath + " --- SKIPPING" );
@@ -920,6 +964,8 @@ async function uploadFileToBynder(asset) {
         name: file_name_only,
         property_Org_Category: '',
         'metaproperty.3E4D131B-61D1-4269-9A8C64352F962010': "DEC4407F-4384-48F7-9645FC3DD18C2260",
+        property_Main_Country: '',
+        'metaproperty.DE8BBD4F-DFDA-4559-849714F7954AE3A2': asset.main_country.main_country_meta_id,
         property_Asset_Type: '',
         'metaproperty.8961A884-9F3A-4406-AEA266B0311932FF': asset.asset_type.asset_type_meta_id,
         property_Department: '',

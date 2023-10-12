@@ -8,6 +8,13 @@
         "org_category_id": "3E4D131B-61D1-4269-9A8C64352F962010",
         "celsius": "DEC4407F-4384-48F7-9645FC3DD18C2260"
     },
+
+    "main_country": {
+
+        "canada": "6BBFB276-5E1E-4837-A02E408C1F443123",
+        "usa": "730BCC62-3F2A-4E7E-96FD1E9901475EB9"
+
+    },
     "asset_type":{
         "asset_type_id": "8961A884-9F3A-4406-AEA266B0311932FF",
 
@@ -157,7 +164,7 @@
         "shelf talker": "DD9F1321-4E85-4E5F-84958C5F2F79E532",
         "texas icer": "CFC5316A-2CA1-49F9-86D803B044D536D3",
         "wobbler": "A417C685-BF02-40CC-AD049ACA8EB7F0B4",
-        "combos": "5C3A4880-86FD-4D85-B15D9190843D1AD2"
+        "combo": "04157ABF-E6BE-4065-91BD81852DE7CDC0"
 
     },
 

@@ -1,25 +1,35 @@
 const cron = require('node-cron');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 
-// Define the schedule for the cron job (12 AM and 12 PM every day)
+// Define the schedule for the cron job (noon and midnight every day)
 const schedule = '0 0,12 * * *';
-
-// Define the command to run the sync.js file
-const command = 'node sync.js';
 
 // Create the cron job
 cron.schedule(schedule, () => {
-  // Execute the command
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing the command: ${error.message}`);
-      return;
+  // Define the command to run sync.js
+  const command = 'sync.js';
+
+  // Spawn a child process to execute sync.js
+  const child = spawn('node', [command]);
+
+  // Handle stdout data
+  child.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  // Handle stderr data
+  child.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  // Handle the exit of the child process
+  child.on('close', (code) => {
+    if (code === 0) {
+      console.log('sync.js executed successfully.');
+    } else {
+      console.error(`sync.js execution failed with code ${code}.`);
     }
-    if (stderr) {
-      console.error(`Command stderr: ${stderr}`);
-    }
-    console.log(`Command output: ${stdout}`);
   });
 });
 
-console.log('Cron job scheduled to run sync.js at 12 AM and 12 PM every day.');
+console.log('Cron job scheduled to run sync.js every day at noon and midnight.');

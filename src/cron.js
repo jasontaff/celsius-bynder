@@ -1,8 +1,8 @@
 const cron = require('node-cron');
 const { spawn } = require('child_process');
 
-// Define the schedule for the cron job (8 AM, noon, and 4 PM Monday through Friday, and midnight every day)
-const schedule = '0 8,12,16 * * 1-5,0';
+// Define the schedule for the cron job (7 AM, noon, and 4 PM Monday through Friday, and midnight every day)
+const schedule = '0 7,12,16 * * 1-5,0';
 
 // Create the cron job
 cron.schedule(schedule, () => {
@@ -32,4 +32,4 @@ cron.schedule(schedule, () => {
   });
 });
 
-console.log('Cron job scheduled to run sync.js at 8 AM, noon, and 4 PM from Monday through Friday, and midnight every day.');
+console.log('Cron job scheduled to run sync.js at 7 AM, noon, and 4 PM from Monday through Friday, and midnight every day.');

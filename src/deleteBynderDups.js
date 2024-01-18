@@ -39,10 +39,17 @@ async function getAllBynderAssets() {
           
               duplicate.occurrences.forEach((occurrence) => {
                 console.log(`  Name: ${occurrence.name} | ID: ${occurrence.id}`);
+
+                  // Delete the asset from Bynder with the ID
+                  //deleteBynderAsset(occurrence.name, occurrence.id);
+
               });
           
               console.log("------------------------------");
             });
+      
+
+        
       
             resolve(); // Resolve the Promise after the loop is complete
           } catch (error) {
@@ -111,6 +118,22 @@ async function getAllBynderAssets() {
     return duplicates;
   }
   
+  async function deleteBynderAsset(name, id) {
+    return new Promise((resolve, reject) => {
+      bynder.deleteMedia({
+        id: id,
+      })
+        .then((data) => {
+          console.log("Successfully deleted Bynder asset: " + name);
+          resolve();
+        })
+        .catch((error) => {
+          console.error("FAILED TO DELETE BYNDER ASSET: " + name);
+          console.log(error.response.data);
+          reject(error);
+        });
+    });
+  }
 
 getAllBynderAssets();
 

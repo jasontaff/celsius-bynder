@@ -5,8 +5,8 @@ const fs = require('fs');
 // Lock file path
 const lockFilePath = 'cron.lock';
 
-// Define the schedule for the cron job (7 AM, noon, and 4 PM Monday through Friday, and midnight every day)
-const schedule = '0 7,12,16 * * 1-5,0';
+// Define the new schedule for running at 7 AM, noon, and 5 PM every day
+const schedule = '0 7,12,17 * * *';
 
 // Create the cron job
 cron.schedule(schedule, () => {
@@ -48,4 +48,7 @@ cron.schedule(schedule, () => {
   });
 });
 
-console.log('Cron job scheduled to run sync.js at 7 AM, noon, and 4 PM from Monday through Friday, and midnight every day.');
+console.log('Cron job scheduled to run sync.js at 7 AM, noon, and 5 PM every day.');
+
+
+

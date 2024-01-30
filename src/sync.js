@@ -173,33 +173,22 @@ function getDepartmentType(pathName) {
 // *Required - Get Main Country through file path
 function getMainCountry(pathName) {
 
-  const segments = pathName.split('\\');
-
-  let main_country = null;
-  let main_country_meta_id_value = null;
-  const main_countries = Object.keys(configObject.main_country);
-
-  for (const key of main_countries) {
-    var keyword = key.toLowerCase();
-    var isMatch = segments.some(segment => segment.toLowerCase() === keyword);
-    if (isMatch) {
-      main_country = keyword.toLowerCase();
-      main_country_meta_id_value = configObject.main_country[keyword];
-      break;
-    }
-  }
-
-  let mainCountryObj = {
-    main_country_name: main_country,
-    main_country_id: "DE8BBD4F-DFDA-4559-849714F7954AE3A2",
-    main_country_meta_id: null
-  };
-
-  if (mainCountryObj) {
-    mainCountryObj.main_country_meta_id = main_country_meta_id_value;
-  }
-
-  return mainCountryObj;
+    let countryObj= {};
+      let matchingObj= {};
+    
+      for (const [key, value] of Object.entries(configObject.main_country)) {
+        if (pathName.toLowerCase().includes(key.toLowerCase())) {
+          matchingObj[key] = value;
+        }
+      }
+    
+        //If there are 1 or more matching keys from in the pathName
+        if (Object.keys(matchingObj).length > 0) {
+          countryObj.country_id = "DE8BBD4F-DFDA-4559-849714F7954AE3A2";
+          countryObj.country_meta_ids = matchingObj;
+        } 
+       
+        return countryObj;
 }
 
 // *Required - Get Asset Category through file path
@@ -537,7 +526,6 @@ function getCampaignType(pathName){
 
 }
 
-
 //Get Usage Rights 
 function getUsageRights(fileName){
   let usage_rights = "internal";
@@ -595,25 +583,24 @@ function getFlavors(fileName){
     return flavorsObj;
 }
 
-
 //Get Countries
-function getCountries(fileName){
-  let countryObj= {};
-  let matchingObj= {};
+// function getCountries(fileName){
+//   let countryObj= {};
+//   let matchingObj= {};
 
-  for (const [key, value] of Object.entries(configObject.country)) {
-    if (fileName.toLowerCase().includes(key.toLowerCase())) {
-      matchingObj[key] = value;
-    }
-  }
+//   for (const [key, value] of Object.entries(configObject.country)) {
+//     if (fileName.toLowerCase().includes(key.toLowerCase())) {
+//       matchingObj[key] = value;
+//     }
+//   }
 
-    //If there are 1 or more matching keys from in the filename
-    if (Object.keys(matchingObj).length > 0) {
-      countryObj.country_id = "697F646C-9594-4A3A-92716AD65D29CE90";
-      countryObj.country_meta_ids = matchingObj;
-    } 
-    return countryObj;
-}
+//     //If there are 1 or more matching keys from in the filename
+//     if (Object.keys(matchingObj).length > 0) {
+//       countryObj.country_id = "697F646C-9594-4A3A-92716AD65D29CE90";
+//       countryObj.country_meta_ids = matchingObj;
+//     } 
+//     return countryObj;
+// }
 
 //Get Year
 function getYear(fileName){
@@ -741,7 +728,6 @@ function getEmphasis(fileName){
     return emphasisObj;
 }
 
-
 //Get Location through file name
 function getLocation(fileName){
   let locationObj= {};
@@ -788,10 +774,12 @@ function readAssets(directory, assets) {
         
            if (department.department_name  !== null){
 
-              var main_country = getMainCountry(file_path_only);
+              var countryObj = getMainCountry(file_path_only);
 
-               if (main_country.main_country_name  !== null){
-              
+                 if (Object.keys(countryObj).length) {
+
+                  
+        
 
               var assetCategory = getAssetCategory(file_path_only); 
 
@@ -807,11 +795,13 @@ function readAssets(directory, assets) {
                     modified_date: file_stats.mtime,
                     asset_type: extension,
                     department_type: department,
-                    main_country: main_country,
+                  //  main_country: countryObj,
                     asset_category: assetCategory,
                     usage_right: usage_rights
                   };
 
+
+                  assets[filePath].main_country = countryObj;
 
                   //GET OPTIONAL METAPROPERITES//
                   var assetSubCategory = getAssetSubCategory(file_path_only); 
@@ -869,10 +859,10 @@ function readAssets(directory, assets) {
                     assets[filePath].flavors = flavorObj;
                   }
 
-                  var countryObj = getCountries(file_name_only);
-                  if (Object.keys(countryObj).length) {
-                    assets[filePath].country = countryObj;
-                  }
+                //   var countryObj = getCountries(file_name_only);
+                //   if (Object.keys(countryObj).length) {
+                //     assets[filePath].country = countryObj;
+                //   }
 
                   var yearObjc = getYear(file_name_only);
                   if (Object.keys(yearObjc).length) {
@@ -964,8 +954,8 @@ async function uploadFileToBynder(asset) {
         name: file_name_only,
         property_Org_Category: '',
         'metaproperty.3E4D131B-61D1-4269-9A8C64352F962010': "DEC4407F-4384-48F7-9645FC3DD18C2260",
-        property_Main_Country: '',
-        'metaproperty.DE8BBD4F-DFDA-4559-849714F7954AE3A2': asset.main_country.main_country_meta_id,
+        // property_Main_Country: '',
+        // 'metaproperty.DE8BBD4F-DFDA-4559-849714F7954AE3A2': asset.main_country.main_country_meta_id,
         property_Asset_Type: '',
         'metaproperty.8961A884-9F3A-4406-AEA266B0311932FF': asset.asset_type.asset_type_meta_id,
         property_Department: '',
@@ -977,6 +967,13 @@ async function uploadFileToBynder(asset) {
       
       },
     };
+
+        //NEW COUNTRY LOGIC
+       if ('main_country' in asset) {
+        var countryValues = Object.values(asset.main_country.country_meta_ids);
+        requestData.data.property_Main_Country = '';
+        requestData.data['metaproperty.DE8BBD4F-DFDA-4559-849714F7954AE3A2'] = countryValues;
+      }
 
       // Check if asset_sub_category is present
       if ('asset_sub_category' in asset) {
@@ -1049,11 +1046,11 @@ async function uploadFileToBynder(asset) {
       }
 
       // Check if country is present
-      if ('country' in asset) {
-        var countryValues = Object.values(asset.country.country_meta_ids);
-        requestData.data.property_Country = '';
-        requestData.data['metaproperty.697F646C-9594-4A3A-92716AD65D29CE90'] = countryValues;
-      }
+    //   if ('country' in asset) {
+    //     var countryValues = Object.values(asset.country.country_meta_ids);
+    //     requestData.data.property_Country = '';
+    //     requestData.data['metaproperty.697F646C-9594-4A3A-92716AD65D29CE90'] = countryValues;
+    //   }
 
       // Check if year is present
       if ('year' in asset) {
@@ -1114,7 +1111,7 @@ async function uploadFileToBynder(asset) {
 
 
         //CONSOLE TO SHOW OBJECT DATA DURING UPLOAD PROCESS
-        //console.log(requestData.data);
+       // console.log(requestData.data);
   
     bynder.uploadFile(requestData)
       .then((data) => {
@@ -1131,7 +1128,6 @@ async function uploadFileToBynder(asset) {
       });
   });
 }
-
 
 async function getAllBynderAssets() {
   return new Promise(async (resolve, reject) => {

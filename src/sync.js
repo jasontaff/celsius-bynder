@@ -1142,6 +1142,12 @@ async function getAllBynderAssets() {
  
       console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
       
+      // Check if there are 0 Bynder assets
+      if (Object.keys(bynderAssets).length === 0) {
+        console.log("No Bynder assets found. Exiting script.");
+        process.exit(0); // Exit the script
+      }
+
       await loopThroughAllAssets(serverAssets, bynderAssets);
       console.log("---Check for unwanted assets in Bynder that are not on the server---");
       await checkBynderUnwantedFiles(serverAssets, bynderAssets);

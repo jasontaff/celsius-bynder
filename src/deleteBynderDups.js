@@ -32,25 +32,43 @@ async function getAllBynderAssets() {
             // const filenames = bynderAssets.map((asset) => asset.name);
            
             const duplicates = findDuplicates(bynderAssets);
-       
+         
+
+
             duplicates.forEach((duplicate) => {
               console.log(`Duplicate Name: ${duplicate.name}`);
               console.log("Occurrences:");
-          
+
+              let latestOccurrenceId = null;
+              let latestDate = null;
+              let latestOccurrenceName = null;
+
               duplicate.occurrences.forEach((occurrence) => {
-                console.log(`  Name: ${occurrence.name} | ID: ${occurrence.id}`);
+                console.log(`  Name:  | ID: ${occurrence.id}  | DateCreated ${occurrence.dateCreated}`);
 
-                  // Delete the asset from Bynder with the ID
-                  //deleteBynderAsset(occurrence.name, occurrence.id);
-
-              });
-          
-              console.log("------------------------------");
-            });
-      
-
+                const currentDate = new Date(occurrence.dateCreated);
         
-      
+                if (!latestDate || currentDate > latestDate) {
+                    latestDate = currentDate;
+                    latestOccurrenceId = occurrence.id;
+                    latestOccurrenceName = occurrence.name;
+                }
+            });
+        
+            if (latestOccurrenceId !== null) {
+               console.log(`Latest Occurrence: Name - ${latestOccurrenceName} | ID - ${latestOccurrenceId}`);
+               console.log("Delete: " + latestOccurrenceName + " : " + latestOccurrenceId );
+               // Delete the asset from Bynder with the ID
+               deleteBynderAsset(latestOccurrenceName, latestOccurrenceId);
+            } else {
+                console.log("No occurrences found.");
+            }
+        
+            
+            console.log("------------------------------");
+          
+            });
+            console.log("Total Dups Found: " +duplicates.length)
             resolve(); // Resolve the Promise after the loop is complete
           } catch (error) {
             reject(error);
@@ -92,9 +110,11 @@ async function getAllBynderAssets() {
     const nameOccurrences = {};
   
     for (let i = 0; i < bynderAssets.length; i++) {
+      
       const item = bynderAssets[i];
       const name = item.name;
       const id = item.id;
+      const dateCreated = item.dateCreated;
   
       nameOccurrences[name] = nameOccurrences[name] ? nameOccurrences[name] + 1 : 1;
   
@@ -102,7 +122,7 @@ async function getAllBynderAssets() {
         // This is the second occurrence of the name, grab all occurrences and push into duplicates array
         const allOccurrences = bynderAssets
           .filter((asset) => asset.name === name)
-          .map((occurrence) => ({ name: occurrence.name, id: occurrence.id }));
+          .map((occurrence) => ({ name: occurrence.name, id: occurrence.id, dateCreated: occurrence.dateCreated }));
   
         duplicates.push({ name: name, occurrences: allOccurrences});
   
@@ -117,7 +137,7 @@ async function getAllBynderAssets() {
 
     return duplicates;
   }
-  
+
   async function deleteBynderAsset(name, id) {
     return new Promise((resolve, reject) => {
       bynder.deleteMedia({

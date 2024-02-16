@@ -1154,6 +1154,7 @@ async function getAllBynderAssets() {
       resolve(); // Resolve the Promise after the loop is complete
     } catch (error) {
       reject(error);
+      process.exit(0); // Exit the script
     }
   });
 }
@@ -1331,6 +1332,13 @@ function sendEmail(){
 console.log("-----Get All Sever Assets-----");
 serverAssets = getAllServerAssets(configObject.defaults.directory);
 console.log("-----Finished getting all assets on Server----- Server total assets = " + Object.keys(serverAssets).length);
+
+//fail safe if issue and no server assets are found
+if( Object.keys(serverAssets).length == 0){
+  console.log("No Windows Server Assets Found");
+  process.exit(0); // Exit the script
+}
+
 console.log("-----Get All Bynder Assets-----");
 getAllBynderAssets()
   .then(() => {

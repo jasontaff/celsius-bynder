@@ -12,7 +12,6 @@ var logFileName = `file_${getCurrentTimestamp()}.log`;
 var logFilePath = path.join('../logs/', logFileName);
 var logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
-
 // Attach an error event listener to the logStream
 logStream.on('error', (error) => {
   console.error('An error occurred during the write operation:', error);
@@ -1118,12 +1117,12 @@ async function uploadFileToBynder(asset) {
         if (data.success == true) {
           console.log("Successfully uploaded asset: " + full_path + " to Bynder!");
           resolve(); // Resolve the promise when upload is successful
-        } else {
-          reject("Failed to upload asset: " + full_path + " to Bynder!");
+        } else {//prob don't need
+          reject("(Promise Reject) Failed to upload asset: " + full_path + " to Bynder!");
         }
       })
       .catch((error) => {
-        console.log("Failed to upload asset: " + full_path + " to Bynder!" + error.data);
+        console.log("(Catch) Failed to upload asset: " + full_path + " to Bynder!" + error.data);
         reject(error);
       });
   });

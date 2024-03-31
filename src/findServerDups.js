@@ -43,7 +43,6 @@ console.error = (...args) => {
 };
 
 
-
 function getCurrentTimestamp() {
   const now = new Date();
   const year = now.getFullYear();
@@ -937,123 +936,6 @@ function getAllServerAssets(directory) {
   return assets;
 }
 
-async function getAllBynderAssets() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const params = {
-        limit: 1000,
-        page: 1,
-        orderBy: 'dateModified desc'
-      };
-
-      bynderAssets = await getAllBynderMediaItems(params);
- 
-      console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
-      
-      // Check if there are 0 Bynder assets
-      if (Object.keys(bynderAssets).length === 0) {
-        console.log("No Bynder assets found. Exiting script.");
-        process.exit(0); // Exit the script
-      }
-
-      await loopThroughAllAssets(serverAssets, bynderAssets);
-      console.log("---Check for unwanted assets in Bynder that are not on the server---");
-      await checkBynderUnwantedFiles(serverAssets, bynderAssets);
-      resolve(); // Resolve the Promise after the loop is complete
-    } catch (error) {
-      reject(error);
-      process.exit(0); // Exit the script
-    }
-  });
-}
-
-async function getAllBynderMediaItems(params) {
-  var recursiveGetAssets = (_params, assets) => {
-
-    bynderFileArray = assets;
-    var params = { ..._params }; // gathers the rest of the list of arguments into an array
-    params.page = !params.page ? 1 : params.page;
-    params.limit = !params.limit ? defaultAssetsNumberPerPage : params.limit;
-
-    return bynder.getMediaList(params)
-      .then(data => {
-        bynderFileArray = assets.concat(data);
-        
-        //if date return length is equal to limit, call again. 
-        //if not, it got the rest of assets 
-        if (data && data.length === params.limit) {
-          
-          params.page += 1;
-          return recursiveGetAssets(params, bynderFileArray);
-        }
-        
-        return bynderFileArray;
-      })
-      .catch(error => {
-        return error;
-      });
-  };
-  return recursiveGetAssets(params, []);
-}
-
-async function loopThroughAllAssets(serverAssets, bynderAssets) {
-  console.log("Looping through all assets on the Server");
-
-
-
-  var filePaths = {}; // Object to store filenames and their paths
-
-for (var filePath in serverAssets) {
-    var serverAsset = serverAssets[filePath];
-    var serverAssetFileName = serverAsset.file_name_only;
-    var serverAssetFilePath = serverAsset.file_path_only + '\\\\' + serverAssetFileName;
-    
-    // Check if the filename already exists in the object
-    if (filePaths[serverAssetFileName]) {
-        console.log("Duplicate file found: " + serverAssetFilePath);
-        console.log("First occurrence: " + filePaths[serverAssetFileName]);
-        console.log("Second occurrence: " + serverAssetFilePath);
-    } else {
-        // Store the file path corresponding to the filename
-        filePaths[serverAssetFileName] = serverAssetFilePath;
-    }
-}
-  
-
-}
-
-
-async function checkBynderUnwantedFiles(serverAssets, bynderAssets){
- 
-  for (var bynderFilePath in bynderAssets) {
-        var bynderAsset = bynderAssets[bynderFilePath];
-        var bynderAssetName = bynderAsset.name;
-        var foundInServer = false;
-
-        for (var filePath in serverAssets) {
-              var serverAsset = serverAssets[filePath];
-              var serverAssetFileName = serverAsset.file_name_only;
-              
-              if (bynderAssetName === serverAssetFileName) {
-                foundInServer = true;
-                break; // Break the loop when a match is found
-              }
-            }
-
-        if(!foundInServer){
-          try {
-            console.log("Bynder asset: " + bynderAssetName + " not found on the server...deleteing from bynder" )
-            //await deleteBynderAsset(bynderAsset);
-            
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      }
- 
-  }
-
-
 
 // START:
 console.log("-----Get All Sever Assets-----");
@@ -1064,20 +946,31 @@ console.log("-----Finished getting all assets on Server----- Server total assets
 if( Object.keys(serverAssets).length == 0){
   console.log("No Windows Server Assets Found");
   process.exit(0); // Exit the script
+}else{
+
+  console.log("Looping through all assets on the Server");
+
+  var filePaths = {}; // Object to store filenames and their paths
+
+  for (var filePath in serverAssets) {
+      var serverAsset = serverAssets[filePath];
+      var serverAssetFileName = serverAsset.file_name_only;
+      var serverAssetFilePath = serverAsset.file_path_only + '\\\\' + serverAssetFileName;
+      
+      // Check if the filename already exists in the object
+      if (filePaths[serverAssetFileName]) {
+          console.log("Duplicate file found: " + serverAssetFilePath);
+          console.log("First occurrence: " + filePaths[serverAssetFileName]);
+          console.log("Second occurrence: " + serverAssetFilePath);
+      } else {
+          // Store the file path corresponding to the filename
+          filePaths[serverAssetFileName] = serverAssetFilePath;
+      }
+  }
+    console.log("---Find Server Dups...done---");
+    logStream.end();
 }
 
-console.log("-----Get All Bynder Assets-----");
-getAllBynderAssets()
-  .then(() => {
-    console.log("---SYNC.JS DONE---");
-    // At the end of the script, close the log stream and write any remaining data
-    logStream.end();
-   
- 
-  })
-  .catch((error) => {
-    console.error("An error occurred:", error);
-  });
 
 
 

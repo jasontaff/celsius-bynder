@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Node.js GUI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="log"></div>
+  <button id="runButton">Run sync.js</button>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    const runButton = document.getElementById('runButton');
+    const logDiv = document.getElementById('log');
+
+    runButton.addEventListener('click', () => {
+      ipcRenderer.send('run-sync-js');
+    });
+
+    ipcRenderer.on('log', (event, message) => {
+      logDiv.innerHTML += `<p>${message}</p>`;
+    });
+  </script>
+</body>
+</html>

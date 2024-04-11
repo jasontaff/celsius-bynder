@@ -11,6 +11,7 @@
   "dependencies": {
     "@bynder/bynder-js-sdk": "^2.3.9",
     "axios": "^1.3.5",
+    "child_process": "^1.0.2",
     "dotenv": "^16.0.3",
     "exceljs": "^4.3.0",
     "fs": "^0.0.1-security",

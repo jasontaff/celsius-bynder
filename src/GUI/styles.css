@@ -1,0 +1,15 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+button {
+  margin: 10px;
+}
+
+#log {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}

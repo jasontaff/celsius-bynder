@@ -1,0 +1,24 @@
+
+name: Create Dev Branch
+
+on:
+  schedule:
+     # * is a special character in YAML so you have to quote this string
+         - cron:  "*/1 * * * *"  # Runs every minute
+
+jobs:
+  create-dev-branch:
+    runs-on: self-hosted # This will use the main branch environment
+
+    steps:
+    - name: Checkout main branch
+      uses: actions/checkout@v2
+      with:
+        ref: main
+
+    - name: Create dev branch
+      run: git checkout -b dev-branch
+
+    - name: Push dev branch
+      run: |
+        git push origin dev-branch

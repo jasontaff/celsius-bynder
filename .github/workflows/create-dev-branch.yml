@@ -2,7 +2,7 @@ name: Create Dev Branch
 
 on:
   schedule:
-    # Cron expression for running every 2 minutes  
+    # Cron expression for running every 2 minutes   
     - cron: '*/2 * * * *'
 
 jobs:

@@ -2,9 +2,10 @@
   "name": "celsius-bynder",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "fs": "^0.0.1-security",
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.2",
+    "nw": "^0.86.0-3",
     "path": "^0.12.7",
     "request": "^2.88.2",
     "uuid": "^9.0.0"

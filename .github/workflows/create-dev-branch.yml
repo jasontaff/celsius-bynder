@@ -2,7 +2,7 @@ name: Create Dev Branch
 
 on:
   schedule:
-    # Cron expression for running every 2 weeks (every other Sunday)
+    # Cron expression for running every 2 weeks, every other sunday
     - cron: "0 0 */2 * 0"
 
 jobs:
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref: main
       
       - name: Create Dev Branch with Date
         run: |

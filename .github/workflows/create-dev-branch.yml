@@ -5,12 +5,11 @@ on:
     # Cron expression for running every 2 weeks (every other Sunday)
     - cron: "0 0 */2 * 0"
 
-
 jobs:
   create-dev-branch:
     runs-on: ubuntu-latest
 
- steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:

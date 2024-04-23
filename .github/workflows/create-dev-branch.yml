@@ -18,3 +18,6 @@ jobs:
           TIMESTAMP=$(date +'%Y-%m-%d-%H-%M-%S')
           git checkout -b "Dev-Branch-$TIMESTAMP"
           git push origin "Dev-Branch-$TIMESTAMP"
+
+      - name: Say Hello
+        run: echo "Hello"

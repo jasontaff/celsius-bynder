@@ -1132,7 +1132,7 @@ async function getAllBynderAssets() {
   return new Promise(async (resolve, reject) => {
     try {
       const params = {
-        limit: 1000,
+        limit: 250,
         page: 1,
         orderBy: 'dateModified desc'
       };

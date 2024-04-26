@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const ExcelJS = require('exceljs');
 const nodemailer = require('nodemailer');
+const ping = require('ping');
 
 var logFileName = `file_${getCurrentTimestamp()}.log`;
 var logFilePath = path.join('../logs/', logFileName);
@@ -1144,7 +1145,7 @@ async function getAllBynderAssets() {
       // Check if there are 0 Bynder assets
       if (Object.keys(bynderAssets).length === 0) {
         console.log("No Bynder assets found. Exiting script.");
-        process.exit(0); // Exit the script
+        process.exit(1); // Exit the script
       }
 
       await loopThroughAllAssets(serverAssets, bynderAssets);
@@ -1153,7 +1154,7 @@ async function getAllBynderAssets() {
       resolve(); // Resolve the Promise after the loop is complete
     } catch (error) {
       reject(error);
-      process.exit(0); // Exit the script
+      process.exit(1); // Exit the script
     }
   });
 }
@@ -1327,7 +1328,23 @@ function sendEmail(){
 
 }
 
+function pingBynder() {
+  const host = 'celsius.bynder.com';
+
+  ping.sys.probe(host, function(isAlive) {
+      if (!isAlive) {
+          console.error('Failed to ping Celsius Bynder. Exiting script.');
+          process.exit(1); // Exit with a non-zero code to indicate failure
+      } else {
+          console.log('Celsius Bynder is up');
+      }
+  });
+}
+
+
 // START:
+pingBynder();
+
 console.log("-----Get All Sever Assets-----");
 serverAssets = getAllServerAssets(configObject.defaults.directory);
 console.log("-----Finished getting all assets on Server----- Server total assets = " + Object.keys(serverAssets).length);
@@ -1335,7 +1352,7 @@ console.log("-----Finished getting all assets on Server----- Server total assets
 //fail safe if issue and no server assets are found
 if( Object.keys(serverAssets).length == 0){
   console.log("No Windows Server Assets Found");
-  process.exit(0); // Exit the script
+  process.exit(1); // Exit the script
 }
 
 console.log("-----Get All Bynder Assets-----");

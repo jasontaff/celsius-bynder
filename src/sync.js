@@ -1143,7 +1143,9 @@ async function getAllBynderAssets() {
       console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
       
       // Check if there are 0 Bynder assets
-      if (Object.keys(bynderAssets).length === 0) {
+      if (Object.keys(bynderAssets).length == 0 || 
+          Object.keys(bynderAssets).length > Object.keys(serverAssets).length ||
+          Object.keys(bynderAssets).length < 100 ) { //TODO: random number to fail safe to figure out why bynder only returns 6 assets sometimes
         console.log("No Bynder assets found. Exiting script.");
         process.exit(1); // Exit the script
       }
@@ -1351,7 +1353,7 @@ console.log("-----Finished getting all assets on Server----- Server total assets
 
 //fail safe if issue and no server assets are found
 if( Object.keys(serverAssets).length == 0){
-  console.log("No Windows Server Assets Found");
+  console.log("No Window Server Assets Found");
   process.exit(1); // Exit the script
 }
 

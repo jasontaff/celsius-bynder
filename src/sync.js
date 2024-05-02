@@ -1141,12 +1141,13 @@ async function getAllBynderAssets() {
       bynderAssets = await getAllBynderMediaItems(params);
  
       console.log("-----Finished getting all assets on Bynder----- Bynder total assets = " + Object.keys(bynderAssets).length);
-      
+     
       // Check if there are 0 Bynder assets
       if (Object.keys(bynderAssets).length == 0 || 
           Object.keys(bynderAssets).length > Object.keys(serverAssets).length ||
           Object.keys(bynderAssets).length < 100 ) { //TODO: random number to fail safe to figure out why bynder only returns 6 assets sometimes
         console.log("No Bynder assets found. Exiting script.");
+        console.log(bynderAssets);
         process.exit(1); // Exit the script
       }
 

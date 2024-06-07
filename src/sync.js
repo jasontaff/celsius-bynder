@@ -1144,10 +1144,10 @@ async function getAllBynderAssets() {
      
       // Check if there are 0 Bynder assets
       if (Object.keys(bynderAssets).length == 0 || 
-          Object.keys(bynderAssets).length > Object.keys(serverAssets).length ||
           Object.keys(bynderAssets).length < 100 ) { //TODO: random number to fail safe to figure out why bynder only returns 6 assets sometimes
         console.log("No Bynder assets found. Exiting script.");
-        console.log(bynderAssets);
+        console.log("Bynder length: " + bynderAssets.length);
+        
         process.exit(1); // Exit the script
       }
 

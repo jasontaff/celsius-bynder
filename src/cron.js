@@ -20,7 +20,7 @@ cron.schedule(schedule, () => {
   fs.writeFileSync(lockFilePath, '');
 
   // Define the command to run sync.js
-  const command = 'sync.js';
+  const command = 'sync-in-batches.js';
 
   // Spawn a child process to execute sync.js
   const child = spawn('node', [command]);

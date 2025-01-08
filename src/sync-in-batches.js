@@ -1300,7 +1300,7 @@ async function uploadAssetsInChunks(assetsToUploadToBynderArray) {
   console.log("---SYNC.JS DONE---");
 
   // All chunks processed, now call the sendEmail function
- // sendEmail();
+   sendEmail();
 }
 
 
@@ -1408,7 +1408,7 @@ async function checkBynderUnwantedFiles(serverAssets, bynderAssets){
   const mailOptions = {
     from:  process.env.EMAIL_USER,
 
-    to: '',
+    to: 'jason.dion.taff@gmail.com',
     subject: 'Bynder Sync - Daily Email',
     text: 'Please see attached file',
     attachments: [

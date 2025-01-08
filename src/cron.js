@@ -3,7 +3,6 @@ const cron = require('node-cron');
 const { spawn } = require('child_process');
 const fs = require('fs');
 
-
 // Lock file path
 const lockFilePath = 'cron.lock';
 

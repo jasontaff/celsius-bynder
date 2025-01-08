@@ -1,12 +1,8 @@
-# Ignore environment variables file
+# Packages #
+############
+*node_modules
 .env
-
-# Ignore Node.js dependencies
-node_modules/
-
-# Optional: Add other common ignores
-.DS_Store
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+package-lock.json
+*.xls
+*.xlsx
